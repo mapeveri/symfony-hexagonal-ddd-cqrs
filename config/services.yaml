@@ -1,0 +1,63 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        App\Magazine\Domain\Bus\Command\CommandHandler:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+        App\Magazine\Domain\Bus\Query\QueryHandler:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+    
+    App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository:
+        class: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+        arguments: [
+            '@doctrine.orm.default_entity_manager'
+        ]
+        abstract:  true
+
+    App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineCategoryRepository:
+        parent: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+    
+    App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository:
+        parent: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+    
+    App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrinePostRepository:
+        parent: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+
+    App\Magazine\Domain\Category\CategoryRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineCategoryRepository'
+    App\Magazine\Domain\User\UserRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
+    App\Magazine\Domain\User\GeneratePassword: '@App\Magazine\Infrastructure\Symfony\Security\EncodedPassword'
+    App\Magazine\Domain\Post\PostRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrinePostRepository'
+
+    # Commands
+    app_create_user:
+        class: App\Magazine\Infrastructure\Symfony\Commands\CreateUserCommand
+        tags:
+            -  { name: console.command }

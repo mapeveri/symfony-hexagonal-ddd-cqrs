@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Magazine\Domain\Entity\Category" table="categories">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="name" type="string" unique="true" length="72" />
+        <field name="description" type="string" length="350" nullable="true" />
+        <field name="hidden" type="boolean" />
+
+        <many-to-one field="parent" target-entity="Category" nullable="true" inversedBy="categoryparent" fetch="EAGER">
+            <join-columns>
+                <join-column name="parent_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+
+        <one-to-many field="children" target-entity="Category" mapped-by="category" />
+        <one-to-many field="posts" target-entity="Post" mapped-by="post" />
+    </entity>
+
+</doctrine-mapping>

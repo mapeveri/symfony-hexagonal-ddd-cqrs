@@ -1,0 +1,4 @@
+post_create:
+  path: /posts/create
+  controller: App\Controller\Post\PostPostController
+  methods:  [POST]

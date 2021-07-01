@@ -1,0 +1,48 @@
+security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        app_user_provider:
+            id: App\Magazine\Infrastructure\Symfony\Security\UserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        
+        login:
+            pattern:  ^/api/login
+            stateless: true
+            anonymous: false
+            json_login:
+                check_path:               /api/login_check
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern:   ^/api
+            stateless: true
+            anonymous: false
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        main:
+            lazy: true
+            provider: app_user_provider
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+        
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+
+    password_hashers:
+        App\Magazine\Infrastructure\Symfony\Security\Auth:
+            algorithm: auto

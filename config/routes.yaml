@@ -1,0 +1,3 @@
+api:
+    resource: ./routes/routing.yaml
+    prefix: api

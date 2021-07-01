@@ -1,0 +1,10 @@
+api_category_directory:
+    resource: 'category/'
+    type: directory
+
+api_post_directory:
+    resource: 'post/'
+    type: directory
+
+api_login_check:
+    path: /login_check
