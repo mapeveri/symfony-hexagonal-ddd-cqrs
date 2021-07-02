@@ -56,6 +56,25 @@ services:
     App\Magazine\Domain\User\GeneratePassword: '@App\Magazine\Infrastructure\Symfony\Security\EncodedPassword'
     App\Magazine\Domain\Post\PostRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrinePostRepository'
 
+    App\Magazine\Infrastructure\Notification\Post\NewPostEmailAdmin:
+        class: App\Magazine\Infrastructure\Notification\Post\NewPostEmailAdmin
+        arguments:
+            - '%env(EMAIL_ADMIN)%'
+            - '%env(EMAIL_FROM)%'
+
+    App\Magazine\Domain\Email\Post\SendEmailAdmin: '@App\Magazine\Infrastructure\Notification\Post\NewPostEmailAdmin'
+
+    # Listener
+    App\Magazine\Infrastructure\Symfony\EventListener\PostEvent:
+        autowire: true
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'postPersist'
+                entity: 'App\Magazine\Domain\Entity\Post'
+                priority: 500
+                lazy: true
+
     # Commands
     app_create_user:
         class: App\Magazine\Infrastructure\Symfony\Commands\CreateUserCommand
