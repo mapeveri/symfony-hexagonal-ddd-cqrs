@@ -10,7 +10,7 @@ use App\Magazine\Application\Category\Create\CategoryCreateCommand;
 
 final class CategoryCreateCommandHandler implements CommandHandler
 {
-    private $service;
+    private CategoryCreate $service;
 
     public function __construct(CategoryCreate $service)
     {

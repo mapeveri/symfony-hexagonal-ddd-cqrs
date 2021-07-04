@@ -8,7 +8,7 @@ use App\Magazine\Domain\Bus\Query\Query;
 
 final class CategoryFinderQuery implements Query
 {
-    private $id;
+    private int $id;
 
     public function __construct(int $id)
     {

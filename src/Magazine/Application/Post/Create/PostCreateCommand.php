@@ -8,11 +8,11 @@ use App\Magazine\Domain\Bus\Command\Command;
 
 final class PostCreateCommand implements Command
 {
-    private $category;
-    private $user;
-    private $title;
-    private $content;
-    private $hidden;
+    private int $category;
+    private int $user;
+    private string $title;
+    private string $content;
+    private bool $hidden;
 
     public function __construct(string $title, string $content, int $category, int $user, bool $hidden)
     {

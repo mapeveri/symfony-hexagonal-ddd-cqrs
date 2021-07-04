@@ -7,9 +7,13 @@ namespace App\Magazine\Domain\Entity;
 use DateTime;
 use App\Magazine\Domain\Entity\User;
 use App\Magazine\Domain\Entity\Category;
+use App\Magazine\Domain\Event\EventsDomain;
+use App\Magazine\Domain\Post\PostWasCreated;
 
 final class Post
 {
+    use EventsDomain;
+
     /**
      * @var int
      */
@@ -69,6 +73,8 @@ final class Post
     public static function create(string $title, string $content, Category $category, User $user, ?bool $hidden = false): self
     {
         $post = new self($title, $content, $category, $user, $hidden);
+
+        $post->record(new PostWasCreated($title, $content, $category->id(), $user->id(), $hidden));
 
         return $post;
     }

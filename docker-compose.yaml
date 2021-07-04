@@ -41,3 +41,14 @@ services:
         environment:
             - RABBITMQ_DEFAULT_USER=app
             - RABBITMQ_DEFAULT_PASS=rabbit_app
+
+    elasticsearch:
+        container_name: app-elastic
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.8.10
+        ports:
+            - 9200:9200
+            - 9300:9300
+        environment:
+            - discovery.type=single-node
+            - xpack.security.enabled=false
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"

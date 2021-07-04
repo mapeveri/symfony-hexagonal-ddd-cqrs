@@ -9,7 +9,7 @@ use App\Magazine\Domain\Category\CategoryRepository;
 
 final class CategoryGetAll
 {
-    private $repository;
+    private CategoryRepository $repository;
 
     public function __construct(CategoryRepository $repository)
     {

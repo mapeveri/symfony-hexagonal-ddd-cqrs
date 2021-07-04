@@ -11,8 +11,9 @@ use App\Magazine\Application\Category\Find\CategoryFinder;
 
 final class CategoryCreate
 {
-    private $repository;
-    private $serviceFinder;
+    private CategoryRepository $repository;
+    private CategoryFinder $serviceFinder;
+    private CategoryFinderName $serviceFinderName;
 
     public function __construct(
         CategoryRepository $repository,

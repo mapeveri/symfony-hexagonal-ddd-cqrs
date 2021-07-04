@@ -12,7 +12,7 @@ use App\Magazine\Application\Category\Find\CategoryFinderResponse;
 
 final class CategoryFinderQueryHandler implements QueryHandler
 {
-    private $service;
+    private CategoryFinder $service;
 
     public function __construct(CategoryFinder $service)
     {

@@ -11,7 +11,7 @@ use App\Magazine\Application\Category\GetAll\CategoryGetAllResponse;
 
 final class CategoryGetAllQueryHandler implements QueryHandler
 {
-    private $service;
+    private CategoryGetAll $service;
 
     public function __construct(CategoryGetAll $service)
     {

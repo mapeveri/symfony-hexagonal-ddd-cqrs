@@ -10,7 +10,7 @@ use App\Magazine\Domain\Category\CategoryRepository;
 
 final class CategoryFinder
 {
-    private $repository;
+    private CategoryRepository $repository;
 
     public function __construct(CategoryRepository $repository)
     {

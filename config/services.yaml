@@ -34,7 +34,26 @@ services:
         App\Magazine\Domain\Bus\Query\QueryHandler:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
-    
+
+    App\Magazine\Infrastructure\Bus\Event\RabbitMqConnection:
+        arguments:
+            - host: '%env(RABBITMQ_HOST)%'
+              port: '%env(RABBITMQ_PORT)%'
+              vhost: '%env(RABBITMQ_MOOC_VHOST)%'
+              login: '%env(RABBITMQ_LOGIN)%'
+              password: '%env(RABBITMQ_PASSWORD)%'
+              read_timeout: 2
+              write_timeout: 2
+              connect_timeout: 5
+
+    App\Magazine\Infrastructure\Bus\Event\MessengerRabbitMqEventBus:
+        class : App\Magazine\Infrastructure\Bus\Event\MessengerRabbitMqEventBus
+        arguments:
+            - '@App\Magazine\Infrastructure\Bus\Event\RabbitMqConnection'
+            - '%env(RABBITMQ_EXCHANGE)%'
+
+    App\Magazine\Domain\Bus\Event\EventBus: '@App\Magazine\Infrastructure\Bus\Event\MessengerRabbitMqEventBus'
+
     App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository:
         class: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
         arguments: [
@@ -55,6 +74,7 @@ services:
     App\Magazine\Domain\User\UserRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
     App\Magazine\Domain\User\GeneratePassword: '@App\Magazine\Infrastructure\Symfony\Security\EncodedPassword'
     App\Magazine\Domain\Post\PostRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrinePostRepository'
+    App\Magazine\Domain\Index\IndexRepository: '@App\Magazine\Infrastructure\Persistence\Elasticsearch\Repository\ElasticsearchIndexRepository'
 
     App\Magazine\Infrastructure\Notification\Post\NewPostEmailAdmin:
         class: App\Magazine\Infrastructure\Notification\Post\NewPostEmailAdmin
@@ -63,6 +83,15 @@ services:
             - '%env(EMAIL_FROM)%'
 
     App\Magazine\Domain\Email\Post\SendEmailAdmin: '@App\Magazine\Infrastructure\Notification\Post\NewPostEmailAdmin'
+
+    App\Magazine\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient:
+        factory: '@App\Magazine\Infrastructure\Persistence\Elasticsearch\ElasticsearchClientFactory'
+        arguments:
+            - '%env(ELASTICSEARCH_HOST)%'
+            - '%env(ELASTICSEARCH_INDEX_PREFIX)%'
+            - '%kernel.project_dir%/../etc/databases/magazine'
+            - '%env(APP_ENV)%'
+        public: true
 
     # Listener
     App\Magazine\Infrastructure\Symfony\EventListener\PostEvent:

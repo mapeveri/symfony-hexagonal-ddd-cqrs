@@ -11,8 +11,8 @@ use App\Magazine\Domain\Category\CategoryAssociatedContent;
 
 final class CategoryDelete
 {
-    private $repository;
-    private $serviceFinder;
+    private CategoryRepository $repository;
+    private CategoryFinder $serviceFinder;
 
     public function __construct(CategoryRepository $repository, CategoryFinder $serviceFinder)
     {

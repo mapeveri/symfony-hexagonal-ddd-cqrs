@@ -9,7 +9,7 @@ use App\Magazine\Domain\Bus\Query\Response;
 
 final class CategoryFinderResponse implements Response
 {
-    private $category;
+    private Category $category;
 
     public function __construct(Category $category)
     {

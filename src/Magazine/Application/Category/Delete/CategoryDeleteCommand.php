@@ -8,7 +8,7 @@ use App\Magazine\Domain\Bus\Command\Command;
 
 final class CategoryDeleteCommand implements Command
 {
-    private $id;
+    private int $id;
 
     public function __construct(int $id)
     {

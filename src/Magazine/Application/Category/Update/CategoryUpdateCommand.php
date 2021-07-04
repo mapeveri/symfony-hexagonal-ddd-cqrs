@@ -8,11 +8,11 @@ use App\Magazine\Domain\Bus\Command\Command;
 
 final class CategoryUpdateCommand implements Command
 {
-    private $id;
-    private $name;
-    private $description;
-    private $hidden;
-    private $parent;
+    private int $id;
+    private string $name;
+    private string $description;
+    private ?int $hidden;
+    private bool $parent;
 
     public function __construct(int $id, string $name, string $description, ?int $parent, bool $hidden)
     {

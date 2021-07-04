@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Application\Category\GetAll;
+namespace App\Magazine\Application\Index\GetAll;
 
 use App\Magazine\Domain\Bus\Query\Response;
 
-final class CategoryGetAllResponse implements Response
+final class IndexGetAllResponse implements Response
 {
-    private array $data;
+    private $data;
 
     public function __construct(array $data)
     {

@@ -10,7 +10,7 @@ use App\Magazine\Application\Post\Create\PostCreateCommand;
 
 final class PostCreateCommandHandler implements CommandHandler
 {
-    private $service;
+    private PostCreate $service;
 
     public function __construct(PostCreate $service)
     {

@@ -10,7 +10,7 @@ use App\Magazine\Application\Category\Delete\CategoryDeleteCommand;
 
 final class CategoryDeleteCommandHandler implements CommandHandler
 {
-    private $service;
+    private CategoryDelete $service;
 
     public function __construct(CategoryDelete $service)
     {

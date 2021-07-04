@@ -10,8 +10,8 @@ use App\Magazine\Application\Category\Find\CategoryFinder;
 
 final class CategoryUpdate
 {
-    private $repository;
-    private $serviceFinder;
+    private CategoryRepository $repository;
+    private CategoryFinder $serviceFinder;
 
     public function __construct(CategoryRepository $repository, CategoryFinder $serviceFinder)
     {

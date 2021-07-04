@@ -10,7 +10,7 @@ use App\Magazine\Application\Category\Update\CategoryUpdateCommand;
 
 final class CategoryUpdateHandler implements CommandHandler
 {
-    private $service;
+    private CategoryUpdate $service;
 
     public function __construct(CategoryUpdate $service)
     {

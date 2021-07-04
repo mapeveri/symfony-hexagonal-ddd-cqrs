@@ -8,10 +8,10 @@ use App\Magazine\Domain\Bus\Command\Command;
 
 final class CategoryCreateCommand implements Command
 {
-    private $name;
-    private $description;
-    private $hidden;
-    private $parent;
+    private string $name;
+    private string $description;
+    private ?int $hidden;
+    private bool $parent;
 
     public function __construct(string $name, string $description, ?int $parent, bool $hidden)
     {
