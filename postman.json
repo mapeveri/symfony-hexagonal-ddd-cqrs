@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "a855c4e6-dcbd-46a7-9804-a07f62eba0e9",
+		"name": "api-symfony-hexagonal-crqs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "http://localhost:8000/api/categories/create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Backend\",\n\t\"description\": \"Backend category\",\n\t\"parent\": null,\n\t\"hidden\": 0\n}"
+						},
+						"url": {
+							"raw": "{{SERVER}}/api/categories/create",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "https://api-demo.globalcandace.com/upload-data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{TOKEN}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Post 3\",\n\t\"content\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\n\t\"hidden\": 0,\n\t\"user_id\": 1,\n\t\"category_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{SERVER}}/api/posts/create",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Index",
+			"item": [
+				{
+					"name": "http://localhost:8000/api/index",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{SERVER}}/api/index",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"api",
+								"index"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LOGIN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var data = pm.response.json();",
+							"pm.environment.set(\"TOKEN\", data.token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"mapeveri\",\n\t\"password\": \"123456\"\n}"
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/login_check",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"login_check"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
