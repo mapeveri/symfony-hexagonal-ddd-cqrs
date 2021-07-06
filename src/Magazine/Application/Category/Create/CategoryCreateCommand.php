@@ -10,8 +10,8 @@ final class CategoryCreateCommand implements Command
 {
     private string $name;
     private string $description;
-    private ?int $hidden;
-    private bool $parent;
+    private bool $hidden;
+    private ?int $parent;
 
     public function __construct(string $name, string $description, ?int $parent, bool $hidden)
     {
