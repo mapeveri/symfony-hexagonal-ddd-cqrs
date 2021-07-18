@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\User\Create;
 
-use App\Magazine\Domain\Bus\Command\CommandHandler;
+use App\Magazine\Shared\Domain\Bus\Command\CommandHandler;
 use App\Magazine\Application\User\Create\UserCreate;
 use App\Magazine\Application\User\Create\UserCreateCommand;
 
 final class UserCreateCommandHandler implements CommandHandler
 {
-    private $service;
+    private UserCreate $service;
 
     public function __construct(UserCreate $service)
     {

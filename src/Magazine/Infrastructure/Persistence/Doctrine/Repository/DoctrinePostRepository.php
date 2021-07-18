@@ -6,7 +6,7 @@ namespace App\Magazine\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Magazine\Domain\Entity\Post;
 use App\Magazine\Domain\Post\PostRepository;
-use App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
+use App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
 
 final class DoctrinePostRepository extends DoctrineRepository implements PostRepository
 {

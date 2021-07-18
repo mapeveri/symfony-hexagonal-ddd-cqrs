@@ -7,7 +7,7 @@ namespace App\Magazine\Domain\Entity;
 use DateTime;
 use App\Magazine\Domain\Entity\User;
 use App\Magazine\Domain\Entity\Category;
-use App\Magazine\Domain\Event\EventsDomain;
+use App\Magazine\Shared\Domain\Event\EventsDomain;
 use App\Magazine\Domain\Post\PostWasCreated;
 
 final class Post

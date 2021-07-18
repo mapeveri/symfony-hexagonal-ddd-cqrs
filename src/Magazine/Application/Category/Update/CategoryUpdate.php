@@ -19,7 +19,7 @@ final class CategoryUpdate
         $this->serviceFinder = $serviceFinder;
     }
 
-    public function __invoke(int $id, string $name, string $description, ?int $parent, bool $hidden): void
+    public function __invoke(int $id, string $name, string $description, ?int $parent, ?bool $hidden): void
     {
         $category = $this->serviceFinder->__invoke($id);
         $parentCategory = ($parent ? $this->serviceFinder->__invoke($parent) : null);

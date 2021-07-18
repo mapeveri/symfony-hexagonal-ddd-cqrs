@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\Index\GetAll;
 
-use App\Magazine\Domain\Bus\Query\Response;
-use App\Magazine\Domain\Bus\Query\QueryHandler;
+use App\Magazine\Shared\Domain\Bus\Query\Response;
+use App\Magazine\Shared\Domain\Bus\Query\QueryHandler;
 use App\Magazine\Application\Index\GetAll\IndexGetAll;
 use App\Magazine\Application\Index\GetAll\IndexGetAllQuery;
 use App\Magazine\Application\Index\GetAll\IndexGetAllResponse;

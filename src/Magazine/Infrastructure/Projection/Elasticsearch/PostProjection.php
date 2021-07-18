@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Magazine\Infrastructure\Projection\Elasticsearch;
 
 use App\Magazine\Domain\Entity\Post;
-use App\Magazine\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
+use App\Magazine\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
 
 final class PostProjection
 {

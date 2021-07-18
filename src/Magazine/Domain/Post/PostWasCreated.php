@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Domain\Post;
 
-use App\Magazine\Domain\Event\DomainEvent;
+use App\Magazine\Shared\Domain\Event\DomainEvent;
 use function uniqid;
 
 final class PostWasCreated extends DomainEvent

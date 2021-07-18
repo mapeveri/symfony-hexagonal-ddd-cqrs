@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Magazine\Infrastructure\Persistence\Elasticsearch\Repository;
 
 use App\Magazine\Domain\Index\IndexRepository;
-use App\Magazine\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
+use App\Magazine\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
 
 final class ElasticsearchIndexRepository implements IndexRepository
 {

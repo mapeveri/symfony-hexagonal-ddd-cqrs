@@ -10,7 +10,7 @@ use App\Magazine\Domain\Category\CategoryAlreadyExist;
 
 final class CategoryFinderName
 {
-    private $repository;
+    private CategoryRepository $repository;
 
     public function __construct(CategoryRepository $repository)
     {

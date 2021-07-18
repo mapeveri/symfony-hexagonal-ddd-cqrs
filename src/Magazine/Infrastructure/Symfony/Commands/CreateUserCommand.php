@@ -2,16 +2,16 @@
 
 namespace App\Magazine\Infrastructure\Symfony\Commands;
 
+use App\Magazine\Shared\Domain\Bus\Command\CommandBus;
+use App\Magazine\Application\User\Create\UserCreateCommand;
 use Symfony\Component\Console\Command\Command;
-use App\Magazine\Domain\Bus\Command\CommandBus;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Magazine\Application\User\Create\UserCreateCommand;
 
 final class CreateUserCommand extends Command
 {
-    private $commandBus;
+    private CommandBus $commandBus;
 
     public function __construct(CommandBus $commandBus)
     {

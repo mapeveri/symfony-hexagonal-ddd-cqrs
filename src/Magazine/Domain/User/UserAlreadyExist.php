@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Magazine\Domain\User;
 
-use App\Magazine\Domain\DomainError;
+use App\Magazine\Shared\Domain\DomainError;
 
 final class UserAlreadyExist extends DomainError
 {
-    private $username;
+    private string $username;
 
     public function __construct(string $username)
     {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\Category\Find;
 
-use App\Magazine\Domain\Bus\Query\Response;
-use App\Magazine\Domain\Bus\Query\QueryHandler;
+use App\Magazine\Shared\Domain\Bus\Query\Response;
+use App\Magazine\Shared\Domain\Bus\Query\QueryHandler;
 use App\Magazine\Application\Category\Find\CategoryFinder;
 use App\Magazine\Application\Category\Find\CategoryFinderQuery;
 use App\Magazine\Application\Category\Find\CategoryFinderResponse;

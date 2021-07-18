@@ -28,14 +28,14 @@ services:
     # please note that last definitions always *replace* previous ones
 
     _instanceof:
-        App\Magazine\Domain\Bus\Command\CommandHandler:
+        App\Magazine\Shared\Domain\Bus\Command\CommandHandler:
             tags:
                 - { name: messenger.message_handler, bus: command.bus }
-        App\Magazine\Domain\Bus\Query\QueryHandler:
+        App\Magazine\Shared\Domain\Bus\Query\QueryHandler:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
 
-    App\Magazine\Infrastructure\Bus\Event\RabbitMqConnection:
+    App\Magazine\Shared\Infrastructure\Bus\Event\RabbitMqConnection:
         arguments:
             - host: '%env(RABBITMQ_HOST)%'
               port: '%env(RABBITMQ_PORT)%'
@@ -46,29 +46,29 @@ services:
               write_timeout: 2
               connect_timeout: 5
 
-    App\Magazine\Infrastructure\Bus\Event\MessengerRabbitMqEventBus:
-        class : App\Magazine\Infrastructure\Bus\Event\MessengerRabbitMqEventBus
+    App\Magazine\Shared\Infrastructure\Bus\Event\MessengerRabbitMqEventBus:
+        class : App\Magazine\Shared\Infrastructure\Bus\Event\MessengerRabbitMqEventBus
         arguments:
-            - '@App\Magazine\Infrastructure\Bus\Event\RabbitMqConnection'
+            - '@App\Magazine\Shared\Infrastructure\Bus\Event\RabbitMqConnection'
             - '%env(RABBITMQ_EXCHANGE)%'
 
-    App\Magazine\Domain\Bus\Event\EventBus: '@App\Magazine\Infrastructure\Bus\Event\MessengerRabbitMqEventBus'
+    App\Magazine\Shared\Domain\Bus\Event\EventBus: '@App\Magazine\Shared\Infrastructure\Bus\Event\MessengerRabbitMqEventBus'
 
-    App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository:
-        class: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+    App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository:
+        class: App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
         arguments: [
             '@doctrine.orm.default_entity_manager'
         ]
         abstract:  true
 
     App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineCategoryRepository:
-        parent: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+        parent: App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
     
     App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository:
-        parent: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+        parent: App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
     
     App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrinePostRepository:
-        parent: App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+        parent: App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
 
     App\Magazine\Domain\Category\CategoryRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineCategoryRepository'
     App\Magazine\Domain\User\UserRepository: '@App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
@@ -84,8 +84,8 @@ services:
 
     App\Magazine\Domain\Email\Post\SendEmailAdmin: '@App\Magazine\Infrastructure\Notification\Post\NewPostEmailAdmin'
 
-    App\Magazine\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient:
-        factory: '@App\Magazine\Infrastructure\Persistence\Elasticsearch\ElasticsearchClientFactory'
+    App\Magazine\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient:
+        factory: '@App\Magazine\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClientFactory'
         arguments:
             - '%env(ELASTICSEARCH_HOST)%'
             - '%env(ELASTICSEARCH_INDEX_PREFIX)%'

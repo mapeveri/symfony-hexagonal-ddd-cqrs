@@ -6,7 +6,7 @@ namespace App\Magazine\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Magazine\Domain\Entity\User;
 use App\Magazine\Domain\User\UserRepository;
-use App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
+use App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
 
 final class DoctrineUserRepository extends DoctrineRepository implements UserRepository
 {

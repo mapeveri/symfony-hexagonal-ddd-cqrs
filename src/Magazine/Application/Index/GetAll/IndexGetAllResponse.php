@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\Index\GetAll;
 
-use App\Magazine\Domain\Bus\Query\Response;
+use App\Magazine\Shared\Domain\Bus\Query\Response;
 
 final class IndexGetAllResponse implements Response
 {
-    private $data;
+    private array $data;
 
     public function __construct(array $data)
     {

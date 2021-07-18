@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Magazine\Domain\Post;
 
-use App\Magazine\Domain\DomainError;
+use App\Magazine\Shared\Domain\DomainError;
 
 final class PostNotExist extends DomainError
 {
-    private $id;
+    private int $id;
 
     public function __construct(int $id)
     {

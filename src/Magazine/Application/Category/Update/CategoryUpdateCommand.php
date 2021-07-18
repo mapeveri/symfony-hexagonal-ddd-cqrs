@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\Category\Update;
 
-use App\Magazine\Domain\Bus\Command\Command;
+use App\Magazine\Shared\Domain\Bus\Command\Command;
 
 final class CategoryUpdateCommand implements Command
 {
     private int $id;
     private string $name;
     private string $description;
-    private ?int $hidden;
-    private bool $parent;
+    private ?bool $hidden;
+    private ?int $parent;
 
-    public function __construct(int $id, string $name, string $description, ?int $parent, bool $hidden)
+    public function __construct(int $id, string $name, string $description, ?int $parent, ?bool $hidden)
     {
         $this->id = $id;
         $this->name = $name;
@@ -38,7 +38,7 @@ final class CategoryUpdateCommand implements Command
         return $this->description;
     }
 
-    public function hidden(): bool
+    public function hidden(): ?bool
     {
         return $this->hidden;
     }

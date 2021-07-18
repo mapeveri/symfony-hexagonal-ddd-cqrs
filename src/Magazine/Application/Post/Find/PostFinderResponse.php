@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Magazine\Application\Post\Find;
 
 use App\Magazine\Domain\Entity\Post;
-use App\Magazine\Domain\Bus\Query\Response;
+use App\Magazine\Shared\Domain\Bus\Query\Response;
 
 final class PostFinderResponse implements Response
 {

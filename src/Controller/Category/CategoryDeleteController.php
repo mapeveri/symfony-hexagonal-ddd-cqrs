@@ -8,7 +8,7 @@ use App\Magazine\Application\Category\Delete\CategoryDeleteCommand;
 
 final class CategoryDeleteController extends ApiController
 {
-    public function __invoke(string $id): Response
+    public function __invoke(int $id): Response
     {
         $this->dispatch(new CategoryDeleteCommand($id));
 

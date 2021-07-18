@@ -9,7 +9,7 @@ use App\Magazine\Application\Category\Update\CategoryUpdateCommand;
 
 final class CategoryPutController extends ApiController
 {
-    public function __invoke(Request $request, $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $content = $request->getContent();
         

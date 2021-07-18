@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\Category\Create;
 
-use App\Magazine\Domain\Bus\Command\Command;
+use App\Magazine\Shared\Domain\Bus\Command\Command;
 
 final class CategoryCreateCommand implements Command
 {

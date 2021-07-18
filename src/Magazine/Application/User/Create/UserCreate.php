@@ -11,9 +11,9 @@ use App\Magazine\Application\User\Find\UserFinderExists;
 
 final class UserCreate
 {
-    private $repository;
-    private $serviceFinderExists;
-    private $generatePassword;
+    private UserRepository $repository;
+    private UserFinderExists $serviceFinderExists;
+    private GeneratePassword $generatePassword;
 
     public function __construct(
         UserRepository $repository,

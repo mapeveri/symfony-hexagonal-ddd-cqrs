@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Magazine\Domain\Category;
 
-use App\Magazine\Domain\DomainError;
+use App\Magazine\Shared\Domain\DomainError;
 
 final class CategoryAssociatedContent extends DomainError
 {
-    private $id;
+    private int $id;
 
     public function __construct(int $id)
     {

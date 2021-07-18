@@ -8,7 +8,7 @@ use App\Magazine\Domain\Index\IndexRepository;
 
 final class IndexGetAll
 {
-    private $repository;
+    private IndexRepository $repository;
 
     public function __construct(IndexRepository $repository)
     {

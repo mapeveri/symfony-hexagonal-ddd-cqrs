@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\User\Create;
 
-use App\Magazine\Domain\Bus\Command\Command;
+use App\Magazine\Shared\Domain\Bus\Command\Command;
 
 final class UserCreateCommand implements Command
 {
-    private $username;
-    private $email;
-    private $password;
-    private $isActive;
+    private string $username;
+    private string $email;
+    private string $password;
+    private bool $isActive;
 
     public function __construct(string $username, string $email, string $password, bool $isActive)
     {

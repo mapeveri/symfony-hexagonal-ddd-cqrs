@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Magazine\Domain\Category;
 
-use App\Magazine\Domain\DomainError;
+use App\Magazine\Shared\Domain\DomainError;
 
 final class CategoryAlreadyExist extends DomainError
 {
-    private $name;
+    private string $name;
 
     public function __construct(string $name)
     {

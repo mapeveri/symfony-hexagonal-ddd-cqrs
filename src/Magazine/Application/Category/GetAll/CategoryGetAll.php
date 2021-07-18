@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\Category\GetAll;
 
-use App\Magazine\Domain\Bus\Query\QueryHandler;
+use App\Magazine\Shared\Domain\Bus\Query\QueryHandler;
 use App\Magazine\Domain\Category\CategoryRepository;
 
 final class CategoryGetAll

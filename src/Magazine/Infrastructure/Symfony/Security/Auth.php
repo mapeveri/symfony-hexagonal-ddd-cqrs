@@ -8,8 +8,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class Auth implements UserInterface
 {
-    private $username;
-    private $password;
+    private string $username;
+    private string $password;
 
     public function __construct(string $username, string $password)
     {

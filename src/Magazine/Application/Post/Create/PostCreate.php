@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Magazine\Application\Post\Create;
 
 use App\Magazine\Domain\Entity\Post;
-use App\Magazine\Domain\Bus\Event\EventBus;
+use App\Magazine\Shared\Domain\Bus\Event\EventBus;
 use App\Magazine\Domain\Post\PostRepository;
 use App\Magazine\Domain\User\UserRepository;
 use App\Magazine\Domain\Category\CategoryRepository;

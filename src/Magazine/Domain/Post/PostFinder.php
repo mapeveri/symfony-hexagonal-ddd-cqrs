@@ -10,7 +10,7 @@ use App\Magazine\Domain\Post\PostRepository;
 
 final class PostFinder
 {
-    private $repository;
+    private PostRepository $repository;
 
     public function __construct(PostRepository $repository)
     {

@@ -9,7 +9,7 @@ use App\Magazine\Domain\User\UserAlreadyExist;
 
 final class UserFinderExists
 {
-    private $repository;
+    private UserRepository $repository;
 
     public function __construct(UserRepository $repository)
     {

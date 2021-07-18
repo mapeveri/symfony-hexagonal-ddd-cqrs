@@ -6,7 +6,7 @@ namespace App\Magazine\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Magazine\Domain\Entity\Category;
 use App\Magazine\Domain\Category\CategoryRepository;
-use App\Magazine\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
+use App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
 
 final class DoctrineCategoryRepository extends DoctrineRepository implements CategoryRepository
 {

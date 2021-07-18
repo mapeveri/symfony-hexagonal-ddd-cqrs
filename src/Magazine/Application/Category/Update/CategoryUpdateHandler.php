@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Application\Category\Update;
 
-use App\Magazine\Domain\Bus\Command\CommandHandler;
+use App\Magazine\Shared\Domain\Bus\Command\CommandHandler;
 use App\Magazine\Application\Category\Update\CategoryUpdate;
 use App\Magazine\Application\Category\Update\CategoryUpdateCommand;
 
