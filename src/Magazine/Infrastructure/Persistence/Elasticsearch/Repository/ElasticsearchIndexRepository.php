@@ -11,6 +11,8 @@ final class ElasticsearchIndexRepository implements IndexRepository
 {
     private ElasticsearchClient $client;
 
+    private string $index = 'index-data';
+
     public function __construct(ElasticsearchClient $client)
     {
         $this->client = $client;
@@ -20,11 +22,16 @@ final class ElasticsearchIndexRepository implements IndexRepository
     {
         $response = $this->client->client()->search([
             'index' => $this->client->indexPrefix(),
-            'type' => 'index-data',
+            'type' => $this->index,
         ]);
 
         return [
             'data' => $response
         ];
+    }
+
+    public function add(string $id, array $data): void
+    {
+        $this->client->persist($this->index, (int)$id, $data);
     }
 }

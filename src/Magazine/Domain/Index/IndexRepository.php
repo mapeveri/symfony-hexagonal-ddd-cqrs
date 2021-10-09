@@ -8,4 +8,5 @@ interface IndexRepository
 {
     public function getAll(): array;
 
+    public function add(string $id, array $data): void;
 }

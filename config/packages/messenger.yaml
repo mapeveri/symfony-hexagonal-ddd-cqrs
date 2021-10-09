@@ -20,12 +20,6 @@ framework:
                     exchange:
                         type: fanout
                         name: 'messages'
-            events:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    exchange:
-                        type: fanout
-                        name: '%env(RABBITMQ_EXCHANGE)%'
    
         routing:
             # Route your messages to the transports

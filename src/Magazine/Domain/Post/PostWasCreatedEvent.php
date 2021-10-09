@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Magazine\Domain\Post;
 
-use App\Magazine\Shared\Domain\Event\DomainEvent;
 use function uniqid;
+use App\Magazine\Shared\Domain\Bus\Event\Event;
+use App\Magazine\Shared\Domain\Event\DomainEvent;
 
-final class PostWasCreated extends DomainEvent
+final class PostWasCreatedEvent extends DomainEvent implements Event
 {
     private string $id;
     private string $title;

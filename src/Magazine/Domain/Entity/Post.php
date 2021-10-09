@@ -8,7 +8,7 @@ use DateTime;
 use App\Magazine\Domain\Entity\User;
 use App\Magazine\Domain\Entity\Category;
 use App\Magazine\Shared\Domain\Event\EventsDomain;
-use App\Magazine\Domain\Post\PostWasCreated;
+use App\Magazine\Domain\Post\PostWasCreatedEvent;
 
 final class Post
 {
@@ -74,7 +74,7 @@ final class Post
     {
         $post = new self($title, $content, $category, $user, $hidden);
 
-        $post->record(new PostWasCreated($title, $content, $category->id(), $user->id(), $hidden));
+        $post->record(new PostWasCreatedEvent($title, $content, $category->id(), $user->id(), $hidden));
 
         return $post;
     }

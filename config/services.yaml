@@ -28,6 +28,9 @@ services:
     # please note that last definitions always *replace* previous ones
 
     _instanceof:
+        App\Magazine\Shared\Domain\Bus\Event\EventHandler:
+            tags:
+                - { name: messenger.message_handler, bus: event.bus }
         App\Magazine\Shared\Domain\Bus\Command\CommandHandler:
             tags:
                 - { name: messenger.message_handler, bus: command.bus }
@@ -45,14 +48,6 @@ services:
               read_timeout: 2
               write_timeout: 2
               connect_timeout: 5
-
-    App\Magazine\Shared\Infrastructure\Bus\Event\MessengerRabbitMqEventBus:
-        class : App\Magazine\Shared\Infrastructure\Bus\Event\MessengerRabbitMqEventBus
-        arguments:
-            - '@App\Magazine\Shared\Infrastructure\Bus\Event\RabbitMqConnection'
-            - '%env(RABBITMQ_EXCHANGE)%'
-
-    App\Magazine\Shared\Domain\Bus\Event\EventBus: '@App\Magazine\Shared\Infrastructure\Bus\Event\MessengerRabbitMqEventBus'
 
     App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository:
         class: App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
@@ -92,17 +87,6 @@ services:
             - '%kernel.project_dir%/../etc/databases/magazine'
             - '%env(APP_ENV)%'
         public: true
-
-    # Listener
-    App\Magazine\Infrastructure\Symfony\EventListener\PostEvent:
-        autowire: true
-        tags:
-            -
-                name: 'doctrine.orm.entity_listener'
-                event: 'postPersist'
-                entity: 'App\Magazine\Domain\Entity\Post'
-                priority: 500
-                lazy: true
 
     # Commands
     app_create_user:
