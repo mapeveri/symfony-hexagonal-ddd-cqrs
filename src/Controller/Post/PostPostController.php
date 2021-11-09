@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Magazine\Infrastructure\Symfony\ApiController;
 use App\Magazine\Application\Post\Create\PostCreateCommand;
+use RuntimeException;
 
 final class PostPostController extends ApiController
 {
@@ -13,9 +14,11 @@ final class PostPostController extends ApiController
     {
         $content = $request->getContent();
         
-        if (!empty($content)) {
-            $params = json_decode($content, true);
+        if (empty($content)) {
+            throw new RuntimeException('The body is empty');
         }
+
+        $params = json_decode($content, true);
 
         $this->dispatch(new PostCreateCommand(
             $params['title'],

@@ -10,7 +10,7 @@ interface CategoryRepository
 {
     public function getAll(): array;
 
-    public function find(int $id): ?Category;
+    public function find(string $id): ?Category;
 
     public function findByName(string $name): ?Category;
 

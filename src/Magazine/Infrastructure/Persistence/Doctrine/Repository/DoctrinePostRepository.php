@@ -15,7 +15,7 @@ final class DoctrinePostRepository extends DoctrineRepository implements PostRep
         return $this->repository(Post::class)->findAll();
     }
 
-    public function find(int $id): ?Post
+    public function find(string $id): ?Post
     {
         return $this->repository(Post::class)->find($id);
     }

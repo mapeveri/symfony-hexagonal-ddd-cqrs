@@ -15,7 +15,7 @@ final class Post
     use EventsDomain;
 
     /**
-     * @var int
+     * @var string
      */
     private $id;
 
@@ -58,8 +58,9 @@ final class Post
      */
     private $comments;
 
-    public function __construct(string $title, string $content, Category $category, User $user, ?bool $hidden = false)
+    public function __construct(string $id, string $title, string $content, Category $category, User $user, ?bool $hidden = false)
     {
+        $this->id = $id;
         $this->title = $title;
         $this->content = $content;
         $this->category = $category;
@@ -70,16 +71,16 @@ final class Post
         $this->comments = [];
     }
 
-    public static function create(string $title, string $content, Category $category, User $user, ?bool $hidden = false): self
+    public static function create(string $id, string $title, string $content, Category $category, User $user, ?bool $hidden = false): self
     {
-        $post = new self($title, $content, $category, $user, $hidden);
+        $post = new self($id, $title, $content, $category, $user, $hidden);
 
-        $post->record(new PostWasCreatedEvent($title, $content, $category->id(), $user->id(), $hidden));
+        $post->record(new PostWasCreatedEvent($id, $title, $content, $category->id(), $user->id(), $hidden));
 
         return $post;
     }
 
-    public function id(): int
+    public function id(): string
     {
         return $this->id;
     }

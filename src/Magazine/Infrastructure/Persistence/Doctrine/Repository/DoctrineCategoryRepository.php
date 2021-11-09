@@ -15,7 +15,7 @@ final class DoctrineCategoryRepository extends DoctrineRepository implements Cat
         return $this->repository(Category::class)->findAll();
     }
 
-    public function find(int $id): ?Category
+    public function find(string $id): ?Category
     {
         return $this->repository(Category::class)->find($id);
     }

@@ -8,14 +8,14 @@ use App\Magazine\Shared\Domain\Bus\Command\Command;
 
 final class CategoryDeleteCommand implements Command
 {
-    private int $id;
+    private string $id;
 
-    public function __construct(int $id)
+    public function __construct(string $id)
     {
         $this->id = $id;
     }
 
-    public function id(): int
+    public function id(): string
     {
         return $this->id;
     }

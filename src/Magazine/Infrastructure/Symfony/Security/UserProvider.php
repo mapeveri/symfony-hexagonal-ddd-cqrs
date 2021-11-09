@@ -6,6 +6,7 @@ namespace App\Magazine\Infrastructure\Symfony\Security;
 
 use App\Magazine\Domain\User\UserRepository;
 use App\Magazine\Infrastructure\Symfony\Security\Auth;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 

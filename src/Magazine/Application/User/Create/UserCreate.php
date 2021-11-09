@@ -8,6 +8,7 @@ use App\Magazine\Domain\Entity\User;
 use App\Magazine\Domain\User\UserRepository;
 use App\Magazine\Domain\User\GeneratePassword;
 use App\Magazine\Application\User\Find\UserFinderExists;
+use App\Magazine\Shared\Domain\Uuid;
 
 final class UserCreate
 {
@@ -30,7 +31,13 @@ final class UserCreate
         // Throw exception if the user exists
         $this->serviceFinderExists->__invoke($username);
 
-        $user = User::create($username, $email, $password, $isActive);
+        $user = User::create(
+            Uuid::next(),
+            $username,
+            $email,
+            $password,
+            $isActive
+        );
 
         // Encoded password
         $encodedPassword = $this->generatePassword->generate($user, $password);

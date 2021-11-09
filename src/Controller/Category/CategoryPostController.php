@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Magazine\Infrastructure\Symfony\ApiController;
 use App\Magazine\Application\Category\Create\CategoryCreateCommand;
+use RuntimeException;
 
 final class CategoryPostController extends ApiController
 {
@@ -13,10 +14,11 @@ final class CategoryPostController extends ApiController
     {
         $content = $request->getContent();
         
-        if (!empty($content)) {
-            $params = json_decode($content, true);
+        if (empty($content)) {
+            throw new RuntimeException('The body is empty');
         }
 
+        $params = json_decode($content, true);
         $this->dispatch(new CategoryCreateCommand(
             $params['name'],
             $params['description'],

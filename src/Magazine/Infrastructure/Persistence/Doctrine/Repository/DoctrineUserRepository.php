@@ -10,7 +10,7 @@ use App\Magazine\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineR
 
 final class DoctrineUserRepository extends DoctrineRepository implements UserRepository
 {
-    public function find(int $id): ?User
+    public function find(string $id): ?User
     {
         return $this->repository(User::class)->find($id);
     }

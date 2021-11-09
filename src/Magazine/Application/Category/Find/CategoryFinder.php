@@ -10,14 +10,14 @@ use App\Magazine\Domain\Category\CategoryRepository;
 
 final class CategoryFinder
 {
-    private CategoryRepository $repository;
+    private DomainCategoryFinder $finder;
 
     public function __construct(CategoryRepository $repository)
     {
         $this->finder = new DomainCategoryFinder($repository);
     }
 
-    public function __invoke(int $id): Category
+    public function __invoke(string $id): Category
     {
         return $this->finder->__invoke($id);
     }

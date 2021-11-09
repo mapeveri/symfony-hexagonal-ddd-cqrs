@@ -8,6 +8,7 @@ use App\Magazine\Domain\Entity\Category;
 use App\Magazine\Domain\Category\CategoryFinderName;
 use App\Magazine\Domain\Category\CategoryRepository;
 use App\Magazine\Application\Category\Find\CategoryFinder;
+use App\Magazine\Shared\Domain\Uuid;
 
 final class CategoryCreate
 {
@@ -31,7 +32,14 @@ final class CategoryCreate
         $this->serviceFinderName->__invoke($name);
 
         $parentCategory = ($parent ? $this->serviceFinder->__invoke($parent) : null);
-        $category = Category::create($name, $description, $parentCategory, $hidden);
+        $category = Category::create(
+            Uuid::next(),
+            $name,
+            $description,
+            $parentCategory,
+            $hidden
+        );
+
         $this->repository->save($category);
     }
 }

@@ -8,13 +8,13 @@ use App\Magazine\Shared\Domain\Bus\Command\Command;
 
 final class PostCreateCommand implements Command
 {
-    private int $category;
-    private int $user;
+    private string $category;
+    private string $user;
     private string $title;
     private string $content;
     private bool $hidden;
 
-    public function __construct(string $title, string $content, int $category, int $user, bool $hidden)
+    public function __construct(string $title, string $content, string $category, string $user, bool $hidden)
     {
         $this->category = $category;
         $this->user = $user;
@@ -23,12 +23,12 @@ final class PostCreateCommand implements Command
         $this->hidden = $hidden;
     }
 
-    public function category(): int
+    public function category(): string
     {
         return $this->category;
     }
 
-    public function user(): int
+    public function user(): string
     {
         return $this->user;
     }

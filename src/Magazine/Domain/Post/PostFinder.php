@@ -17,7 +17,7 @@ final class PostFinder
         $this->repository = $repository;
     }
 
-    public function __invoke(int $id): ?Post
+    public function __invoke(string $id): ?Post
     {
         $post = $this->repository->find($id);
 

@@ -8,7 +8,7 @@ use App\Magazine\Application\Category\Find\CategoryFinderQuery;
 
 final class CategoryFindController extends ApiController
 {
-    public function __invoke(int $id): JsonResponse
+    public function __invoke(string $id): JsonResponse
     {
         $response = $this->handle(new CategoryFinderQuery($id));
 
