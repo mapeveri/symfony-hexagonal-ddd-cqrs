@@ -10,14 +10,14 @@ use App\Magazine\Domain\Post\PostRepository;
 
 final class PostFinder
 {
-    private PostRepository $repository;
+    private DomainPostFinder $finder;
 
     public function __construct(PostRepository $repository)
     {
         $this->finder = new DomainPostFinder($repository);
     }
 
-    public function __invoke(int $id): Post
+    public function __invoke(string $id): Post
     {
         return $this->finder->__invoke($id);
     }

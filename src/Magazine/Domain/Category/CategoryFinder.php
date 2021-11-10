@@ -17,7 +17,7 @@ final class CategoryFinder
         $this->repository = $repository;
     }
 
-    public function __invoke(int $id): ?Category
+    public function __invoke(string $id): ?Category
     {
         $category = $this->repository->find($id);
 

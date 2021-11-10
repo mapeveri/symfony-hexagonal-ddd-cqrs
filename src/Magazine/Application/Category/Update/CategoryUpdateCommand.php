@@ -8,13 +8,13 @@ use App\Magazine\Shared\Domain\Bus\Command\Command;
 
 final class CategoryUpdateCommand implements Command
 {
-    private int $id;
+    private string $id;
     private string $name;
     private string $description;
     private ?bool $hidden;
     private ?int $parent;
 
-    public function __construct(int $id, string $name, string $description, ?int $parent, ?bool $hidden)
+    public function __construct(string $id, string $name, string $description, ?int $parent, ?bool $hidden)
     {
         $this->id = $id;
         $this->name = $name;
@@ -23,7 +23,7 @@ final class CategoryUpdateCommand implements Command
         $this->parent = $parent;
     }
 
-    public function id(): int
+    public function id(): string
     {
         return $this->id;
     }

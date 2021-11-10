@@ -11,7 +11,7 @@ use App\Magazine\Domain\Entity\User;
 final class Comment
 {
     /**
-     * @var int
+     * @var string
      */
     private $id;
 
@@ -44,8 +44,9 @@ final class Comment
      */
     private $updated;
 
-    public function __construct(string $content, User $user, Post $post, ?bool $hidden = false)
+    public function __construct(string $id, string $content, User $user, Post $post, ?bool $hidden = false)
     {
+        $this->id = $id;
         $this->content = $content;
         $this->user = $user;
         $this->post = $post;
@@ -54,14 +55,12 @@ final class Comment
         $this->updated = new DateTime();
     }
 
-    public static function create(string $content, User $user, Post $post, ?bool $hidden = false): self
+    public static function create(string $id, string $content, User $user, Post $post, ?bool $hidden = false): self
     {
-        $comment = new self($content, $user, $post, $hidden);
-
-        return $comment;
+        return new self($id, $content, $user, $post, $hidden);
     }
 
-    public function id(): int
+    public function id(): string
     {
         return $this->id;
     }

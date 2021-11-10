@@ -7,7 +7,7 @@ namespace App\Magazine\Domain\Entity;
 final class Category
 {
     /**
-     * @var int
+     * @var string
      */
     private $id;
 
@@ -46,8 +46,9 @@ final class Category
      */
     private $categories;
 
-    public function __construct(string $name, string $description, ?self $parent, bool $hidden)
+    public function __construct(string $id, string $name, string $description, ?self $parent, bool $hidden)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->parent = $parent;
@@ -57,14 +58,12 @@ final class Category
         $this->categories = [];
     }
 
-    public static function create(string $name, string $description, ?self $parent, bool $hidden): self
+    public static function create(string $id, string $name, string $description, ?self $parent, bool $hidden): self
     {
-        $category = new self($name, $description, $parent, $hidden);
-
-        return $category;
+        return new self($id, $name, $description, $parent, $hidden);
     }
 
-    public function id(): int
+    public function id(): string
     {
         return $this->id;
     }

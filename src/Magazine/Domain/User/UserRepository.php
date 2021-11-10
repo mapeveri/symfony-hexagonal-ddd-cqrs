@@ -8,7 +8,7 @@ use App\Magazine\Domain\Entity\User;
 
 interface UserRepository
 {
-    public function find(int $id): ?User;
+    public function find(string $id): ?User;
 
     public function findByUsername(string $username): ?User;
 

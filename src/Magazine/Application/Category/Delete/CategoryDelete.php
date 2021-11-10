@@ -20,7 +20,7 @@ final class CategoryDelete
         $this->serviceFinder = $serviceFinder;
     }
 
-    public function __invoke($id): void
+    public function __invoke(string $id): void
     {
         try {
             $category = $this->serviceFinder->__invoke($id);

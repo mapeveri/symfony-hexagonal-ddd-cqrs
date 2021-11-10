@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Magazine\Domain\Post;
 
-use function uniqid;
 use App\Magazine\Shared\Domain\Bus\Event\Event;
 use App\Magazine\Shared\Domain\Event\DomainEvent;
 
@@ -13,20 +12,21 @@ final class PostWasCreatedEvent extends DomainEvent implements Event
     private string $id;
     private string $title;
     private string $content;
-    private int $categoryId;
-    private int $userId;
+    private string $categoryId;
+    private string $userId;
     private bool $hidden;
 
     public function __construct(
+        string $id,
         string $title,
         string $content,
-        int $categoryId,
-        int $userId,
+        string $categoryId,
+        string $userId,
         bool $hidden,
         string $eventId = null,
         string $occurredOn = null
     ) {
-        $this->id = uniqid();
+        $this->id = $id;
         $this->title = $title;
         $this->content = $content;
         $this->categoryId = $categoryId;
@@ -84,12 +84,12 @@ final class PostWasCreatedEvent extends DomainEvent implements Event
         return $this->content;
     }
 
-    public function categoryId(): int
+    public function categoryId(): string
     {
         return $this->categoryId;
     }
 
-    public function userId(): int
+    public function userId(): string
     {
         return $this->userId;
     }

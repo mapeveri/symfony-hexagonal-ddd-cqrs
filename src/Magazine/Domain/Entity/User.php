@@ -9,7 +9,7 @@ use DateTime;
 final class User
 {
     /**
-     * @var int
+     * @var string
      */
     private $id;
 
@@ -53,8 +53,9 @@ final class User
      */
     private $comments;
 
-    public function __construct(string $username, string $email, string $password, bool $isActive)
+    public function __construct(string $id, string $username, string $email, string $password, bool $isActive)
     {
+        $this->id = $id;
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
@@ -65,14 +66,12 @@ final class User
         $this->comments = [];
     }
 
-    public static function create(string $username, string $email, string $password, ?bool $isActive): self
+    public static function create(string $id, string $username, string $email, string $password, ?bool $isActive): self
     {
-        $user = new self($username, $email, $password, $isActive);
-
-        return $user;
+        return new self($id, $username, $email, $password, $isActive);
     }
 
-    public function id(): int
+    public function id(): string
     {
         return $this->id;
     }

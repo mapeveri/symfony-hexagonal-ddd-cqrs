@@ -10,7 +10,7 @@ interface PostRepository
 {
     public function getAll(): array;
 
-    public function find(int $id): ?Post;
+    public function find(string $id): ?Post;
 
     public function save(Post $post): void;
 

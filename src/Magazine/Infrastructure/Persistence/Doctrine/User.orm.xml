@@ -4,9 +4,8 @@
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
                 
     <entity name="App\Magazine\Domain\Entity\User" table="users">
-        <id name="id" type="integer" column="id">
-            <generator strategy="AUTO"/>
-        </id>
+        <id name="id" type="string" column="id" />
+
         <field name="username" type="string" unique="true"/>
         <field name="email" type="string" unique="true"/>
         <field name="password" length="72"/>

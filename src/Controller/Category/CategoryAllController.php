@@ -3,7 +3,6 @@
 namespace App\Controller\Category;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Magazine\Infrastructure\Symfony\ApiController;
 use App\Magazine\Application\Category\GetAll\CategoryGetAllQuery;
 

@@ -10,7 +10,7 @@ use App\Magazine\Domain\User\UserRepository;
 
 final class UserFinderExists
 {
-    private $finder;
+    private DomainUserFinderExists $finder;
 
     public function __construct(UserRepository $repository)
     {

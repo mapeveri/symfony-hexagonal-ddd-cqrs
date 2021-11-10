@@ -8,7 +8,7 @@ use App\Magazine\Application\Post\Find\PostFinderQuery;
 
 final class PostFindController extends ApiController
 {
-    public function __invoke(int $id): JsonResponse
+    public function __invoke(string $id): JsonResponse
     {
         $response = $this->handle(new PostFinderQuery($id));
 
