@@ -4,7 +4,7 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         app_user_provider:
-            id: App\Magazine\Infrastructure\Symfony\Security\UserProvider
+            id: App\Magazine\User\Infrastructure\Symfony\Security\UserProvider
 
     firewalls:
         dev:
@@ -44,5 +44,5 @@ security:
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
     password_hashers:
-        App\Magazine\Infrastructure\Symfony\Security\Auth:
+        App\Magazine\User\Infrastructure\Symfony\Security\Auth:
             algorithm: auto

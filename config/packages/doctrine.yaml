@@ -10,9 +10,27 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            User:
                 is_bundle: false
                 type: xml
-                dir: '%kernel.project_dir%/src/Magazine/Infrastructure/Persistence/Doctrine'
-                prefix: 'App\Magazine\Domain\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Magazine/User/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Magazine\User\Domain'
+                alias: Category
+            Category:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Magazine/Category/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Magazine\Category\Domain'
+                alias: Category
+            Post:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Magazine/Post/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Magazine\Post\Domain'
+                alias: Post
+            Comment:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Magazine/Comment/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'App\Magazine\Comment\Domain'
+                alias: Comment

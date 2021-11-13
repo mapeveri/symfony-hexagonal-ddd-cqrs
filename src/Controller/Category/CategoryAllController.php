@@ -2,9 +2,9 @@
 
 namespace App\Controller\Category;
 
+use App\Magazine\Category\Application\Query\GetAll\CategoryGetAllQuery;
+use App\Shared\Infrastructure\Ports\ApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Magazine\Infrastructure\Symfony\ApiController;
-use App\Magazine\Application\Category\GetAll\CategoryGetAllQuery;
 
 final class CategoryAllController extends ApiController
 {

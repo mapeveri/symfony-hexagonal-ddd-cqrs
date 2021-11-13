@@ -2,10 +2,10 @@
 
 namespace App\Controller\Post;
 
+use App\Magazine\Post\Application\Command\Create\PostCreateCommand;
+use App\Shared\Infrastructure\Ports\ApiController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Magazine\Infrastructure\Symfony\ApiController;
-use App\Magazine\Application\Post\Create\PostCreateCommand;
 use RuntimeException;
 
 final class PostPostController extends ApiController

@@ -2,9 +2,9 @@
 
 namespace App\Controller\Category;
 
+use App\Magazine\Category\Application\Query\Find\CategoryFinderQuery;
+use App\Shared\Infrastructure\Ports\ApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Magazine\Infrastructure\Symfony\ApiController;
-use App\Magazine\Application\Category\Find\CategoryFinderQuery;
 
 final class CategoryFindController extends ApiController
 {

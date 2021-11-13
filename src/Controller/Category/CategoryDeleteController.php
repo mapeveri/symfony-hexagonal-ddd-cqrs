@@ -2,9 +2,9 @@
 
 namespace App\Controller\Category;
 
+use App\Magazine\Category\Application\Command\Delete\CategoryDeleteCommand;
+use App\Shared\Infrastructure\Ports\ApiController;
 use Symfony\Component\HttpFoundation\Response;
-use App\Magazine\Infrastructure\Symfony\ApiController;
-use App\Magazine\Application\Category\Delete\CategoryDeleteCommand;
 
 final class CategoryDeleteController extends ApiController
 {

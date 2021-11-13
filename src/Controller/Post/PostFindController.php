@@ -2,9 +2,9 @@
 
 namespace App\Controller\Post;
 
+use App\Magazine\Post\Application\Query\Find\PostFinderQuery;
+use App\Shared\Infrastructure\Ports\ApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Magazine\Infrastructure\Symfony\ApiController;
-use App\Magazine\Application\Post\Find\PostFinderQuery;
 
 final class PostFindController extends ApiController
 {

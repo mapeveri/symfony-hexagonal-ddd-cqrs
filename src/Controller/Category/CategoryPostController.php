@@ -2,10 +2,10 @@
 
 namespace App\Controller\Category;
 
+use App\Magazine\Category\Application\Command\Create\CategoryCreateCommand;
+use App\Shared\Infrastructure\Ports\ApiController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Magazine\Infrastructure\Symfony\ApiController;
-use App\Magazine\Application\Category\Create\CategoryCreateCommand;
 use RuntimeException;
 
 final class CategoryPostController extends ApiController
