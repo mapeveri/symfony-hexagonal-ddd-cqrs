@@ -65,28 +65,11 @@ services:
             - '%env(APP_ENV)%'
         public: true
 
-    App\Magazine\Category\Infrastructure\Persistence\Doctrine\Repository\DoctrineCategoryRepository:
-        parent: App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
-
-    App\Magazine\User\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository:
-        parent: App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
-
-    App\Magazine\Post\Infrastructure\Persistence\Doctrine\Repository\DoctrinePostRepository:
-        parent: App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
-
-    App\Magazine\Category\Domain\CategoryRepository: '@App\Magazine\Category\Infrastructure\Persistence\Doctrine\Repository\DoctrineCategoryRepository'
-    App\Magazine\User\Domain\UserRepository: '@App\Magazine\User\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository'
-    App\Magazine\ser\Domain\GeneratePassword: '@App\Magazine\User\Infrastructure\Symfony\Security\EncodedPassword'
-    App\Magazine\Post\Domain\PostRepository: '@App\Magazine\Post\Infrastructure\Persistence\Doctrine\Repository\DoctrinePostRepository'
-    App\Magazine\Portal\Domain\PortalRepository: '@App\Magazine\Portal\Infrastructure\Persistence\Elasticsearch\Repository\ElasticsearchPortalRepository'
-
     App\Magazine\Post\Infrastructure\Notification\Post\NewPostEmailAdmin:
         class: App\Magazine\Post\Infrastructure\Notification\Post\NewPostEmailAdmin
         arguments:
             - '%env(EMAIL_ADMIN)%'
             - '%env(EMAIL_FROM)%'
-
-    App\Magazine\Post\Domain\SendEmailAdmin: '@App\Magazine\Post\Infrastructure\Notification\Post\NewPostEmailAdmin'
 
     # Commands
     app_create_user:
