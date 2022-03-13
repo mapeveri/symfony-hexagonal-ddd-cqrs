@@ -44,7 +44,12 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "composer/package-versions-deprecated": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -66,7 +71,7 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
-        "tests": "phpunit --color=always",
+        "tests": "vendor/bin/phpunit tests",
         "check": ["@tests"],
         "post-install-cmd": [
             "@auto-scripts"
