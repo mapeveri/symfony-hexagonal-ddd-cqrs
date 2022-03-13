@@ -21,7 +21,7 @@ final class IndexGetAllQueryHandler implements QueryHandler
         $data = [];
         $records = $this->service->__invoke();
 
-        if (isset($records)) {
+        if (count($records) > 0) {
             $dataIndex = $records['data']['hits']['hits'];
 
             foreach ($dataIndex as $index) {

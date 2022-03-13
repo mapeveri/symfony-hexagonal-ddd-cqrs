@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Domain;
 
-final class CategoryFinderName
+class CategoryFinderName
 {
     private CategoryRepository $repository;
 

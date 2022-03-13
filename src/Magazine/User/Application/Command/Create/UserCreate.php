@@ -8,22 +8,16 @@ use App\Magazine\User\Application\Query\Find\UserFinderExists;
 use App\Magazine\User\Domain\GeneratePassword;
 use App\Magazine\User\Domain\User;
 use App\Magazine\User\Domain\UserRepository;
-use App\Shared\Domain\Uuid;
+use App\Shared\Domain\UuidGenerator;
 
 final class UserCreate
 {
-    private UserRepository $repository;
-    private UserFinderExists $serviceFinderExists;
-    private GeneratePassword $generatePassword;
-
     public function __construct(
-        UserRepository $repository,
-        UserFinderExists $serviceFinderExists,
-        GeneratePassword $generatePassword
+        private UserRepository $repository,
+        private UserFinderExists $serviceFinderExists,
+        private GeneratePassword $generatePassword,
+        private UuidGenerator $uuidGenerator
     ) {
-        $this->repository = $repository;
-        $this->serviceFinderExists = $serviceFinderExists;
-        $this->generatePassword = $generatePassword;
     }
 
     public function __invoke(string $username, string $email, string $password, bool $isActive): void
@@ -32,7 +26,7 @@ final class UserCreate
         $this->serviceFinderExists->__invoke($username);
 
         $user = User::create(
-            Uuid::next(),
+            $this->uuidGenerator->generate(),
             $username,
             $email,
             $password,

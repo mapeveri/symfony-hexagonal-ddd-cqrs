@@ -8,22 +8,16 @@ use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\Category;
 use App\Magazine\Category\Domain\CategoryFinderName;
 use App\Magazine\Category\Domain\CategoryRepository;
-use App\Shared\Domain\Uuid;
+use App\Shared\Domain\UuidGenerator;
 
-final class CategoryCreate
+class CategoryCreate
 {
-    private CategoryRepository $repository;
-    private CategoryFinder $serviceFinder;
-    private CategoryFinderName $serviceFinderName;
-
     public function __construct(
-        CategoryRepository $repository,
-        CategoryFinder $serviceFinder,
-        CategoryFinderName $serviceFinderName
+        private CategoryRepository $repository,
+        private CategoryFinder $serviceFinder,
+        private CategoryFinderName $serviceFinderName,
+        private UuidGenerator $uuidGenerator,
     ) {
-        $this->repository = $repository;
-        $this->serviceFinder = $serviceFinder;
-        $this->serviceFinderName = $serviceFinderName;
     }
 
     public function __invoke(string $name, string $description, ?string $parent, bool $hidden): void
@@ -33,7 +27,7 @@ final class CategoryCreate
 
         $parentCategory = ($parent ? $this->serviceFinder->__invoke($parent) : null);
         $category = Category::create(
-            Uuid::next(),
+            $this->uuidGenerator->generate(),
             $name,
             $description,
             $parentCategory,
