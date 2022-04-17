@@ -13,6 +13,8 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
+/config/supervisor/build/*
+
 /dbdata/
 /.vscode/
 ###> phpunit/phpunit ###
