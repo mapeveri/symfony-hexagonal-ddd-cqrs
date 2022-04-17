@@ -8,6 +8,7 @@ use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\Category;
 use App\Magazine\Category\Domain\CategoryFinderName;
 use App\Magazine\Category\Domain\CategoryRepository;
+use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\UuidGenerator;
 
 class CategoryCreate
@@ -17,6 +18,7 @@ class CategoryCreate
         private CategoryFinder $serviceFinder,
         private CategoryFinderName $serviceFinderName,
         private UuidGenerator $uuidGenerator,
+        private EventBus $syncBus,
     ) {
     }
 
@@ -35,5 +37,7 @@ class CategoryCreate
         );
 
         $this->repository->save($category);
+
+        $this->syncBus->publish(...$category->pullDomainEvents());
     }
 }

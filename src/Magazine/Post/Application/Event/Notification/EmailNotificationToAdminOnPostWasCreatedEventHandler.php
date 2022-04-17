@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Post\Application\Event\Create;
+namespace App\Magazine\Post\Application\Event\Notification;
 
-use App\Magazine\Portal\Application\Command\Create\CreatePortalPostCommand;
+use App\Magazine\Post\Application\Command\NewPostEmailAdmin\NewPostEmailAdminCommand;
 use App\Magazine\Post\Domain\PostWasCreatedEvent;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
 
-final class PostProjectionOnPostWasCreatedEventHandler implements DomainEventSubscriber
+final class EmailNotificationToAdminOnPostWasCreatedEventHandler implements DomainEventSubscriber
 {
     public function __construct(private CommandBus $commandBus)
     {
@@ -18,9 +18,10 @@ final class PostProjectionOnPostWasCreatedEventHandler implements DomainEventSub
     public function __invoke(PostWasCreatedEvent $event): void
     {
         $this->commandBus->dispatch(
-            new CreatePortalPostCommand(
+            new NewPostEmailAdminCommand(
                 $event->aggregateId(),
-                ['id' => $event->aggregateId(), 'title' => $event->title(), 'content' => $event->content()]
+                $event->title(),
+                $event->content()
             )
         );
     }

@@ -2,26 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain\Event;
+namespace App\Shared\Domain\Bus\Event;
 
+use App\Shared\Domain\Utils;
+use App\Shared\Domain\ValueObject\Uuid;
 use DateTimeImmutable;
-use function uniqid;
 
 abstract class DomainEvent
 {
-    private string $id;
     private string $eventId;
     private string $occurredOn;
 
-    public function __construct(string $id, string $eventId = null, string $occurredOn = null)
+    public function __construct(private string $aggregateId, string $eventId = null, string $occurredOn = null)
     {
-        $this->id = $id;
-        $this->eventId = $eventId ?: uniqid();
-        $this->occurredOn = $occurredOn ?: date("Y-m-d H:i:s");
+        $this->eventId    = $eventId ?: Uuid::random()->value();
+        $this->occurredOn = $occurredOn ?: Utils::dateToString(new DateTimeImmutable());
     }
 
     abstract public static function fromPrimitives(
-        string $id,
+        string $aggregateId,
         array $body,
         string $eventId,
         string $occurredOn
@@ -29,13 +28,11 @@ abstract class DomainEvent
 
     abstract public static function eventName(): string;
 
-    abstract public static function eventClass(): string;
-
     abstract public function toPrimitives(): array;
 
-    public function id(): string
+    public function aggregateId(): string
     {
-        return $this->id;
+        return $this->aggregateId;
     }
 
     public function eventId(): string

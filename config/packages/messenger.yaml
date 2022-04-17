@@ -23,4 +23,3 @@ framework:
    
         routing:
             # Route your messages to the transports
-            'App\Magazine\Post\Application\Command\NewPostEmailAdmin\NewPostEmailAdminCommand': async

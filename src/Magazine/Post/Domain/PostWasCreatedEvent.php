@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Magazine\Post\Domain;
 
-use App\Shared\Domain\Bus\Event\Event;
-use App\Shared\Domain\Event\DomainEvent;
+use App\Shared\Domain\Bus\Event\DomainEvent;
 
-final class PostWasCreatedEvent extends DomainEvent implements Event
+final class PostWasCreatedEvent extends DomainEvent
 {
     private string $id;
     private string $title;

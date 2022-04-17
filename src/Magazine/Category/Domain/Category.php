@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Domain;
 
-final class Category
+use App\Magazine\Category\Domain\Event\CategoryWasCreatedEvent;
+use App\Shared\Domain\Bus\Event\EventsDomain;
+
+class Category
 {
+    use EventsDomain;
+
     /**
      * @var string
      */
@@ -60,7 +65,11 @@ final class Category
 
     public static function create(string $id, string $name, string $description, ?self $parent, bool $hidden): self
     {
-        return new self($id, $name, $description, $parent, $hidden);
+        $category = new self($id, $name, $description, $parent, $hidden);
+
+        $category->record(new CategoryWasCreatedEvent($category->id(), $category->name()));
+
+        return $category;
     }
 
     public function id(): string

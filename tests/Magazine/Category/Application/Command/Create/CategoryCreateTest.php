@@ -7,6 +7,7 @@ namespace App\Tests\Magazine\Category\Application\Command\Create;
 use App\Magazine\Category\Application\Command\Create\CategoryCreate;
 use App\Tests\Magazine\Category\CategoryUnitTestCase;
 use App\Tests\Magazine\Category\Domain\CategoryMother;
+use App\Tests\Magazine\Category\Domain\Event\CategoryWasCreatedEventMother;
 use App\Tests\Magazine\Shared\Utils\Faker\Faker;
 use function Lambdish\Phunctional\apply;
 
@@ -20,7 +21,8 @@ final class CategoryCreateTest extends CategoryUnitTestCase
             $this->repository(),
             $this->finder(),
             $this->finderName(),
-            $this->uuidGenerator()
+            $this->uuidGenerator(),
+            $this->eventBus(),
         );
 
         parent::setUp();
@@ -43,6 +45,7 @@ final class CategoryCreateTest extends CategoryUnitTestCase
         $this->shouldFind($parentCategory);
         $this->shouldGenerateUuid($category->id());
         $this->shouldSave($category);
+        $this->shouldPublishDomainEvent(CategoryWasCreatedEventMother::create(['id' => $category->id(), 'name' => $category->name()]));
 
         apply($this->SUT, [
             $category->name(),

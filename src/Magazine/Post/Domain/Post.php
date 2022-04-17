@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Magazine\Post\Domain;
 
-use App\Magazine\User\Domain\User;
 use App\Magazine\Category\Domain\Category;
-use App\Shared\Domain\Event\EventsDomain;
+use App\Magazine\User\Domain\User;
+use App\Shared\Domain\Bus\Event\EventsDomain;
 use DateTime;
 
-final class Post
+class Post
 {
     use EventsDomain;
 
