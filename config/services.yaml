@@ -31,6 +31,10 @@ services:
         App\Shared\Domain\Bus\Event\EventHandler:
             tags:
                 - { name: messenger.message_handler, bus: event.bus }
+
+        App\Shared\Domain\Bus\Event\DomainEventSubscriber:
+            tags: [ 'app.domain_event_subscriber' ]
+
         App\Shared\Domain\Bus\Command\CommandHandler:
             tags:
                 - { name: messenger.message_handler, bus: command.bus }
@@ -38,7 +42,19 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
 
-    App\Shared\Infrastructure\Bus\Event\RabbitMqConnection:
+    # Tagging
+    App\Shared\Infrastructure\Bus\Event\DomainEventMapping:
+        arguments: [ !tagged app.domain_event_subscriber ]
+
+    App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository:
+        class: App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
+        arguments: [
+            '@doctrine.orm.default_entity_manager'
+        ]
+        abstract:  true
+
+    # RabbitMQ
+    App\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConnection:
         arguments:
             - host: '%env(RABBITMQ_HOST)%'
               port: '%env(RABBITMQ_PORT)%'
@@ -49,19 +65,25 @@ services:
               write_timeout: 2
               connect_timeout: 5
 
-    App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository:
-        class: App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository
-        arguments: [
-            '@doctrine.orm.default_entity_manager'
-        ]
-        abstract:  true
+    App\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
+        arguments: [ !tagged app.domain_event_subscriber ]
+
+    App\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqEventBus:
+        arguments: ['@App\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConnection', '%env(RABBITMQ_EXCHANGE)%']
+
+    App\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqDomainEventsConsumer:
+        arguments:
+            - '@App\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConnection'
+            - '@App\Shared\Infrastructure\Bus\Event\DomainEventJsonDeserializer'
+            - '%env(RABBITMQ_EXCHANGE)%'
+            - '%env(RABBITMQ_MAX_RETRIES)%'
 
     App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient:
         factory: '@App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClientFactory'
         arguments:
             - '%env(ELASTICSEARCH_HOST)%'
             - '%env(ELASTICSEARCH_INDEX_PREFIX)%'
-            - '%kernel.project_dir%/../etc/databases/magazine'
+            - '%kernel.project_dir%/etc/databases/magazine'
             - '%env(APP_ENV)%'
         public: true
 
@@ -76,3 +98,13 @@ services:
         class: App\Magazine\User\Infrastructure\Symfony\Console\CreateUserCommand
         tags:
             -  { name: console.command }
+
+    App\Shared\Infrastructure\Console\Command\ConfigureRabbitMqCommand:
+        arguments:
+            - '@App\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqConfigurer'
+            - '%env(RABBITMQ_EXCHANGE)%'
+            - !tagged app.domain_event_subscriber
+
+    # IMPLEMENTATIONS SELECTOR
+    App\Shared\Domain\Bus\Event\EventBus $asyncBus: '@App\Shared\Infrastructure\Bus\Event\RabbitMq\RabbitMqEventBus'
+    App\Shared\Domain\Bus\Event\EventBus $syncBus: '@App\Shared\Infrastructure\Bus\Event\MessengerEventBus'

@@ -6,7 +6,7 @@ namespace App\Magazine\User\Domain;
 
 use DateTime;
 
-final class User
+class User
 {
     /**
      * @var string

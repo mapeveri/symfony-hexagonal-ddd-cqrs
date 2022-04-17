@@ -17,7 +17,7 @@ final class PostCreate
         private PostRepository $repository,
         private CategoryRepository $categoryRepository,
         private UserRepository $userRepository,
-        private EventBus $bus,
+        private EventBus $asyncBus,
         private UuidGenerator $uuidGenerator,
     ) {
     }
@@ -37,6 +37,6 @@ final class PostCreate
         );
         $this->repository->save($post);
 
-        $this->bus->publish(...$post->pullDomainEvents());
+        $this->asyncBus->publish(...$post->pullDomainEvents());
     }
 }

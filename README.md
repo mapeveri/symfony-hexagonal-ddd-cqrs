@@ -34,25 +34,34 @@ Installation
 5. Execute this command:
 
 
-        php bin/console lexik:jwt:generate-keypair
+        bin/console lexik:jwt:generate-keypair
 
 
 6. Run migrations:
 
 
-        php bin/console doctrine:migrations:migrate
+        bin/console doctrine:migrations:migrate
 
 
 7. Create a new user:
 
 
-        php bin/console app:create-user user user@email.com 123456 true
+         bin/console app:create-user user user@email.com 123456 true
 
 
-8. Run consumer for rabbitmq:
+8. In the browser execute http://localhost:8000
 
 
-        php bin/console messenger:consume -vv
+Rabbit configuration and consumers
 
+1. Configure exchange and queues in rabbitmq:
+    
+        bin/console app:domain-events:rabbitmq:configure
 
-9. In the browser execute http://localhost:8000
+2. Consume events of a queue, example:
+
+        bin/console app:domain-events:rabbitmq:consume app.magazine.post.post_projection_on_post_was_created_event_handler 200
+
+3. For production, generate supervisor consumer files configurations:
+
+         bin/console app:domain-events:rabbitmq:generate-supervisor-files

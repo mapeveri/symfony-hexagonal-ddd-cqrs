@@ -8,7 +8,7 @@ use App\Magazine\Post\Domain\Post;
 use App\Magazine\User\Domain\User;
 use DateTime;
 
-final class Comment
+class Comment
 {
     /**
      * @var string

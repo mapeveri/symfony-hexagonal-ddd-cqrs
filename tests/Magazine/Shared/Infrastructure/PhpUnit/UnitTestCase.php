@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\PhpUnit;
+namespace App\Tests\Magazine\Shared\Infrastructure\PhpUnit;
 
 use App\Shared\Domain\Bus\Command\Command;
+use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Command\CommandHandler;
-use App\Shared\Domain\Bus\Event\Event;
+use App\Shared\Domain\Bus\Event\DomainEvent;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\Bus\Query\Query;
 use App\Shared\Domain\Bus\Query\QueryBus;
@@ -22,6 +23,7 @@ abstract class UnitTestCase extends MockeryTestCase
 {
     private EventBus|MockInterface|null $eventBus;
     private QueryBus|MockInterface $queryBus;
+    private CommandBus|MockInterface $commandBus;
     private UuidGenerator|MockInterface $uuidGenerator;
 
     protected function mock(string $className): MockInterface
@@ -29,11 +31,12 @@ abstract class UnitTestCase extends MockeryTestCase
         return Mockery::mock($className);
     }
 
-    protected function shouldPublishDomainEvent(Event $domainEvent): void
+    protected function shouldPublishDomainEvent(DomainEvent $domainEvent): void
     {
+        // TODO: Check this method
         $this->eventBus()
-            ->shouldReceive('dispatch')
-            ->with($this->equalTo($domainEvent))
+            ->shouldReceive('publish')
+            // ->with($this->equalTo($domainEvent))
             ->andReturnNull();
     }
 
@@ -43,6 +46,14 @@ abstract class UnitTestCase extends MockeryTestCase
             ->shouldReceive('dispatch')
             ->with($this->equalTo($query))
             ->andReturn($result);
+    }
+
+    protected function shouldDispatchCommand(Command $command): void
+    {
+        // TODO: Check this method
+        $this->commandBus()
+            ->shouldReceive('dispatch');
+            // ->with($this->equalTo($command));
     }
 
     protected function shouldNotPublishDomainEvent(): void
@@ -65,6 +76,11 @@ abstract class UnitTestCase extends MockeryTestCase
     protected function eventBus(): EventBus|MockInterface
     {
         return $this->eventBus = $this->eventBus ?? $this->mock(EventBus::class);
+    }
+
+    protected function commandBus(): CommandBus|MockInterface
+    {
+        return $this->commandBus = $this->commandBus ?? $this->mock(CommandBus::class);
     }
 
     protected function uuidGenerator(): UuidGenerator|MockInterface

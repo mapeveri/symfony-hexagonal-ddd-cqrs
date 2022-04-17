@@ -8,15 +8,8 @@ use App\Shared\Domain\Bus\Command\Command;
 
 final class NewPostEmailAdminCommand implements Command
 {
-    private string $id;
-    private string $title;
-    private string $content;
-
-    public function __construct(string $id, string $title, string $content)
+    public function __construct(private string $id, private string $title, private string $content)
     {
-        $this->id = $id;
-        $this->title = $title;
-        $this->content = $content;
     }
 
     public function id(): string
