@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Magazine\Post\Application\Event\Create;
 
 use App\Magazine\Portal\Application\Command\Create\CreatePortalPostCommand;
-use App\Magazine\Post\Domain\PostWasCreatedEvent;
+use App\Magazine\Post\Domain\Event\PostWasCreatedEvent;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Event\DomainEventSubscriber;
 

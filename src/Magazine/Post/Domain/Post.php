@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Magazine\Post\Domain;
 
 use App\Magazine\Category\Domain\Category;
+use App\Magazine\Post\Domain\Event\PostWasCreatedEvent;
 use App\Magazine\User\Domain\User;
 use App\Shared\Domain\Bus\Event\EventsDomain;
 use DateTime;

@@ -13,7 +13,7 @@ final class RabbitMqQueueNameFormatter
 {
     public static function format(DomainEventSubscriber $subscriber): string
     {
-        $subscriberClassPaths = explode('\\', str_replace('CodelyTv', 'codelytv', get_class($subscriber)));
+        $subscriberClassPaths = explode('\\', get_class($subscriber));
 
         $queueNameParts = [
             $subscriberClassPaths[0],
@@ -37,6 +37,15 @@ final class RabbitMqQueueNameFormatter
         $queueName = self::format($subscriber);
 
         return "dead_letter.$queueName";
+    }
+
+    public static function ensureQueueName(string $queueName): string
+    {
+        if (str_contains($queueName, 'dead_letter.')) {
+            $queueName = explode('dead_letter.', $queueName)[1];
+        }
+
+        return $queueName;
     }
 
     public static function shortFormat(DomainEventSubscriber $subscriber): string
