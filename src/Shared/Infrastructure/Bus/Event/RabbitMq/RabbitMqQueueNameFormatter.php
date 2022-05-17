@@ -39,15 +39,6 @@ final class RabbitMqQueueNameFormatter
         return "dead_letter.$queueName";
     }
 
-    public static function ensureQueueName(string $queueName): string
-    {
-        if (str_contains($queueName, 'dead_letter.')) {
-            $queueName = explode('dead_letter.', $queueName)[1];
-        }
-
-        return $queueName;
-    }
-
     public static function shortFormat(DomainEventSubscriber $subscriber): string
     {
         $subscriberCamelCaseName = (string) last(explode('\\', get_class($subscriber)));

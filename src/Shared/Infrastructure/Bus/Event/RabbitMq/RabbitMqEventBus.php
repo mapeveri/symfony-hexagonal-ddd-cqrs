@@ -48,6 +48,7 @@ final class RabbitMqEventBus implements EventBus
                 'message_id'       => $messageId,
                 'content_type'     => 'application/json',
                 'content_encoding' => 'utf-8',
+                'delivery_mode'    => 2
             ]
         );
     }
