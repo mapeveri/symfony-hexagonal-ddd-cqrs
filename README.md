@@ -61,6 +61,9 @@ Rabbit configuration and consumers
 2. Consume events of a queue, example:
 
         bin/console app:domain-events:rabbitmq:consume app.magazine.post.post_projection_on_post_was_created_event_handler 200
+        
+        // Dead lettter
+        bin/console app:domain-events:rabbitmq:consume app.magazine.post.post_projection_on_post_was_created_event_handler 200 true
 
 3. For production, generate supervisor consumer files configurations:
 
