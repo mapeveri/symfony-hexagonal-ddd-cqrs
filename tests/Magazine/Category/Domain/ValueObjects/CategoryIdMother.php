@@ -8,8 +8,8 @@ use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 
 final class CategoryIdMother
 {
-    public static function create(): CategoryId
+    public static function create(?string $id = null): CategoryId
     {
-        return CategoryId::random();
+        return null === $id ? CategoryId::random() : CategoryId::create($id);
     }
 }

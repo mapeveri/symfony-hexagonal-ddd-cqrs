@@ -12,7 +12,7 @@ use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\UuidGenerator;
 
-final class CategoryCreate
+class CategoryCreate
 {
     public function __construct(
         private CategoryRepository $repository,
@@ -27,7 +27,7 @@ final class CategoryCreate
     {
         $this->ensureCategoryDoesntExists($name);
 
-        $parentCategory = ($parent ? $this->serviceFinder->__invoke(CategoryId::create($parent)) : null);
+        $parentCategory = (null === $parent ?  null : $this->serviceFinder->__invoke(CategoryId::create($parent)));
         $category = Category::create(
             CategoryId::create($this->uuidGenerator->generate()),
             $name,

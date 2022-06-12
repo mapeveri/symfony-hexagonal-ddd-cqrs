@@ -8,6 +8,7 @@ use App\Magazine\Category\Application\Command\Create\CategoryCreate;
 use App\Tests\Magazine\Category\CategoryUnitTestCase;
 use App\Tests\Magazine\Category\Domain\CategoryMother;
 use App\Tests\Magazine\Category\Domain\Event\CategoryWasCreatedEventMother;
+use App\Tests\Magazine\Category\Domain\ValueObjects\CategoryIdMother;
 use App\Tests\Magazine\Shared\Utils\Faker\Faker;
 use function Lambdish\Phunctional\apply;
 
@@ -33,7 +34,7 @@ final class CategoryCreateTest extends CategoryUnitTestCase
         $name = Faker::random()->name();
         $parentId = Faker::random()->uuid();
 
-        $parentCategory = CategoryMother::create(['id' => $parentId]);
+        $parentCategory = CategoryMother::create(['id' => CategoryIdMother::create($parentId)]);
         $category = CategoryMother::create([
             'name' => $name,
             'description' => Faker::random()->text(),
@@ -50,7 +51,7 @@ final class CategoryCreateTest extends CategoryUnitTestCase
         apply($this->SUT, [
             $category->name(),
             $category->description(),
-            $category->parent()->id(),
+            $parentId,
             $category->hidden()
         ]);
     }

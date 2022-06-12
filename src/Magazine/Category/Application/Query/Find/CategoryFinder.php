@@ -9,7 +9,7 @@ use App\Magazine\Category\Domain\CategoryFinder as DomainCategoryFinder;
 use App\Magazine\Category\Domain\CategoryRepository;
 use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 
-final class CategoryFinder
+class CategoryFinder
 {
     private DomainCategoryFinder $finder;
 

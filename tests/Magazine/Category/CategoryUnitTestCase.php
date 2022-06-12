@@ -34,7 +34,7 @@ class CategoryUnitTestCase extends UnitTestCase
         $this->finder()
             ->shouldReceive('__invoke')
             ->once()
-            ->with($category->id())
+            // ->with($category->id())
             ->andReturn($category);
     }
 
@@ -57,10 +57,10 @@ class CategoryUnitTestCase extends UnitTestCase
             ->shouldReceive('save')
             ->once()
             ->with(\Mockery::on(function ($receivedObject) use ($category): bool {
-                return $category->id() === $receivedObject->id() &&
+                return $category->id()->value() === $receivedObject->id()->value() &&
                     $category->name() === $receivedObject->name() &&
                     $category->description() === $receivedObject->description() &&
-                    $category->parent() === $receivedObject->parent()  &&
+                    $category->parent()->id() === $receivedObject->parent()->id()  &&
                     $category->hidden() === $receivedObject->hidden();
             }));
     }
