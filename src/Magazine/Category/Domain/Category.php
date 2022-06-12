@@ -5,74 +5,35 @@ declare(strict_types=1);
 namespace App\Magazine\Category\Domain;
 
 use App\Magazine\Category\Domain\Event\CategoryWasCreatedEvent;
-use App\Shared\Domain\Bus\Event\EventsDomain;
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
+use App\Shared\Domain\Aggregate\AggregateRoot;
 
-class Category
+class Category extends AggregateRoot
 {
-    use EventsDomain;
-
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var self
-     */
-    private $parent;
-
-    /**
-     * @var boolean
-     */
-    private $hidden;
-
-    /**
-     * @var array
-     */
     private $children;
-
-    /**
-     * @var array
-     */
     private $posts;
-
-    /**
-     * @var array
-     */
     private $categories;
 
-    public function __construct(string $id, string $name, string $description, ?self $parent, bool $hidden)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->parent = $parent;
-        $this->hidden = $hidden;
+    public function __construct(
+        private CategoryId $id,
+        private string $name,
+        private string $description,
+        private ?self $parent,
+        private bool $hidden
+    ) {
         $this->children = [];
         $this->posts = [];
         $this->categories = [];
     }
 
-    public static function create(string $id, string $name, string $description, ?self $parent, bool $hidden): self
+    public static function create(CategoryId $id, string $name, string $description, ?self $parent, bool $hidden): self
     {
         $category = new self($id, $name, $description, $parent, $hidden);
-
-        $category->record(new CategoryWasCreatedEvent($category->id(), $category->name()));
-
+        $category->record(new CategoryWasCreatedEvent($category->id()->value(), $category->name()));
         return $category;
     }
 
-    public function id(): string
+    public function id(): CategoryId
     {
         return $this->id;
     }

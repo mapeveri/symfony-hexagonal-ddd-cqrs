@@ -9,20 +9,17 @@ use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
 
 final class ElasticsearchPortalRepository implements PortalRepository
 {
-    private ElasticsearchClient $client;
+    private const INDEX = 'portal-front';
 
-    private string $index = 'portal-front';
-
-    public function __construct(ElasticsearchClient $client)
+    public function __construct(private ElasticsearchClient $client)
     {
-        $this->client = $client;
     }
 
     public function getAll(): array
     {
         $response = $this->client->client()->search([
             'index' => $this->client->indexPrefix(),
-            'type' => $this->index,
+            'type' => self::INDEX,
         ]);
 
         return [
@@ -32,6 +29,6 @@ final class ElasticsearchPortalRepository implements PortalRepository
 
     public function add(string $id, array $data): void
     {
-        $this->client->persist($this->index, (int)$id, $data);
+        $this->client->persist(self::INDEX, (int)$id, $data);
     }
 }

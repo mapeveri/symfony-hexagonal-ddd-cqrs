@@ -8,12 +8,8 @@ use App\Shared\Domain\DomainError;
 
 final class PostNotExist extends DomainError
 {
-    private string $id;
-
-    public function __construct(string $id)
+    public function __construct(private string $id)
     {
-        $this->id = $id;
-
         parent::__construct();
     }
 

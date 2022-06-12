@@ -6,19 +6,15 @@ namespace App\Magazine\Category\Application\Command\Update;
 
 use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\CategoryRepository;
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 
 final class CategoryUpdate
 {
-    private CategoryRepository $repository;
-    private CategoryFinder $serviceFinder;
-
-    public function __construct(CategoryRepository $repository, CategoryFinder $serviceFinder)
+    public function __construct(private CategoryRepository $repository, private CategoryFinder $serviceFinder)
     {
-        $this->repository = $repository;
-        $this->serviceFinder = $serviceFinder;
     }
 
-    public function __invoke(string $id, string $name, string $description, ?string $parent, ?bool $hidden): void
+    public function __invoke(CategoryId $id, string $name, string $description, ?CategoryId $parent, ?bool $hidden): void
     {
         $category = $this->serviceFinder->__invoke($id);
         $parentCategory = ($parent ? $this->serviceFinder->__invoke($parent) : null);

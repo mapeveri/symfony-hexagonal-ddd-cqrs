@@ -10,12 +10,22 @@ use Symfony\Component\Uid\Uuid as SymfonyUuid;
 
 class Uuid implements Stringable
 {
-    public function __construct(protected string $value)
+    final public function __construct(private string $value)
     {
-        $this->ensureIsValidUuid($value);
     }
 
-    public static function random(): self
+    public static function create(?string $value): ?static
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        self::ensureIsValidUuid($value);
+
+        return new static($value);
+    }
+
+    public static function random(): static
     {
         return new static((string)SymfonyUuid::v4());
     }
@@ -35,7 +45,7 @@ class Uuid implements Stringable
         return $this->value();
     }
 
-    private function ensureIsValidUuid(string $id): void
+    private static function ensureIsValidUuid(string $id): void
     {
         if (!SymfonyUuid::isValid($id)) {
             throw new InvalidArgumentException(sprintf('<%s> does not allow the value <%s>.', static::class, $id));

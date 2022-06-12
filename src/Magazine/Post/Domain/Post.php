@@ -6,81 +6,48 @@ namespace App\Magazine\Post\Domain;
 
 use App\Magazine\Category\Domain\Category;
 use App\Magazine\Post\Domain\Event\PostWasCreatedEvent;
+use App\Magazine\Post\Domain\ValueObjects\PostId;
 use App\Magazine\User\Domain\User;
-use App\Shared\Domain\Bus\Event\EventsDomain;
+use App\Shared\Domain\Aggregate\AggregateRoot;
 use DateTime;
 
-class Post
+class Post extends AggregateRoot
 {
-    use EventsDomain;
-
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var Category
-     */
-    private $category;
-
-    /**
-     * @var User
-     */
-    private $user;
-
-    /**
-     * @var boolean
-     */
-    private $hidden;
-
-    /**
-     * @var DateTime
-     */
-    private $created;
-    /**
-     * @var DateTime
-     */
-    private $updated;
-
-    /**
-     * @var array
-     */
+    private DateTime $created;
+    private DateTime $updated;
     private $comments;
 
-    public function __construct(string $id, string $title, string $content, Category $category, User $user, ?bool $hidden = false)
-    {
-        $this->id = $id;
-        $this->title = $title;
-        $this->content = $content;
-        $this->category = $category;
-        $this->user = $user;
-        $this->hidden = $hidden;
+    public function __construct(
+        private PostId $id,
+        private string $title,
+        private string $content,
+        private Category $category,
+        private User $user,
+        private ?bool $hidden = false
+    ) {
         $this->created = new DateTime();
         $this->updated = new DateTime();
         $this->comments = [];
     }
 
-    public static function create(string $id, string $title, string $content, Category $category, User $user, ?bool $hidden = false): self
+    public static function create(PostId $id, string $title, string $content, Category $category, User $user, ?bool $hidden = false): self
     {
         $post = new self($id, $title, $content, $category, $user, $hidden);
-
-        $post->record(new PostWasCreatedEvent($id, $title, $content, $category->id(), $user->id(), $hidden));
+        $post->record(
+            new PostWasCreatedEvent(
+                $id->value(),
+                $title,
+                $content,
+                $category->id()->value(),
+                $user->id()->value(),
+                $hidden
+            )
+        );
 
         return $post;
     }
 
-    public function id(): string
+    public function id(): PostId
     {
         return $this->id;
     }

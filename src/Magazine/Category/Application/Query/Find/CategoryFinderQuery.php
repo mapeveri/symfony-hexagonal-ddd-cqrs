@@ -8,11 +8,8 @@ use App\Shared\Domain\Bus\Query\Query;
 
 final class CategoryFinderQuery implements Query
 {
-    private string $id;
-
-    public function __construct(string $id)
+    public function __construct(private string $id)
     {
-        $this->id = $id;
     }
 
     public function id(): string

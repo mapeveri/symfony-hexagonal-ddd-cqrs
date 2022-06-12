@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Domain;
 
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
+
 final class CategoryFinder
 {
-    private CategoryRepository $repository;
-
-    public function __construct(CategoryRepository $repository)
+    public function __construct(private CategoryRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    public function __invoke(string $id): ?Category
+    public function __invoke(CategoryId $id): ?Category
     {
         $category = $this->repository->find($id);
 
         if (null === $category) {
-            throw new CategoryNotExist($id);
+            throw new CategoryNotExist($id->value());
         }
 
         return $category;

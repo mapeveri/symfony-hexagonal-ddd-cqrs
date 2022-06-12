@@ -9,17 +9,14 @@ use App\Shared\Domain\Bus\Query\Response;
 
 final class PostFinderResponse implements Response
 {
-    private Post $post;
-
-    public function __construct(Post $post)
+    public function __construct(private Post $post)
     {
-        $this->post = $post;
     }
 
     public function data(): array
     {
         return [
-            'id' => $this->post->id(),
+            'id' => $this->post->id()->value(),
             'title' => $this->post->title(),
             'content' => $this->post->content(),
             'user' => $this->post->user()->id(),

@@ -24,7 +24,7 @@ final class CategoryGetAllQueryHandler implements QueryHandler
         foreach ($records as $record) {
             $parent = $record->parent();
             $data[] = [
-                'id' => $record->id(),
+                'id' => $record->id()->value(),
                 'name' => $record->name(),
                 'description' => $record->description(),
                 'hidden' => $record->hidden(),

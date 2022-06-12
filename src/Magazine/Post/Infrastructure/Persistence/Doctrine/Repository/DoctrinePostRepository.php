@@ -6,6 +6,7 @@ namespace App\Magazine\Post\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Magazine\Post\Domain\Post;
 use App\Magazine\Post\Domain\PostRepository;
+use App\Magazine\Post\Domain\ValueObjects\PostId;
 use App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
 
 final class DoctrinePostRepository extends DoctrineRepository implements PostRepository
@@ -15,7 +16,7 @@ final class DoctrinePostRepository extends DoctrineRepository implements PostRep
         return $this->repository(Post::class)->findAll();
     }
 
-    public function find(string $id): ?Post
+    public function find(PostId $id): ?Post
     {
         return $this->repository(Post::class)->find($id);
     }

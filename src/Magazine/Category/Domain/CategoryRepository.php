@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Domain;
 
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
+
 interface CategoryRepository
 {
     public function getAll(): array;
 
-    public function find(string $id): ?Category;
+    public function find(CategoryId $id): ?Category;
 
     public function findByName(string $name): ?Category;
 

@@ -4,7 +4,7 @@
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
                 
     <entity name="App\Magazine\User\Domain\User" table="users">
-        <id name="id" type="string" column="id" />
+        <id name="id" type="user_id" column="id" />
 
         <field name="username" type="string" unique="true"/>
         <field name="email" type="string" unique="true"/>

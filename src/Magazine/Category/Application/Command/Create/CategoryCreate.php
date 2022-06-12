@@ -8,10 +8,11 @@ use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\Category;
 use App\Magazine\Category\Domain\CategoryFinderName;
 use App\Magazine\Category\Domain\CategoryRepository;
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\UuidGenerator;
 
-class CategoryCreate
+final class CategoryCreate
 {
     public function __construct(
         private CategoryRepository $repository,
@@ -24,12 +25,11 @@ class CategoryCreate
 
     public function __invoke(string $name, string $description, ?string $parent, bool $hidden): void
     {
-        // Throw exception if the category exists
-        $this->serviceFinderName->__invoke($name);
+        $this->ensureCategoryDoesntExists($name);
 
-        $parentCategory = ($parent ? $this->serviceFinder->__invoke($parent) : null);
+        $parentCategory = ($parent ? $this->serviceFinder->__invoke(CategoryId::create($parent)) : null);
         $category = Category::create(
-            $this->uuidGenerator->generate(),
+            CategoryId::create($this->uuidGenerator->generate()),
             $name,
             $description,
             $parentCategory,
@@ -39,5 +39,10 @@ class CategoryCreate
         $this->repository->save($category);
 
         $this->syncBus->publish(...$category->pullDomainEvents());
+    }
+
+    private function ensureCategoryDoesntExists(string $name): void
+    {
+        $this->serviceFinderName->__invoke($name);
     }
 }

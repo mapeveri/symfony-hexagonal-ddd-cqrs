@@ -6,11 +6,12 @@ namespace App\Magazine\User\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Magazine\User\Domain\User;
 use App\Magazine\User\Domain\UserRepository;
+use App\Magazine\User\Domain\ValueObjects\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
 
 final class DoctrineUserRepository extends DoctrineRepository implements UserRepository
 {
-    public function find(string $id): ?User
+    public function find(UserId $id): ?User
     {
         return $this->repository(User::class)->find($id);
     }

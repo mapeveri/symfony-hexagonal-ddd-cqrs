@@ -4,74 +4,36 @@ declare(strict_types=1);
 
 namespace App\Magazine\User\Domain;
 
+use App\Magazine\User\Domain\ValueObjects\UserId;
+use App\Shared\Domain\Aggregate\AggregateRoot;
 use DateTime;
 
-class User
+class User extends AggregateRoot
 {
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @var boolean
-     */
-    private $isActive;
-
-    /**
-     * @var DateTime
-     */
-    private $created;
-    
-    /**
-     * @var DateTime
-     */
-    private $updated;
-
-    /**
-     * @var array
-     */
+    private DateTime $created;
+    private DateTime $updated;
     private $posts;
-
-    /**
-     * @var array
-     */
     private $comments;
 
-    public function __construct(string $id, string $username, string $email, string $password, bool $isActive)
-    {
-        $this->id = $id;
-        $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
-        $this->isActive = $isActive;
+    public function __construct(
+        private UserId $id,
+        private string $username,
+        private string $email,
+        private string $password,
+        private bool $isActive
+    ) {
         $this->created = new DateTime();
         $this->updated = new DateTime();
         $this->posts = [];
         $this->comments = [];
     }
 
-    public static function create(string $id, string $username, string $email, string $password, ?bool $isActive): self
+    public static function create(UserId $id, string $username, string $email, string $password, ?bool $isActive): self
     {
         return new self($id, $username, $email, $password, $isActive);
     }
 
-    public function id(): string
+    public function id(): UserId
     {
         return $this->id;
     }

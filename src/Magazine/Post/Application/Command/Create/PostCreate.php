@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Magazine\Post\Application\Command\Create;
 
-use App\Magazine\Category\Domain\CategoryRepository;
+use App\Magazine\Category\Application\Query\Find\CategoryFinderQuery;
 use App\Magazine\Post\Domain\Post;
 use App\Magazine\Post\Domain\PostRepository;
-use App\Magazine\User\Domain\UserRepository;
+use App\Magazine\Post\Domain\ValueObjects\PostId;
+use App\Magazine\User\Application\Query\Find\UserFinderQuery;
 use App\Shared\Domain\Bus\Event\EventBus;
+use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\UuidGenerator;
 
 final class PostCreate
 {
     public function __construct(
+        private QueryBus $queryBus,
         private PostRepository $repository,
-        private CategoryRepository $categoryRepository,
-        private UserRepository $userRepository,
         private EventBus $asyncBus,
         private UuidGenerator $uuidGenerator,
     ) {
@@ -24,11 +25,11 @@ final class PostCreate
 
     public function __invoke(string $title, string $content, string $categoryId, string $userId, bool $hidden): void
     {
-        $category = $this->categoryRepository->find($categoryId);
-        $user = $this->userRepository->find($userId);
+        $category = $this->queryBus->handle(new CategoryFinderQuery($categoryId));
+        $user = $this->queryBus->handle(new UserFinderQuery($userId));
 
         $post = Post::create(
-            $this->uuidGenerator->generate(),
+            PostId::create($this->uuidGenerator->generate()),
             $title,
             $content,
             $category,

@@ -4,63 +4,34 @@ declare(strict_types=1);
 
 namespace App\Magazine\Comment\Domain;
 
+use App\Magazine\Comment\Domain\ValueObjects\CommentId;
 use App\Magazine\Post\Domain\Post;
 use App\Magazine\User\Domain\User;
+use App\Shared\Domain\Aggregate\AggregateRoot;
 use DateTime;
 
-class Comment
+class Comment extends AggregateRoot
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private DateTime $created;
+    private DateTime $updated;
 
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var User
-     */
-    private $user;
-
-    /**
-     * @var Post
-     */
-    private $post;
-
-    /**
-     * @var boolean
-     */
-    private $hidden;
-
-    /**
-     * @var DateTime
-     */
-    private $created;
-    /**
-     * @var DateTime
-     */
-    private $updated;
-
-    public function __construct(string $id, string $content, User $user, Post $post, ?bool $hidden = false)
-    {
-        $this->id = $id;
-        $this->content = $content;
-        $this->user = $user;
-        $this->post = $post;
-        $this->hidden = $hidden;
+    public function __construct(
+        private CommentId $id,
+        private string $content,
+        private User $user,
+        private Post $post,
+        private ?bool $hidden = false
+    ) {
         $this->created = new DateTime();
         $this->updated = new DateTime();
     }
 
-    public static function create(string $id, string $content, User $user, Post $post, ?bool $hidden = false): self
+    public static function create(CommentId $id, string $content, User $user, Post $post, ?bool $hidden = false): self
     {
         return new self($id, $content, $user, $post, $hidden);
     }
 
-    public function id(): string
+    public function id(): CommentId
     {
         return $this->id;
     }

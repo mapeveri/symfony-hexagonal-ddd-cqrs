@@ -7,6 +7,7 @@ namespace App\Magazine\Post\Application\Query\Find;
 use App\Magazine\Post\Domain\PostFinder as DomainPostFinder;
 use App\Magazine\Post\Domain\Post;
 use App\Magazine\Post\Domain\PostRepository;
+use App\Magazine\Post\Domain\ValueObjects\PostId;
 
 final class PostFinder
 {
@@ -17,7 +18,7 @@ final class PostFinder
         $this->finder = new DomainPostFinder($repository);
     }
 
-    public function __invoke(string $id): Post
+    public function __invoke(PostId $id): Post
     {
         return $this->finder->__invoke($id);
     }

@@ -6,11 +6,8 @@ namespace App\Magazine\Category\Domain;
 
 class CategoryFinderName
 {
-    private CategoryRepository $repository;
-
-    public function __construct(CategoryRepository $repository)
+    public function __construct(private CategoryRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function __invoke(string $name): ?Category

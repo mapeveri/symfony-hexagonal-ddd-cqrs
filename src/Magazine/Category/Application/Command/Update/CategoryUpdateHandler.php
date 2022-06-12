@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Application\Command\Update;
 
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 
 final class CategoryUpdateHandler implements CommandHandler
@@ -18,10 +19,10 @@ final class CategoryUpdateHandler implements CommandHandler
     public function __invoke(CategoryUpdateCommand $command): void
     {
         $this->service->__invoke(
-            $command->id(),
+            CategoryId::create($command->id()),
             $command->name(),
             $command->description(),
-            $command->parent(),
+            CategoryId::create($command->parent()),
             $command->hidden()
         );
     }

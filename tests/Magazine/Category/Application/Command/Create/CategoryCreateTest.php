@@ -43,9 +43,9 @@ final class CategoryCreateTest extends CategoryUnitTestCase
 
         $this->shouldNotFindByName($name);
         $this->shouldFind($parentCategory);
-        $this->shouldGenerateUuid($category->id());
+        $this->shouldGenerateUuid($category->id()->value());
         $this->shouldSave($category);
-        $this->shouldPublishDomainEvent(CategoryWasCreatedEventMother::create(['id' => $category->id(), 'name' => $category->name()]));
+        $this->shouldPublishDomainEvent(CategoryWasCreatedEventMother::create(['id' => $category->id()->value(), 'name' => $category->name()]));
 
         apply($this->SUT, [
             $category->name(),

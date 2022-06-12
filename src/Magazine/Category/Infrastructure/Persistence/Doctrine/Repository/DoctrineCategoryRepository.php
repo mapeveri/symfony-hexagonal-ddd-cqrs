@@ -6,6 +6,7 @@ namespace App\Magazine\Category\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Magazine\Category\Domain\Category;
 use App\Magazine\Category\Domain\CategoryRepository;
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 use App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
 
 final class DoctrineCategoryRepository extends DoctrineRepository implements CategoryRepository
@@ -15,7 +16,7 @@ final class DoctrineCategoryRepository extends DoctrineRepository implements Cat
         return $this->repository(Category::class)->findAll();
     }
 
-    public function find(string $id): ?Category
+    public function find(CategoryId $id): ?Category
     {
         return $this->repository(Category::class)->find($id);
     }

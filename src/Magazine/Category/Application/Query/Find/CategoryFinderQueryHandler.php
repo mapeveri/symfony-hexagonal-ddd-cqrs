@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Application\Query\Find;
 
+use App\Magazine\Category\Domain\Category;
+use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 use App\Shared\Domain\Bus\Query\QueryHandler;
-use App\Shared\Domain\Bus\Query\Response;
 
 final class CategoryFinderQueryHandler implements QueryHandler
 {
-    private CategoryFinder $service;
-
-    public function __construct(CategoryFinder $service)
+    public function __construct(private CategoryFinder $service)
     {
-        $this->service = $service;
     }
 
-    public function __invoke(CategoryFinderQuery $query): Response
+    public function __invoke(CategoryFinderQuery $query): ?Category
     {
-        return new CategoryFinderResponse($this->service->__invoke($query->id()));
+        return $this->service->__invoke(CategoryId::create($query->id()));
     }
 }

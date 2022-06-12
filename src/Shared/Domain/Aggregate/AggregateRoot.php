@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Shared\Domain\Aggregate;
 
-namespace App\Shared\Domain\Bus\Event;
+use App\Shared\Domain\Bus\Event\DomainEvent;
 
-trait EventsDomain {
-
+class AggregateRoot
+{
     private array $domainEvents = [];
 
     final public function pullDomainEvents(): array

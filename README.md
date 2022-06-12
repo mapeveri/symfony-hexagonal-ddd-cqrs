@@ -65,3 +65,9 @@ Rabbit configuration and consumers
 3. For production, generate supervisor consumer files configurations:
 
          bin/console app:domain-events:rabbitmq:generate-supervisor-files
+
+
+To check elasticsearch data:
+
+
+   http://localhost:9200/magazine/_search
