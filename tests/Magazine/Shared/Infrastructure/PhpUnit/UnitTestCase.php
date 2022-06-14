@@ -14,9 +14,11 @@ use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Shared\Domain\Bus\Query\Response;
 use App\Shared\Domain\UuidGenerator;
+use App\Tests\Magazine\Shared\Domain\TestUtils;
 use Exception;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery\Matcher\MatcherAbstract;
 use Mockery\MockInterface;
 
 abstract class UnitTestCase extends MockeryTestCase
@@ -33,10 +35,9 @@ abstract class UnitTestCase extends MockeryTestCase
 
     protected function shouldPublishDomainEvent(DomainEvent $domainEvent): void
     {
-        // TODO: Check this method
         $this->eventBus()
             ->shouldReceive('publish')
-            // ->with($this->equalTo($domainEvent))
+            ->with($this->similarTo($domainEvent))
             ->andReturnNull();
     }
 
@@ -50,10 +51,9 @@ abstract class UnitTestCase extends MockeryTestCase
 
     protected function shouldDispatchCommand(Command $command): void
     {
-        // TODO: Check this method
         $this->commandBus()
-            ->shouldReceive('dispatch');
-            // ->with($this->equalTo($command));
+            ->shouldReceive('dispatch')
+            ->with($this->similarTo($command));
     }
 
     protected function shouldNotPublishDomainEvent(): void
@@ -121,6 +121,11 @@ abstract class UnitTestCase extends MockeryTestCase
 
         $this->instanceOf($queryHandler, QueryHandler::class);
         $queryHandler($query);
+    }
+
+    protected function similarTo($value, $delta = 0.0): MatcherAbstract
+    {
+        return TestUtils::similarTo($value, $delta);
     }
 
     protected function instanceOf(mixed $object, string $instance): void

@@ -34,7 +34,7 @@ class CategoryUnitTestCase extends UnitTestCase
         $this->finder()
             ->shouldReceive('__invoke')
             ->once()
-            // ->with($category->id())
+            ->with($this->similarTo($category->id()))
             ->andReturn($category);
     }
 

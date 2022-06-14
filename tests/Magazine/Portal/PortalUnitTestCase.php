@@ -12,7 +12,6 @@ class PortalUnitTestCase extends UnitTestCase
 {
     protected PortalRepository|MockInterface $repository;
 
-
     protected function shouldGetAll($withEmptyData = false): array
     {
         $data = $this->getDataAll();

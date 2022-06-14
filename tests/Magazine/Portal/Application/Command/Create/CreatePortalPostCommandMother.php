@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Portal\Command\Create;
+namespace App\Tests\Magazine\Portal\Application\Command\Create;
 
 use App\Magazine\Portal\Application\Command\Create\CreatePortalPostCommand;
 use App\Tests\Magazine\Shared\Domain\ValueObjects\DuplicatorMother;
