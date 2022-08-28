@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Constraint;
+namespace App\Tests\Shared\Infrastructure\PhpUnit\Constraint;
 
-use App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Comparator\DomainEventArraySimilarComparator;
-use App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Comparator\DomainEventSimilarComparator;
+use App\Tests\Shared\Infrastructure\PhpUnit\Comparator\DomainEventArraySimilarComparator;
+use App\Tests\Shared\Infrastructure\PhpUnit\Comparator\DomainEventSimilarComparator;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\ExpectationFailedException;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Comparator\Factory;
+use function App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Constraint\str_contains;
 use function is_string;
 use function sprintf;
 

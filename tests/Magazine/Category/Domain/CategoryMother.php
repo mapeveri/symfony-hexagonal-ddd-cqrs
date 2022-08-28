@@ -6,8 +6,8 @@ namespace App\Tests\Magazine\Category\Domain;
 
 use App\Magazine\Category\Domain\Category;
 use App\Tests\Magazine\Category\Domain\ValueObjects\CategoryIdMother;
-use App\Tests\Magazine\Shared\Domain\ValueObjects\DuplicatorMother;
-use App\Tests\Magazine\Shared\Utils\Faker\Faker;
+use App\Tests\Shared\Domain\ValueObjects\DuplicatorMother;
+use App\Tests\Shared\Utils\Faker\Faker;
 
 final class CategoryMother
 {

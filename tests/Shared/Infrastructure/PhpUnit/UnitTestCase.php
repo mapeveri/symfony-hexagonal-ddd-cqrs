@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Shared\Infrastructure\PhpUnit;
+namespace App\Tests\Shared\Infrastructure\PhpUnit;
 
 use App\Shared\Domain\Bus\Command\Command;
 use App\Shared\Domain\Bus\Command\CommandBus;
@@ -14,7 +14,7 @@ use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Shared\Domain\Bus\Query\Response;
 use App\Shared\Domain\UuidGenerator;
-use App\Tests\Magazine\Shared\Domain\TestUtils;
+use App\Tests\Shared\Domain\TestUtils;
 use Exception;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

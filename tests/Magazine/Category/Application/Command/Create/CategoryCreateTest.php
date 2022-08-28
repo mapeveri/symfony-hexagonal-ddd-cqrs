@@ -9,7 +9,7 @@ use App\Tests\Magazine\Category\CategoryUnitTestCase;
 use App\Tests\Magazine\Category\Domain\CategoryMother;
 use App\Tests\Magazine\Category\Domain\Event\CategoryWasCreatedEventMother;
 use App\Tests\Magazine\Category\Domain\ValueObjects\CategoryIdMother;
-use App\Tests\Magazine\Shared\Utils\Faker\Faker;
+use App\Tests\Shared\Utils\Faker\Faker;
 use function Lambdish\Phunctional\apply;
 
 final class CategoryCreateTest extends CategoryUnitTestCase

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Shared\Domain;
+namespace App\Tests\Shared\Domain;
 
-use App\Tests\Magazine\Shared\Infrastructure\Mockery\AppMatcherIsSimilar;
-use App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Constraint\AppConstraintIsSimilar;
+use App\Tests\Shared\Infrastructure\Mockery\AppMatcherIsSimilar;
+use App\Tests\Shared\Infrastructure\PhpUnit\Constraint\AppConstraintIsSimilar;
 
 final class TestUtils
 {

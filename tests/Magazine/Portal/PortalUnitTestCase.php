@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Magazine\Portal;
 
 use App\Magazine\Portal\Domain\PortalRepository;
-use App\Tests\Magazine\Shared\Infrastructure\PhpUnit\UnitTestCase;
+use App\Tests\Shared\Infrastructure\PhpUnit\UnitTestCase;
 use Mockery\MockInterface;
 
 class PortalUnitTestCase extends UnitTestCase

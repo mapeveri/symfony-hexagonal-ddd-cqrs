@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Shared\Infrastructure\Mockery;
+namespace App\Tests\Shared\Infrastructure\Mockery;
 
-use App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Constraint\AppConstraintIsSimilar;
+use App\Tests\Shared\Infrastructure\PhpUnit\Constraint\AppConstraintIsSimilar;
 use Mockery\Matcher\MatcherAbstract;
 
 final class AppMatcherIsSimilar extends MatcherAbstract

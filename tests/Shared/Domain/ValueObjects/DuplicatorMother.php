@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Shared\Domain\ValueObjects;
+namespace App\Tests\Shared\Domain\ValueObjects;
 
 use ReflectionObject;
 use ReflectionProperty;
-
 use function Lambdish\Phunctional\each;
 
 final class DuplicatorMother

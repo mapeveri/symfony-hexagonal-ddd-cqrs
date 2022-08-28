@@ -6,7 +6,7 @@ namespace App\Tests\Magazine\Category\Application\Command\Create;
 
 use App\Magazine\Category\Application\Command\Create\CategoryCreateCommandHandler;
 use App\Tests\Magazine\Category\CategoryUnitTestCase;
-use App\Tests\Magazine\Shared\Utils\Faker\Faker;
+use App\Tests\Shared\Utils\Faker\Faker;
 
 final class CategoryCreateCommandHandlerTest extends CategoryUnitTestCase
 {

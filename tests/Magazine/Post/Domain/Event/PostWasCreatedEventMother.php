@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Magazine\Post\Domain\Event;
 
 use App\Magazine\Post\Domain\Event\PostWasCreatedEvent;
-use App\Tests\Magazine\Shared\Domain\ValueObjects\DuplicatorMother;
-use App\Tests\Magazine\Shared\Utils\Faker\Faker;
+use App\Tests\Shared\Domain\ValueObjects\DuplicatorMother;
+use App\Tests\Shared\Utils\Faker\Faker;
 
 final class PostWasCreatedEventMother
 {

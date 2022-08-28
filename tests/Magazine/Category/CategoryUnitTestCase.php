@@ -10,7 +10,7 @@ use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\Category;
 use App\Magazine\Category\Domain\CategoryFinderName;
 use App\Magazine\Category\Domain\CategoryRepository;
-use App\Tests\Magazine\Shared\Infrastructure\PhpUnit\UnitTestCase;
+use App\Tests\Shared\Infrastructure\PhpUnit\UnitTestCase;
 use Mockery\MockInterface;
 
 class CategoryUnitTestCase extends UnitTestCase

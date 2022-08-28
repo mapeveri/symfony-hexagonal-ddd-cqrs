@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Comparator;
+namespace App\Tests\Shared\Infrastructure\PhpUnit\Comparator;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
-use App\Tests\Magazine\Shared\Domain\TestUtils;
+use App\Tests\Shared\Domain\TestUtils;
 use SebastianBergmann\Comparator\Comparator;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use function Lambdish\Phunctional\all;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Magazine\Portal\Application\Command\Create;
 
 use App\Magazine\Portal\Application\Command\Create\CreatePortalPostCommand;
-use App\Tests\Magazine\Shared\Domain\ValueObjects\DuplicatorMother;
-use App\Tests\Magazine\Shared\Utils\Faker\Faker;
+use App\Tests\Shared\Domain\ValueObjects\DuplicatorMother;
+use App\Tests\Shared\Utils\Faker\Faker;
 
 final class CreatePortalPostCommandMother
 {
