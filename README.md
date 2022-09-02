@@ -1,7 +1,7 @@
 symfony-hexagonal-cqrs
 ======================
 
-Api Rest with Symfony 5 + Hexagonal Architecture & CQRS.
+Api Rest with Symfony 5 + Hexagonal Architecture + DDD & CQRS.
 
 
 Installation
