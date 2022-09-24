@@ -19,7 +19,9 @@ RUN sh /root/install-xdebug.sh
 RUN docker-php-ext-enable \
         amqp 
 
-RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+RUN apk add --no-cache bash
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash
+RUN apk add symfony-cli
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

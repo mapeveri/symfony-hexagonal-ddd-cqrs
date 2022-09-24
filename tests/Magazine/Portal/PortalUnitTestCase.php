@@ -12,13 +12,13 @@ class PortalUnitTestCase extends UnitTestCase
 {
     protected PortalRepository|MockInterface $repository;
 
-    protected function shouldGetAll($withEmptyData = false): array
+    protected function shouldSearch($withEmptyData = false): array
     {
         $data = $this->getDataAll();
         $returnData = $withEmptyData ? [] : $data;
 
         $this->repository()
-            ->shouldReceive('getAll')
+            ->shouldReceive('search')
             ->once()
             ->andReturn($returnData);
 

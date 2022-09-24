@@ -31,8 +31,8 @@ services:
             MYSQL_USER: user
             MYSQL_PASSWORD: 123456
 
-    shared_rabbitmq:
-        container_name: app-rabbitmq
+    shared_rabbitmq_app:
+        container_name: app-rabbitmq-app
         image: 'rabbitmq:3.7-management'
         restart: unless-stopped
         ports:
@@ -42,8 +42,8 @@ services:
             - RABBITMQ_DEFAULT_USER=app
             - RABBITMQ_DEFAULT_PASS=rabbit_app
 
-    elasticsearch:
-        container_name: app-elastic
+    elasticsearch_app:
+        container_name: app-elastic-app
         image: docker.elastic.co/elasticsearch/elasticsearch:6.8.10
         ports:
             - 9200:9200

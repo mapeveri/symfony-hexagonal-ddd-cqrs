@@ -8,4 +8,19 @@ use App\Shared\Domain\Bus\Query\Query;
 
 final class CategoryGetAllQuery implements Query
 {
+    public function __construct(private ?string $name, private ?bool $hidden)
+    {
+    }
+
+    public function name(): ?string
+    {
+        return $this->name;
+    }
+
+    public function hidden(): ?bool
+    {
+        return $this->hidden;
+    }
+
+
 }
