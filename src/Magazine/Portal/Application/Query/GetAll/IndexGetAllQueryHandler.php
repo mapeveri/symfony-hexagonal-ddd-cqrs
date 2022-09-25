@@ -19,7 +19,7 @@ final class IndexGetAllQueryHandler implements QueryHandler
     public function __invoke(IndexGetAllQuery $query): Response
     {
         $data = [];
-        $records = $this->service->__invoke();
+        $records = $this->service->__invoke($query->search(), $query->ids());
 
         if (count($records) > 0) {
             $dataIndex = $records['data']['hits']['hits'];

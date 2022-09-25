@@ -8,6 +8,7 @@ use App\Magazine\Portal\Application\Query\GetAll\IndexGetAll;
 use App\Magazine\Portal\Application\Query\GetAll\IndexGetAllQuery;
 use App\Magazine\Portal\Application\Query\GetAll\IndexGetAllQueryHandler;
 use App\Magazine\Portal\Application\Query\GetAll\IndexGetAllResponse;
+use App\Magazine\Portal\Domain\Criteria\CriteriaPortal;
 use App\Tests\Magazine\Portal\PortalUnitTestCase;
 use function Lambdish\Phunctional\apply;
 
@@ -17,16 +18,17 @@ final class IndexGetAllQueryHandlerTest extends PortalUnitTestCase
 
     public function setUp(): void
     {
-        $this->SUT = new IndexGetAllQueryHandler(new IndexGetAll($this->repository()));
+        $criteria = new CriteriaPortal();
+        $this->SUT = new IndexGetAllQueryHandler(new IndexGetAll($this->repository(), $criteria));
 
         parent::setUp();
     }
 
     public function testGetAllEmptyData()
     {
-        $query = new IndexGetAllQuery();
+        $query = new IndexGetAllQuery(null, null);
 
-        $dataExpected = $this->shouldGetAll(true);
+        $dataExpected = $this->shouldSearch(true);
 
         $response = apply($this->SUT, [$query]);
 
@@ -35,9 +37,9 @@ final class IndexGetAllQueryHandlerTest extends PortalUnitTestCase
 
     public function testGetAllData()
     {
-        $query = new IndexGetAllQuery();
+        $query = new IndexGetAllQuery(null, null);
 
-        $dataRepository = $this->shouldGetAll();
+        $dataRepository = $this->shouldSearch();
         $dataExpected = $this->processData($dataRepository);
 
         $response = apply($this->SUT, [$query]);

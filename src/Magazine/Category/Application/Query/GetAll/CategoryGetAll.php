@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace App\Magazine\Category\Application\Query\GetAll;
 
 use App\Magazine\Category\Domain\CategoryRepository;
+use App\Magazine\Category\Domain\Criteria\CriteriaCategory;
 
 final class CategoryGetAll
 {
-    private CategoryRepository $repository;
-
-    public function __construct(CategoryRepository $repository)
+    public function __construct(private CategoryRepository $repository, private CriteriaCategory $criteria)
     {
-        $this->repository = $repository;
     }
 
-    public function __invoke(): array
+    public function __invoke(?string $name, ?bool $hidden): array
     {
-        return $this->repository->getAll();
+        $criteria = $this->criteria->__invoke($name, $hidden);
+        return $this->repository->search($criteria);
     }
 }

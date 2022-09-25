@@ -7,13 +7,22 @@ namespace App\Magazine\Category\Infrastructure\Persistence\Doctrine\Repository;
 use App\Magazine\Category\Domain\Category;
 use App\Magazine\Category\Domain\CategoryRepository;
 use App\Magazine\Category\Domain\ValueObjects\CategoryId;
+use App\Shared\Domain\Criteria\Criteria;
+use App\Shared\Infrastructure\Persistence\Doctrine\DoctrineCriteriaConverter;
 use App\Shared\Infrastructure\Persistence\Doctrine\Repository\DoctrineRepository;
 
 final class DoctrineCategoryRepository extends DoctrineRepository implements CategoryRepository
 {
-    public function getAll(): array
+    private static array $criteriaToDoctrineFields = [
+        'id' => 'id',
+    ];
+    
+    public function search(Criteria $criteria): array
     {
-        return $this->repository(Category::class)->findAll();
+        $doctrineCriteria = DoctrineCriteriaConverter::convert($criteria, self::$criteriaToDoctrineFields);
+        $matching = $this->repository(Category::class)->matching($doctrineCriteria);
+
+        return $matching->toArray();
     }
 
     public function find(CategoryId $id): ?Category

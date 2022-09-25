@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace App\Magazine\Portal\Application\Query\GetAll;
 
+use App\Magazine\Portal\Domain\Criteria\CriteriaPortal;
 use App\Magazine\Portal\Domain\PortalRepository;
 
 final class IndexGetAll
 {
-    private PortalRepository $repository;
-
-    public function __construct(PortalRepository $repository)
+    public function __construct(private PortalRepository $repository, private CriteriaPortal $criteria)
     {
-        $this->repository = $repository;
     }
 
-    public function __invoke(): array
+    public function __invoke(?string $search, ?array $ids): array
     {
-        return $this->repository->getAll();
+        $criteria = $this->criteria->__invoke($search, $ids);
+        return $this->repository->search($criteria);
     }
 }

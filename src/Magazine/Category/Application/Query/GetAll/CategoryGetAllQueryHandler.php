@@ -19,7 +19,7 @@ final class CategoryGetAllQueryHandler implements QueryHandler
     public function __invoke(CategoryGetAllQuery $query): Response
     {
         $data = [];
-        $records = $this->service->__invoke();
+        $records = $this->service->__invoke($query->name(), $query->hidden());
 
         foreach ($records as $record) {
             $parent = $record->parent();

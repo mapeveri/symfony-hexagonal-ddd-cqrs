@@ -139,6 +139,9 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "nyholm/dsn": {
+        "version": "2.0.1"
+    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
@@ -200,6 +203,9 @@
     },
     "react/promise": {
         "version": "v2.8.0"
+    },
+    "ruflin/elastica": {
+        "version": "7.2.0"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
@@ -382,9 +388,6 @@
     "symfony/mime": {
         "version": "v5.3.2"
     },
-    "symfony/orm-pack": {
-        "version": "v2.1.0"
-    },
     "symfony/password-hasher": {
         "version": "v5.3.2"
     },
@@ -469,9 +472,6 @@
     },
     "symfony/serializer": {
         "version": "v5.3.2"
-    },
-    "symfony/serializer-pack": {
-        "version": "v1.0.4"
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"

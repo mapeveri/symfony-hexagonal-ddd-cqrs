@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Magazine\Category\Domain;
 
 use App\Magazine\Category\Domain\ValueObjects\CategoryId;
+use App\Shared\Domain\Criteria\Criteria;
 
 interface CategoryRepository
 {
-    public function getAll(): array;
+    public function search(Criteria $criteria): array;
 
     public function find(CategoryId $id): ?Category;
 
