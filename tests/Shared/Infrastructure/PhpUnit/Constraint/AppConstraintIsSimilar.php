@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\Shared\Infrastructure\PhpUnit\Constraint;
 
+use App\Tests\Shared\Infrastructure\PhpUnit\Comparator\CommandSimilarComparator;
 use App\Tests\Shared\Infrastructure\PhpUnit\Comparator\DomainEventArraySimilarComparator;
 use App\Tests\Shared\Infrastructure\PhpUnit\Comparator\DomainEventSimilarComparator;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\ExpectationFailedException;
 use SebastianBergmann\Comparator\ComparisonFailure;
-use SebastianBergmann\Comparator\Factory;
-use function App\Tests\Magazine\Shared\Infrastructure\PhpUnit\Constraint\str_contains;
+use SebastianBergmann\Comparator\Factory as ComparatorFactory;
+use function str_contains;
 use function is_string;
 use function sprintf;
 
@@ -20,20 +21,20 @@ final class AppConstraintIsSimilar extends Constraint
     {
     }
 
-    public function evaluate($other, $description = '', $returnResult = false): bool
+    public function evaluate($other, string $description = '', bool $returnResult = false): ?bool
     {
         if ($this->value === $other) {
             return true;
         }
 
         $isValid           = true;
-        $comparatorFactory = new Factory();
+        $comparatorFactory = ComparatorFactory::getInstance();
 
         $comparatorFactory->register(new DomainEventArraySimilarComparator());
         $comparatorFactory->register(new DomainEventSimilarComparator());
 
         try {
-            $comparator = $comparatorFactory->getComparatorFor($other, $this->value);
+            $comparator = $comparatorFactory->getComparatorFor($this->value, $other);
 
             $comparator->assertEquals($this->value, $other, $this->delta);
         } catch (ComparisonFailure $f) {
@@ -65,7 +66,7 @@ final class AppConstraintIsSimilar extends Constraint
             );
         }
 
-        if ($this->delta !== 0) {
+        if ($this->delta != 0) {
             $delta = sprintf(
                 ' with delta <%F>',
                 $this->delta

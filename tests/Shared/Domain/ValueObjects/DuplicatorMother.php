@@ -18,7 +18,6 @@ final class DuplicatorMother
         each(
             static function (ReflectionProperty $property) use ($duplicated, $newParams) {
                 if (array_key_exists($property->getName(), $newParams)) {
-                    $property->setAccessible(true);
                     $property->setValue($duplicated, $newParams[$property->getName()]);
                 }
             },

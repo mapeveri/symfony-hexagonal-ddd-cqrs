@@ -36,6 +36,6 @@ final class ElasticsearchPortalRepository implements PortalRepository
 
     public function add(string $id, array $data): void
     {
-        $this->client->persist(self::INDEX, (int)$id, $data);
+        $this->client->persist(self::INDEX, $id, $data);
     }
 }

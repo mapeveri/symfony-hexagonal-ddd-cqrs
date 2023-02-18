@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Magazine\User\Infrastructure\Symfony\Security;
 
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class Auth implements UserInterface
+final class Auth implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public function __construct(private string $username, private string $password)
     {
@@ -34,5 +35,10 @@ final class Auth implements UserInterface
 
     public function eraseCredentials(): void
     {
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
     }
 }

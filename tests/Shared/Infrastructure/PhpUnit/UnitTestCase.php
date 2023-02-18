@@ -38,6 +38,8 @@ abstract class UnitTestCase extends MockeryTestCase
         $this->eventBus()
             ->shouldReceive('publish')
             ->with($this->similarTo($domainEvent))
+            ->atLeast()
+            ->times(1)
             ->andReturnNull();
     }
 
@@ -46,6 +48,8 @@ abstract class UnitTestCase extends MockeryTestCase
         $this->queryBus()
             ->shouldReceive('dispatch')
             ->with($this->equalTo($query))
+            ->atLeast()
+            ->times(1)
             ->andReturn($result);
     }
 
@@ -53,7 +57,10 @@ abstract class UnitTestCase extends MockeryTestCase
     {
         $this->commandBus()
             ->shouldReceive('dispatch')
-            ->with($this->similarTo($command));
+            ->with($this->similarTo($command))
+            ->atLeast()
+            ->times(1)
+            ->andReturnNull();
     }
 
     protected function shouldNotPublishDomainEvent(): void

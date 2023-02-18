@@ -21,7 +21,7 @@ final class EmailNotificationToAdminOnPostWasCreatedEventHandlerTest extends Pos
         parent::setUp();
     }
 
-    public function testSendEmailAfterCreatePost()
+    public function testSendEmailAfterCreatingPost()
     {
         $event = PostWasCreatedEventMother::create();
 

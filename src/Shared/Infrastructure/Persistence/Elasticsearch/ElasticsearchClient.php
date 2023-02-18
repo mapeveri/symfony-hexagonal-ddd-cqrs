@@ -8,16 +8,11 @@ use Elasticsearch\Client;
 
 final class ElasticsearchClient
 {
-    private Client $client;
-    private string $indexPrefix;
-
-    public function __construct(Client $client, string $indexPrefix)
+    public function __construct(private Client $client, private string $indexPrefix)
     {
-        $this->client = $client;
-        $this->indexPrefix = $indexPrefix;
     }
 
-    public function persist(string $name, int $identifier, array $plainBody): void
+    public function persist(string $name, string $identifier, array $plainBody): void
     {
         $this->client->index(
             [
