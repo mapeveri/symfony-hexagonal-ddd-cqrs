@@ -19,11 +19,7 @@ final class CategoryUpdate
         $category = $this->serviceFinder->__invoke($id);
         $parentCategory = ($parent ? $this->serviceFinder->__invoke($parent) : null);
         
-        $category->rename($name);
-        $category->setDescription($description);
-        $category->setHidden($hidden);
-        $category->setParent($parentCategory);
-
+        $category->update($name, $description, $parentCategory, $hidden);
         $this->repository->save($category);
     }
 }

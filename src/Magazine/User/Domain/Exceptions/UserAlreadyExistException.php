@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\User\Domain;
+namespace App\Magazine\User\Domain\Exceptions;
 
 use App\Shared\Domain\DomainError;
 
-final class UserAlreadyExist extends DomainError
+final class UserAlreadyExistException extends DomainError
 {
     private string $username;
 

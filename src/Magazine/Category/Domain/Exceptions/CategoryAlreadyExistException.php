@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Category\Domain;
+namespace App\Magazine\Category\Domain\Exceptions;
 
 use App\Shared\Domain\DomainError;
 
-final class CategoryAlreadyExist extends DomainError
+final class CategoryAlreadyExistException extends DomainError
 {
     private string $name;
 

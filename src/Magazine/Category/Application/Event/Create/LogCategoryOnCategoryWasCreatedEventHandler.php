@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Application\Event\Create;
 
-use App\Magazine\Category\Domain\Event\CategoryWasCreatedEvent;
+use App\Magazine\Category\Domain\Events\CategoryWasCreatedEvent;
 use App\Shared\Domain\Bus\Event\EventHandler;
 use Psr\Log\LoggerInterface;
 

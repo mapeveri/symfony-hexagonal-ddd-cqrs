@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\User\Domain;
+namespace App\Magazine\User\Domain\Services;
 
+use App\Magazine\User\Domain\User;
+use App\Magazine\User\Domain\UserRepository;
 use App\Magazine\User\Domain\ValueObjects\UserId;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 

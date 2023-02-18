@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Domain;
 
-use App\Magazine\Category\Domain\Event\CategoryWasCreatedEvent;
+use App\Magazine\Category\Domain\Events\CategoryWasCreatedEvent;
 use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 
@@ -33,6 +33,14 @@ class Category extends AggregateRoot
         return $category;
     }
 
+    public function update(string $name, string $description, ?Category $parent, ?bool $hidden): void
+    {
+        $this->name = $name;
+        $this->description = $description;
+        $this->parent = $parent;
+        $this->hidden = $hidden;
+    }
+
     public function id(): CategoryId
     {
         return $this->id;
@@ -43,19 +51,9 @@ class Category extends AggregateRoot
         return $this->name;
     }
 
-    public function rename(string $name): void
-    {
-        $this->name = $name;
-    }
-
     public function description(): string
     {
         return $this->description;
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
     }
 
     public function parent(): ?self
@@ -63,19 +61,9 @@ class Category extends AggregateRoot
         return $this->parent;
     }
 
-    public function setParent(?self $parent): void
-    {
-        $this->parent = $parent;
-    }
-
     public function hidden(): ?bool
     {
         return $this->hidden;
-    }
-
-    public function setHidden(?bool $hidden): void
-    {
-        $this->hidden = $hidden;
     }
 
     public function children(): array

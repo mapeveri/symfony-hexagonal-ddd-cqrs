@@ -8,11 +8,8 @@ use App\Magazine\Post\Domain\SendEmailAdmin;
 
 final class NewPostEmailAdmin
 {
-    private SendEmailAdmin $emailService;
-
-    public function __construct(SendEmailAdmin $emailService)
+    public function __construct(private SendEmailAdmin $emailService)
     {
-        $this->emailService = $emailService;
     }
 
     public function __invoke(string $id, string $title, string $content): void

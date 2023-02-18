@@ -10,16 +10,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class EncodedPassword implements GeneratePassword
 {
-    private UserPasswordHasherInterface $encoder;
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
-        $this->encoder = $passwordHasher;
     }
 
     public function generate(User $user, string $password): string
     {
         $authUser = new Auth($user->getUsername(), $password);
-        return $this->encoder->hashPassword($authUser, $password);
+        return $this->passwordHasher->hashPassword($authUser, $password);
     }
 }

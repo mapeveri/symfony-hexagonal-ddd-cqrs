@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Category\Domain;
+namespace App\Magazine\Category\Domain\Exceptions;
 
 use App\Shared\Domain\DomainError;
 
-final class CategoryAssociatedContent extends DomainError
+final class CategoryNotExistException extends DomainError
 {
     private string $id;
 
@@ -19,11 +19,11 @@ final class CategoryAssociatedContent extends DomainError
 
     public function errorCode(): string
     {
-        return 'category_remove_parent';
+        return 'category_not_exist';
     }
 
     protected function errorMessage(): string
     {
-        return sprintf('Cannot remove <%s> because it has associated content.', $this->id);
+        return sprintf('The category <%s> does not exist', $this->id);
     }
 }

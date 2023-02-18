@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Magazine\Category\Domain\Event;
+namespace App\Tests\Magazine\Category\Domain\Events;
 
-use App\Magazine\Category\Domain\Event\CategoryWasCreatedEvent;
+use App\Magazine\Category\Domain\Events\CategoryWasCreatedEvent;
 use App\Tests\Shared\Domain\ValueObjects\DuplicatorMother;
 use App\Tests\Shared\Utils\Faker\Faker;
 

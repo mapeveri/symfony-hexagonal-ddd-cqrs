@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Shared\Domain\Bus\Event;
 
 use App\Shared\Domain\Utils;
-use App\Shared\Domain\ValueObject\Uuid;
+use App\Shared\Domain\ValueObjects\Uuid;
 use DateTimeImmutable;
 
 abstract class DomainEvent

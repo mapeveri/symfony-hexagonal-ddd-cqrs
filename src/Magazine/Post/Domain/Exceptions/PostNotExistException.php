@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Post\Domain;
+namespace App\Magazine\Post\Domain\Exceptions;
 
 use App\Shared\Domain\DomainError;
 
-final class PostNotExist extends DomainError
+final class PostNotExistException extends DomainError
 {
     public function __construct(private string $id)
     {

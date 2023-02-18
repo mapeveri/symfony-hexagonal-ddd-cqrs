@@ -2,36 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Post\Domain\Event;
+namespace App\Magazine\Post\Domain\Events;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 
 final class PostWasCreatedEvent extends DomainEvent
 {
-    private string $id;
-    private string $title;
-    private string $content;
-    private string $categoryId;
-    private string $userId;
-    private bool $hidden;
-
     public function __construct(
-        string $id,
-        string $title,
-        string $content,
-        string $categoryId,
-        string $userId,
-        bool $hidden,
+        private string $id,
+        private string $title,
+        private string $content,
+        private string $categoryId,
+        private string $userId,
+        private bool $hidden,
         string $eventId = null,
         string $occurredOn = null
     ) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->content = $content;
-        $this->categoryId = $categoryId;
-        $this->userId = $userId;
-        $this->hidden = $hidden;
-
         parent::__construct($this->id, $eventId, $occurredOn);
     }
 

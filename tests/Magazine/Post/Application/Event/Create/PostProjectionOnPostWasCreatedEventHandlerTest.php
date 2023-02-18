@@ -6,7 +6,7 @@ namespace App\Tests\Magazine\Post\Application\Event\Create;
 
 use App\Magazine\Post\Application\Event\Create\PostProjectionOnPostWasCreatedEventHandler;
 use App\Tests\Magazine\Portal\Application\Command\Create\CreatePortalPostCommandMother;
-use App\Tests\Magazine\Post\Domain\Event\PostWasCreatedEventMother;
+use App\Tests\Magazine\Post\Domain\Events\PostWasCreatedEventMother;
 use App\Tests\Magazine\Post\PostUnitTestCase;
 use function Lambdish\Phunctional\apply;
 

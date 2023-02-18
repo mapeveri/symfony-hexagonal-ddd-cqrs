@@ -11,13 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class CreateUserCommand extends Command
 {
-    private CommandBus $commandBus;
-
-    public function __construct(CommandBus $commandBus)
+    public function __construct(private CommandBus $commandBus)
     {
         parent::__construct();
-
-        $this->commandBus = $commandBus;
     }
 
     protected function configure(): void

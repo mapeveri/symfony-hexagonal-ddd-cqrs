@@ -4,34 +4,32 @@ declare(strict_types=1);
 
 namespace App\Magazine\Category\Application\Query\GetAll;
 
+use App\Magazine\Category\Domain\Category;
 use App\Shared\Domain\Bus\Query\Response;
 use App\Shared\Domain\Bus\Query\QueryHandler;
+use function Lambdish\Phunctional\map;
 
 final class CategoryGetAllQueryHandler implements QueryHandler
 {
-    private CategoryGetAll $service;
-
-    public function __construct(CategoryGetAll $service)
+    public function __construct(private CategoryGetAll $service)
     {
-        $this->service = $service;
     }
 
     public function __invoke(CategoryGetAllQuery $query): Response
     {
-        $data = [];
-        $records = $this->service->__invoke($query->name(), $query->hidden());
-
-        foreach ($records as $record) {
-            $parent = $record->parent();
-            $data[] = [
-                'id' => $record->id()->value(),
-                'name' => $record->name(),
-                'description' => $record->description(),
-                'hidden' => $record->hidden(),
-                'parent' => ($parent ? $parent->id() : null),
-            ];
-        }
-
+        $categories = $this->service->__invoke($query->name(), $query->hidden());
+        $data = map(self::getCategory(), $categories);
         return new CategoryGetAllResponse($data);
+    }
+
+    private static function getCategory(): callable
+    {
+        return static fn(Category $category) => [
+            'id' => $category->id()->value(),
+            'name' => $category->name(),
+            'description' => $category->description(),
+            'hidden' => $category->hidden(),
+            'parent' => ($category->parent() ? $category->parent()->id()->value() : null),
+        ];
     }
 }

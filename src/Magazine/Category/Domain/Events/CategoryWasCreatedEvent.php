@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Category\Domain\Event;
+namespace App\Magazine\Category\Domain\Events;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 

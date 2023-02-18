@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Magazine\Category\Application\Query\Find;
 
 use App\Magazine\Category\Domain\Category;
-use App\Magazine\Category\Domain\CategoryFinder as DomainCategoryFinder;
 use App\Magazine\Category\Domain\CategoryRepository;
+use App\Magazine\Category\Domain\Services\CategoryFinder as DomainCategoryFinder;
 use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 
 class CategoryFinder

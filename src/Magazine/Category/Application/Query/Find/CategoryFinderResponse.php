@@ -20,7 +20,7 @@ final class CategoryFinderResponse implements Response
             'name' => $this->category->name(),
             'description' => $this->category->description(),
             'hidden' => $this->category->hidden(),
-            'parent' => $this->category->parent()?->id(),
+            'parent' => $this->category->parent()?->id()?->value(),
         ];
     }
 }

@@ -8,8 +8,8 @@ use App\Magazine\Category\Application\Command\Create\CategoryCreate;
 use App\Magazine\Category\Application\Command\Create\CategoryCreateCommand;
 use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\Category;
-use App\Magazine\Category\Domain\CategoryFinderName;
 use App\Magazine\Category\Domain\CategoryRepository;
+use App\Magazine\Category\Domain\Services\CategoryFinderByNameChecker;
 use App\Tests\Shared\Infrastructure\PhpUnit\UnitTestCase;
 use Mockery\MockInterface;
 
@@ -18,11 +18,11 @@ class CategoryUnitTestCase extends UnitTestCase
     protected CategoryRepository|MockInterface $repository;
     protected CategoryCreate|MockInterface $creator;
     protected CategoryFinder|MockInterface $finder;
-    protected CategoryFinderName|MockInterface $finderName;
+    protected CategoryFinderByNameChecker|MockInterface $finderByNameChecker;
 
     protected function shouldNotFindByName(string $name): void
     {
-        $this->finderName()
+        $this->finderByNameChecker()
             ->shouldReceive('__invoke')
             ->once()
             ->with($name)
@@ -80,8 +80,8 @@ class CategoryUnitTestCase extends UnitTestCase
         return $this->finder = $this->finder ?? $this->mock(CategoryFinder::class);
     }
 
-    protected function finderName(): CategoryFinderName|MockInterface
+    protected function finderByNameChecker(): CategoryFinderByNameChecker|MockInterface
     {
-        return $this->finderName = $this->finderName ?? $this->mock(CategoryFinderName::class);
+        return $this->finderByNameChecker = $this->finderByNameChecker ?? $this->mock(CategoryFinderByNameChecker::class);
     }
 }

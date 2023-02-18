@@ -7,7 +7,7 @@ namespace App\Tests\Magazine\Category\Application\Command\Create;
 use App\Magazine\Category\Application\Command\Create\CategoryCreate;
 use App\Tests\Magazine\Category\CategoryUnitTestCase;
 use App\Tests\Magazine\Category\Domain\CategoryMother;
-use App\Tests\Magazine\Category\Domain\Event\CategoryWasCreatedEventMother;
+use App\Tests\Magazine\Category\Domain\Events\CategoryWasCreatedEventMother;
 use App\Tests\Magazine\Category\Domain\ValueObjects\CategoryIdMother;
 use App\Tests\Shared\Utils\Faker\Faker;
 use function Lambdish\Phunctional\apply;
@@ -21,7 +21,7 @@ final class CategoryCreateTest extends CategoryUnitTestCase
         $this->SUT = new CategoryCreate(
             $this->repository(),
             $this->finder(),
-            $this->finderName(),
+            $this->finderByNameChecker(),
             $this->uuidGenerator(),
             $this->eventBus(),
         );

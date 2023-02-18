@@ -8,19 +8,13 @@ use App\Shared\Domain\Bus\Command\Command;
 
 final class CategoryUpdateCommand implements Command
 {
-    private string $id;
-    private string $name;
-    private string $description;
-    private ?bool $hidden;
-    private ?int $parent;
-
-    public function __construct(string $id, string $name, string $description, ?int $parent, ?bool $hidden)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->hidden = $hidden;
-        $this->parent = $parent;
+    public function __construct(
+        private string $id,
+        private string $name,
+        private string $description,
+        private ?string $parent,
+        private ?bool $hidden
+    ) {
     }
 
     public function id(): string
@@ -43,7 +37,7 @@ final class CategoryUpdateCommand implements Command
         return $this->hidden;
     }
 
-    public function parent(): ?int
+    public function parent(): ?string
     {
         return $this->parent;
     }

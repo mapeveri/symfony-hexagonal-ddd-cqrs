@@ -9,11 +9,8 @@ use App\Shared\Domain\Bus\Command\CommandHandler;
 
 final class CategoryUpdateHandler implements CommandHandler
 {
-    private CategoryUpdate $service;
-
-    public function __construct(CategoryUpdate $service)
+    public function __construct(private CategoryUpdate $service)
     {
-        $this->service = $service;
     }
 
     public function __invoke(CategoryUpdateCommand $command): void

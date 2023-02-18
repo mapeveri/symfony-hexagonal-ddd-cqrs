@@ -8,17 +8,12 @@ use App\Shared\Domain\Bus\Command\Command;
 
 final class CategoryCreateCommand implements Command
 {
-    private string $name;
-    private string $description;
-    private bool $hidden;
-    private ?string $parent;
-
-    public function __construct(string $name, string $description, ?string $parent, bool $hidden)
-    {
-        $this->name = $name;
-        $this->description = $description;
-        $this->hidden = $hidden;
-        $this->parent = $parent;
+    public function __construct(
+        private string $name,
+        private string $description,
+        private ?string $parent,
+        private bool $hidden
+    ) {
     }
 
     public function name(): string

@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Post\Domain;
+namespace App\Magazine\Post\Domain\Services;
 
+use App\Magazine\Post\Domain\Exceptions\PostNotExistException;
+use App\Magazine\Post\Domain\Post;
+use App\Magazine\Post\Domain\PostRepository;
 use App\Magazine\Post\Domain\ValueObjects\PostId;
 
 final class PostFinder
@@ -17,7 +20,7 @@ final class PostFinder
         $post = $this->repository->find($id);
 
         if (null === $post) {
-            throw new PostNotExist($id->value());
+            throw new PostNotExistException($id->value());
         }
 
         return $post;

@@ -53,7 +53,7 @@ class User extends AggregateRoot
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function updatePassword(string $password): void
     {
         $this->password = $password;
     }
