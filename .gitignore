@@ -17,6 +17,7 @@
 
 /dbdata/
 /.vscode/
+.idea
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
