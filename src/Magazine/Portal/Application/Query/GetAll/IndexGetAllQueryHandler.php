@@ -6,7 +6,6 @@ namespace App\Magazine\Portal\Application\Query\GetAll;
 
 use App\Shared\Domain\Bus\Query\Response;
 use App\Shared\Domain\Bus\Query\QueryHandler;
-use function Lambdish\Phunctional\map;
 
 final class IndexGetAllQueryHandler implements QueryHandler
 {
@@ -23,17 +22,6 @@ final class IndexGetAllQueryHandler implements QueryHandler
             return new IndexGetAllResponse($data);
         }
 
-        $portalPostsData = $records['data']['hits']['hits'];
-        $data = map(self::getPortalPost(), $portalPostsData);
-        return new IndexGetAllResponse($data);
-    }
-
-    private static function getPortalPost(): callable
-    {
-        return static fn(array $post) => [
-            'id' => $post['_source']['id'],
-            'title' => $post['_source']['title'],
-            'content' => $post['_source']['content'],
-        ];
+        return new IndexGetAllResponse($records['data']);
     }
 }

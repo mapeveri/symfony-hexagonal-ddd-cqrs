@@ -16,6 +16,13 @@ final class CategoryFinderResponseQueryHandler implements QueryHandler
 
     public function __invoke(CategoryFinderResponseQuery $query): Response
     {
-        return new CategoryFinderResponse($this->service->__invoke(CategoryId::create($query->id())));
+        $category = $this->service->__invoke(CategoryId::create($query->id()));
+        return new CategoryFinderResponse(
+            $category->id()->value(),
+            $category->name(),
+            $category->description(),
+            $category->parent()?->id()?->value(),
+            $category->hidden()
+        );
     }
 }

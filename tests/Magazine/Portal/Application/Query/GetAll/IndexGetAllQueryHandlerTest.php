@@ -40,26 +40,11 @@ final class IndexGetAllQueryHandlerTest extends PortalUnitTestCase
         $query = new IndexGetAllQuery(null, null);
 
         $dataRepository = $this->shouldSearch();
-        $dataExpected = $this->processData($dataRepository);
+        $dataExpected = $dataRepository['data'];
 
         $response = apply($this->SUT, [$query]);
 
         $this->assertEquals($this->getResponse($dataExpected), $response);
-    }
-
-    private function processData(array $dataRepository): array
-    {
-        $dataIndex = $dataRepository['data']['hits']['hits'];
-        $index = $dataIndex[0];
-        $record = $index['_source'];
-
-        $dataExpected[] = [
-            'id' => $record['id'],
-            'title' => $record['title'],
-            'content' => $record['content'],
-        ];
-
-        return $dataExpected;
     }
 
     private function getResponse(array $dataExpected): IndexGetAllResponse

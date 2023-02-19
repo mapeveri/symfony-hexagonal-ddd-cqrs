@@ -16,7 +16,7 @@ final class EncodedPassword implements GeneratePassword
 
     public function generate(User $user, string $password): string
     {
-        $authUser = new Auth($user->getUsername(), $password);
+        $authUser = new Auth($user->username(), $password);
         return $this->passwordHasher->hashPassword($authUser, $password);
     }
 }

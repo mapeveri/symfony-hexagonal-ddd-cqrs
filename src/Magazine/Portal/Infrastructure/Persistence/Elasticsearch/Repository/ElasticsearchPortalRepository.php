@@ -9,6 +9,7 @@ use App\Shared\Domain\Criteria\Criteria;
 use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticQuery;
 use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
 use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchCriteriaConverter;
+use function Lambdish\Phunctional\map;
 
 final class ElasticsearchPortalRepository implements PortalRepository
 {
@@ -29,13 +30,27 @@ final class ElasticsearchPortalRepository implements PortalRepository
             'body' => $converter->query()->toArray()
         ]);
 
+        if (count($response) === 0) {
+            return [];
+        }
+
+        $data = map(self::getPortalPost(), $response['hits']['hits']);
         return [
-            'data' => $response
+            'data' => $data
         ];
     }
 
     public function add(string $id, array $data): void
     {
         $this->client->persist(self::INDEX, $id, $data);
+    }
+
+    private static function getPortalPost(): callable
+    {
+        return static fn(array $post) => [
+            'id' => $post['_source']['id'],
+            'title' => $post['_source']['title'],
+            'content' => $post['_source']['content'],
+        ];
     }
 }

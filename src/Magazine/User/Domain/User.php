@@ -38,7 +38,7 @@ class User extends AggregateRoot
         return $this->id;
     }
 
-    public function getUsername(): string
+    public function username(): string
     {
         return $this->username;
     }

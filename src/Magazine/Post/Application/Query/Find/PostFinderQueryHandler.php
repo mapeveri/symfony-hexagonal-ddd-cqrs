@@ -19,6 +19,15 @@ final class PostFinderQueryHandler implements QueryHandler
 
     public function __invoke(PostFinderQuery $query): Response
     {
-        return new PostFinderResponse($this->service->__invoke(PostId::create($query->id())));
+        $post = $this->service->__invoke(PostId::create($query->id()));
+        return new PostFinderResponse(
+            $post->id()->value(),
+            $post->title(),
+            $post->content(),
+            $post->category()?->name(),
+            $post->user()->username(),
+            $post->hidden(),
+            $post->created(),
+        );
     }
 }
