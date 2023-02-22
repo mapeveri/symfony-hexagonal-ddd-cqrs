@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Magazine\Portal\Infrastructure\Persistence\Elasticsearch\Repository;
 
+use App\Magazine\Portal\Domain\PortalPost;
 use App\Magazine\Portal\Domain\PortalRepository;
 use App\Shared\Domain\Criteria\Criteria;
 use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticQuery;
@@ -15,7 +16,7 @@ final class ElasticsearchPortalRepository implements PortalRepository
 {
     private const INDEX = 'portal-front';
 
-    public function __construct(private ElasticsearchClient $client)
+    public function __construct(private readonly ElasticsearchClient $client)
     {
     }
 
@@ -40,9 +41,9 @@ final class ElasticsearchPortalRepository implements PortalRepository
         ];
     }
 
-    public function add(string $id, array $data): void
+    public function save(PortalPost $portalPost): void
     {
-        $this->client->persist(self::INDEX, $id, $data);
+        $this->client->persist(self::INDEX, $portalPost->id(), $portalPost->toArray());
     }
 
     private static function getPortalPost(): callable

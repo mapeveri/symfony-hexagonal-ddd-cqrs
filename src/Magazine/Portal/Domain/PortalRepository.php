@@ -10,5 +10,5 @@ interface PortalRepository
 {
     public function search(Criteria $criteria): array;
 
-    public function add(string $id, array $data): void;
+    public function save(PortalPost $portalPost): void;
 }

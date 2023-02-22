@@ -27,7 +27,7 @@ final class PostProjectionOnPostWasCreatedEventHandlerTest extends PostUnitTestC
 
         $command = CreatePortalPostCommandMother::create([
             'id' => $event->aggregateId(),
-            'data' => ['id' => $event->aggregateId(), 'title' => $event->title(), 'content' => $event->content()]
+            'data' => ['title' => $event->title(), 'content' => $event->content()]
         ]);
 
         $this->shouldDispatchCommand($command);

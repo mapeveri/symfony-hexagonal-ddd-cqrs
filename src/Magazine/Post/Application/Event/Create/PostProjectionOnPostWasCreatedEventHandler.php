@@ -20,7 +20,7 @@ final class PostProjectionOnPostWasCreatedEventHandler implements DomainEventSub
         $this->commandBus->dispatch(
             new CreatePortalPostCommand(
                 $event->aggregateId(),
-                ['id' => $event->aggregateId(), 'title' => $event->title(), 'content' => $event->content()]
+                ['title' => $event->title(), 'content' => $event->content()]
             )
         );
     }
