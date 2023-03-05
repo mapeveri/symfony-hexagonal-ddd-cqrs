@@ -8,7 +8,7 @@ use Elasticsearch\Client;
 
 final class ElasticsearchClient
 {
-    public function __construct(private Client $client, private string $indexPrefix)
+    public function __construct(private Client $client)
     {
     }
 
@@ -16,7 +16,7 @@ final class ElasticsearchClient
     {
         $this->client->index(
             [
-                'index' => $this->indexPrefix,
+                'index' => $name,
                 'type' => $name,
                 'id'    => $identifier,
                 'body'  => $plainBody,
@@ -27,10 +27,5 @@ final class ElasticsearchClient
     public function client(): Client
     {
         return $this->client;
-    }
-
-    public function indexPrefix(): string
-    {
-        return $this->indexPrefix;
     }
 }

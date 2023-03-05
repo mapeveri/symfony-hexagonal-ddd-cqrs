@@ -14,7 +14,7 @@ use function Lambdish\Phunctional\map;
 
 final class ElasticsearchPortalRepository implements PortalRepository
 {
-    private const INDEX = 'portal-front';
+    private const INDEX = 'magazine-portal-front';
 
     public function __construct(private readonly ElasticsearchClient $client)
     {
@@ -26,8 +26,7 @@ final class ElasticsearchPortalRepository implements PortalRepository
         $converter = ElasticsearchCriteriaConverter::convert($criteria);
 
         $response = $this->client->client()->search([
-            'index' => $this->client->indexPrefix(),
-            'type' => self::INDEX,
+            'index' => self::INDEX,
             'body' => $converter->query()->toArray()
         ]);
 

@@ -1,0 +1,4 @@
+event_create:
+  path: /events/create
+  controller: App\Controller\Event\EventPostController
+  methods:  [POST]

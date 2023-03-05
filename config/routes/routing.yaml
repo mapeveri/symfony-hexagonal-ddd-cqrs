@@ -6,6 +6,10 @@ api_post_directory:
     resource: 'post/'
     type: directory
 
+api_event_directory:
+  resource: 'event/'
+  type: directory
+
 index:
   path: /index
   controller: App\Controller\Index\IndexController

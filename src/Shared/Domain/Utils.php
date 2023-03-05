@@ -29,4 +29,10 @@ class Utils
     {
         return ctype_lower($text) ? $text : strtolower(preg_replace('/([^A-Z\s])([A-Z])/', "$1_$2", $text));
     }
+
+    public static function shortNamespace(string $object): string
+    {
+        $parts = explode('\\', str_replace('.', '\\', $object));
+        return end($parts);
+    }
 }
