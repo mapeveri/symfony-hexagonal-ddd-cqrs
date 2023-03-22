@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Venue\Event\Domain;
 
+use App\Shared\Domain\Aggregate\AggregateHistory;
 use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\Aggregate\IsEventSourced;
+use App\Shared\Domain\ValueObjects\Uuid;
 use App\Venue\Event\Domain\Events\EventWasCreatedEvent;
 use App\Venue\Event\Domain\ValueObjects\EventId;
 use DateTime;
 
-class Event extends AggregateRoot
+class Event extends AggregateRoot implements IsEventSourced
 {
     private const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
@@ -97,5 +100,21 @@ class Event extends AggregateRoot
         $this->endAt = new DateTime($event->endAt());
         $this->created = new DateTime($event->created());
         $this->updated = new DateTime($event->updated());
+    }
+
+    public static function reconstituteFrom(AggregateHistory $aggregateHistory): self
+    {
+        $event = static::createEmptyEventWith($aggregateHistory->getAggregateId());
+
+        foreach ($aggregateHistory as $anEvent) {
+            $event->apply($anEvent);
+        }
+
+        return $event;
+    }
+
+    private static function createEmptyEventWith(Uuid $eventId): self
+    {
+        return new self(EventId::create($eventId->value()), '', '', '', new DateTime(), new DateTime());
     }
 }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Persistence\Doctrine\Repository;
 
+use App\Shared\Domain\Aggregate\AggregateHistory;
 use App\Shared\Domain\EventStore\EventStoreRepository;
 use App\Shared\Domain\EventStream\EventStream;
 use App\Shared\Domain\ValueObjects\Uuid;
 use Doctrine\DBAL\Connection;
 use DateTimeImmutable;
-use Symfony\Component\Serializer\SerializerInterface;
 
 final class DBALEventStoreRepository implements EventStoreRepository
 {
@@ -33,5 +33,20 @@ final class DBALEventStoreRepository implements EventStoreRepository
                 ':data'         => json_encode($event->toPrimitives()),
             ]);
         }
+    }
+
+    public function getAggregateHistoryFor(Uuid $id): AggregateHistory
+    {
+        $stmt = $this->connection->prepare(
+            'SELECT * FROM event_store WHERE aggregate_id = :aggregate_id'
+        );
+        $resultSet = $stmt->executeQuery([':aggregate_id' => (string) $id]);
+
+        $events = [];
+        while ($row = $resultSet->fetchAllAssociative()) {
+            $events[] = $row['data'];
+        }
+
+        return new AggregateHistory($id, $events);
     }
 }

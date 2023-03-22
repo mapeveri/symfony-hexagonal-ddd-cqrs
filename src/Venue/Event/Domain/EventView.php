@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Venue\Event\Domain;
 
+use App\Shared\Domain\DatetimeUtils;
 use App\Venue\Event\Domain\ValueObjects\EventViewId;
 use DateTime;
 
 class EventView
 {
     public const NAME = 'venue-events-view';
-    private const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     public function __construct(
         private EventViewId $id,
@@ -79,8 +79,8 @@ class EventView
             'content' => $this->content(),
             'location' => $this->location(),
             'comments' => $this->comments(),
-            'startAt' => $this->startAt()->format(self::DATETIME_FORMAT),
-            'endAt' => $this->endAt()->format(self::DATETIME_FORMAT),
+            'startAt' => $this->startAt()->format(DatetimeUtils::DATETIME_FORMAT),
+            'endAt' => $this->endAt()->format(DatetimeUtils::DATETIME_FORMAT),
         ];
     }
 }

@@ -11,6 +11,7 @@ use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchCriteriaCon
 use App\Venue\Event\Domain\EventView;
 use App\Venue\Event\Domain\EventViewRepository;
 use App\Venue\Event\Domain\ValueObjects\EventViewId;
+use DateTime;
 use function Lambdish\Phunctional\map;
 
 final class ElasticsearchEventViewRepository implements EventViewRepository
@@ -21,9 +22,32 @@ final class ElasticsearchEventViewRepository implements EventViewRepository
     {
     }
 
-    public function get(EventViewId $id): ?EventView
+    public function find(EventViewId $id): ?EventView
     {
-        return null;
+        $response = $this->client->client()->search([
+            'index' => self::INDEX,
+            'body' => [
+                'query' => [
+                    'term' => [
+                        '_id' => $id->value(),
+                    ],
+                ],
+            ]
+        ]);
+
+        if (count($response) === 0) {
+            return null;
+        }
+
+        if (!isset($response['hits']['hits'])) {
+            return null;
+        }
+
+        if (empty($response['hits']['hits'])) {
+            return null;
+        }
+
+        return $this->generateEventView($response['hits']['hits'][0]);
     }
 
     public function search(Criteria $criteria): array
@@ -40,22 +64,27 @@ final class ElasticsearchEventViewRepository implements EventViewRepository
             return [];
         }
 
-        $data = map(self::getEventView(), $response['hits']['hits']);
+        $data = map($this->getEventView(), $response['hits']['hits']);
         return [
             'data' => $data
         ];
     }
 
-    private static function getEventView(): callable
+    private function getEventView(): callable
     {
-        return static fn(array $eventView) => EventView::create([
-            'id' => $eventView['_source']['id'],
+        return fn(array $eventView) => $this->generateEventView($eventView);
+    }
+
+    private function generateEventView(array $eventView): EventView
+    {
+        return EventView::create([
+            'id' => $eventView['_id'],
             'title' => $eventView['_source']['title'],
             'content' => $eventView['_source']['content'],
             'location' => $eventView['_source']['location'],
             'comments' => $eventView['_source']['comments'],
-            'startAt' => $eventView['_source']['startAt'],
-            'endAt' => $eventView['_source']['endAt'],
+            'startAt' => new DateTime($eventView['_source']['startAt']),
+            'endAt' => new DateTime($eventView['_source']['endAt']),
         ]);
     }
 }
