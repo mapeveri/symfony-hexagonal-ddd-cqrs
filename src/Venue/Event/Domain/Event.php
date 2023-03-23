@@ -9,6 +9,7 @@ use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Aggregate\IsEventSourced;
 use App\Shared\Domain\ValueObjects\Uuid;
 use App\Venue\Event\Domain\Events\EventWasCreatedEvent;
+use App\Venue\Event\Domain\Events\EventWasUpdatedEvent;
 use App\Venue\Event\Domain\ValueObjects\EventId;
 use DateTime;
 
@@ -49,6 +50,26 @@ class Event extends AggregateRoot implements IsEventSourced
         );
 
         return $event;
+    }
+
+    public function update(string $title, string $content, string $location, DateTime $startAt, DateTime $endAt): void
+    {
+        $this->title = $title;
+        $this->content = $content;
+        $this->location = $location;
+        $this->startAt = $startAt;
+        $this->endAt = $endAt;
+
+        $this->record(
+            new EventWasUpdatedEvent(
+                $this->id->value(),
+                $title,
+                $content,
+                $location,
+                $startAt->format(self::DATETIME_FORMAT),
+                $endAt->format(self::DATETIME_FORMAT),
+            )
+        );
     }
 
     public function id(): EventId
@@ -102,9 +123,18 @@ class Event extends AggregateRoot implements IsEventSourced
         $this->updated = new DateTime($event->updated());
     }
 
+    private function applyEventWasUpdated(EventWasUpdatedEvent $event)
+    {
+        $this->title = $event->title();
+        $this->content = $event->content();
+        $this->location = $event->location();
+        $this->startAt = new DateTime($event->startAt());
+        $this->endAt = new DateTime($event->endAt());
+    }
+
     public static function reconstituteFrom(AggregateHistory $aggregateHistory): self
     {
-        $event = static::createEmptyEventWith($aggregateHistory->getAggregateId());
+        $event = static::createEmptyEventWith($aggregateHistory->aggregateId());
 
         foreach ($aggregateHistory as $anEvent) {
             $event->apply($anEvent);
@@ -115,6 +145,13 @@ class Event extends AggregateRoot implements IsEventSourced
 
     private static function createEmptyEventWith(Uuid $eventId): self
     {
-        return new self(EventId::create($eventId->value()), '', '', '', new DateTime(), new DateTime());
+        return new self(
+            EventId::create($eventId->value()),
+            '',
+            '',
+            '',
+            new DateTime(),
+            new DateTime()
+        );
     }
 }

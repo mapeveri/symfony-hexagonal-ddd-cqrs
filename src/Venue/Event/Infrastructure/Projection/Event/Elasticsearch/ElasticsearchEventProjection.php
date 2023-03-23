@@ -8,6 +8,7 @@ use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
 use App\Shared\Infrastructure\Projection\BaseProjection;
 use App\Venue\Event\Domain\EventProjection;
 use App\Venue\Event\Domain\Events\EventWasCreatedEvent;
+use App\Venue\Event\Domain\Events\EventWasUpdatedEvent;
 use App\Venue\Event\Domain\EventView;
 
 final class ElasticsearchEventProjection extends BaseProjection implements EventProjection
@@ -29,7 +30,24 @@ final class ElasticsearchEventProjection extends BaseProjection implements Event
                 'location' => $event->location(),
                 'startAt' => $event->startAt(),
                 'endAt' => $event->endAt(),
+                'created' => $event->created(),
+                'updated' => $event->updated(),
                 'comments' => []
+            ]
+        );
+    }
+
+    public function projectEventWasUpdatedEvent(EventWasUpdatedEvent $event): void
+    {
+        $this->client->persist(
+            self::INDEX,
+            $event->aggregateId(),
+            [
+                'title' => $event->title(),
+                'content' => $event->content(),
+                'location' => $event->location(),
+                'startAt' => $event->startAt(),
+                'endAt' => $event->endAt(),
             ]
         );
     }

@@ -8,9 +8,9 @@ use App\Shared\Domain\Bus\Event\DomainEvent;
 use App\Shared\Domain\Exceptions\CorruptAggregateHistory;
 use App\Shared\Domain\ValueObjects\Uuid;
 
-class AggregateHistory
+final class AggregateHistory
 {
-    public function __construct(private Uuid $aggregateId, array $events)
+    public function __construct(private Uuid $aggregateId, private array $events)
     {
         /** @var $event DomainEvent */
         foreach($events as $event) {
@@ -20,8 +20,13 @@ class AggregateHistory
         }
     }
 
-    public function getAggregateId(): Uuid
+    public function aggregateId(): Uuid
     {
         return $this->aggregateId;
+    }
+
+    public function isEmptyEventStream(): bool
+    {
+        return count($this->events) === 0;
     }
 }

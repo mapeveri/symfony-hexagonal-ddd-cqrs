@@ -16,9 +16,12 @@ final class EventRepository implements BaseEventRepository
     {
     }
 
-    public function find(EventId $eventId): Event
+    public function find(EventId $eventId): ?Event
     {
         $eventStream = $this->eventStore->getAggregateHistoryFor($eventId);
+        if ($eventStream->isEmptyEventStream()) {
+            return null;
+        }
 
         return Event::reconstituteFrom($eventStream);
     }

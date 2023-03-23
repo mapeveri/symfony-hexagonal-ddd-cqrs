@@ -43,8 +43,16 @@ final class DBALEventStoreRepository implements EventStoreRepository
         $resultSet = $stmt->executeQuery([':aggregate_id' => (string) $id]);
 
         $events = [];
-        while ($row = $resultSet->fetchAllAssociative()) {
-            $events[] = $row['data'];
+        $resultData = $resultSet->fetchAllAssociative();
+        foreach ($resultData as $row) {
+            $event = $row['type']::fromPrimitives(
+                $id->value(),
+                json_decode($row['data'], true),
+                $row['id'],
+                $row['created_at'],
+            );
+
+            $events[] = $event;
         }
 
         return new AggregateHistory($id, $events);
