@@ -24,6 +24,18 @@ final class ElasticsearchClient
         );
     }
 
+    public function partialPersist(string $name, string $identifier, array $plainBody): void
+    {
+        $this->client->update(
+            [
+                'index' => $name,
+                'type' => $name,
+                'id'    => $identifier,
+                'body'  => ['doc' => $plainBody],
+            ]
+        );
+    }
+
     public function client(): Client
     {
         return $this->client;

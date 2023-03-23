@@ -39,7 +39,7 @@ final class ElasticsearchEventProjection extends BaseProjection implements Event
 
     public function projectEventWasUpdatedEvent(EventWasUpdatedEvent $event): void
     {
-        $this->client->persist(
+        $this->client->partialPersist(
             self::INDEX,
             $event->aggregateId(),
             [
