@@ -13,16 +13,17 @@ use App\Venue\Event\Domain\EventView;
 
 final class ElasticsearchEventProjection extends BaseProjection implements EventProjection
 {
-    private const INDEX = EventView::NAME;
+    private string $indexName;
 
     public function __construct(private readonly ElasticsearchClient $client)
     {
+        $this->indexName = EventView::projectionName();
     }
 
     public function projectEventWasCreatedEvent(EventWasCreatedEvent $event): void
     {
         $this->client->persist(
-            self::INDEX,
+            $this->indexName,
             $event->aggregateId(),
             [
                 'title' => $event->title(),
@@ -40,7 +41,7 @@ final class ElasticsearchEventProjection extends BaseProjection implements Event
     public function projectEventWasUpdatedEvent(EventWasUpdatedEvent $event): void
     {
         $this->client->partialPersist(
-            self::INDEX,
+            $this->indexName,
             $event->aggregateId(),
             [
                 'title' => $event->title(),

@@ -16,16 +16,17 @@ use function Lambdish\Phunctional\map;
 
 final class ElasticsearchEventViewRepository implements EventViewRepository
 {
-    private const INDEX = EventView::NAME;
+    private string $indexName;
 
     public function __construct(private readonly ElasticsearchClient $client)
     {
+        $this->indexName = EventView::projectionName();
     }
 
     public function find(EventViewId $id): ?EventView
     {
         $response = $this->client->client()->search([
-            'index' => self::INDEX,
+            'index' => $this->indexName,
             'body' => [
                 'query' => [
                     'term' => [
@@ -39,15 +40,11 @@ final class ElasticsearchEventViewRepository implements EventViewRepository
             return null;
         }
 
-        if (!isset($response['hits']['hits'])) {
-            return null;
-        }
-
         if (empty($response['hits']['hits'])) {
             return null;
         }
 
-        return $this->generateEventView($response['hits']['hits'][0]);
+        return $this->getEventViewFromArray($response['hits']['hits'][0]);
     }
 
     public function search(Criteria $criteria): array
@@ -56,7 +53,7 @@ final class ElasticsearchEventViewRepository implements EventViewRepository
         $converter = ElasticsearchCriteriaConverter::convert($criteria);
 
         $response = $this->client->client()->search([
-            'index' => self::INDEX,
+            'index' => $this->indexName,
             'body' => $converter->query()->toArray()
         ]);
 
@@ -72,12 +69,12 @@ final class ElasticsearchEventViewRepository implements EventViewRepository
 
     private function getEventView(): callable
     {
-        return fn(array $eventView) => $this->generateEventView($eventView);
+        return fn(array $eventView) => $this->getEventViewFromArray($eventView);
     }
 
-    private function generateEventView(array $eventView): EventView
+    private function getEventViewFromArray(array $eventView): EventView
     {
-        return EventView::create([
+        return EventView::createFromArray([
             'id' => $eventView['_id'],
             'title' => $eventView['_source']['title'],
             'content' => $eventView['_source']['content'],

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Venue\Event\Domain;
 
 use App\Shared\Domain\DatetimeUtils;
+use App\Shared\Domain\Projection\IsProjection;
 use App\Venue\Event\Domain\ValueObjects\EventViewId;
 use DateTime;
 
-class EventView
+final class EventView implements IsProjection
 {
-    public const NAME = 'venue-events-view';
+    private const NAME = 'venue-events-view';
 
     public function __construct(
         private EventViewId $id,
@@ -23,7 +24,7 @@ class EventView
     ) {
     }
 
-    public static function create(array $data): self
+    public static function createFromArray(array $data): self
     {
         return new self(
             EventViewId::create($data['id']),
@@ -82,5 +83,10 @@ class EventView
             'startAt' => $this->startAt()->format(DatetimeUtils::DATETIME_FORMAT),
             'endAt' => $this->endAt()->format(DatetimeUtils::DATETIME_FORMAT),
         ];
+    }
+
+    public static function projectionName(): string
+    {
+        return self::NAME;
     }
 }
