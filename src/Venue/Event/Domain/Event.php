@@ -7,6 +7,7 @@ namespace App\Venue\Event\Domain;
 use App\Shared\Domain\Aggregate\AggregateHistory;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Aggregate\IsEventSourced;
+use App\Shared\Domain\DatetimeUtils;
 use App\Shared\Domain\ValueObjects\Uuid;
 use App\Venue\Event\Domain\Events\EventWasCreatedEvent;
 use App\Venue\Event\Domain\Events\EventWasUpdatedEvent;
@@ -15,8 +16,6 @@ use DateTime;
 
 class Event extends AggregateRoot implements IsEventSourced
 {
-    private const DATETIME_FORMAT = 'Y-m-d H:i:s';
-
     private DateTime $created;
     private DateTime $updated;
 
@@ -42,10 +41,10 @@ class Event extends AggregateRoot implements IsEventSourced
                 $title,
                 $content,
                 $location,
-                $startAt->format(self::DATETIME_FORMAT),
-                $endAt->format(self::DATETIME_FORMAT),
-                $event->created()->format(self::DATETIME_FORMAT),
-                $event->updated()->format(self::DATETIME_FORMAT)
+                $startAt->format(DatetimeUtils::DATETIME_FORMAT),
+                $endAt->format(DatetimeUtils::DATETIME_FORMAT),
+                $event->created()->format(DatetimeUtils::DATETIME_FORMAT),
+                $event->updated()->format(DatetimeUtils::DATETIME_FORMAT)
             )
         );
 
@@ -66,8 +65,8 @@ class Event extends AggregateRoot implements IsEventSourced
                 $title,
                 $content,
                 $location,
-                $startAt->format(self::DATETIME_FORMAT),
-                $endAt->format(self::DATETIME_FORMAT),
+                $startAt->format(DatetimeUtils::DATETIME_FORMAT),
+                $endAt->format(DatetimeUtils::DATETIME_FORMAT),
             )
         );
     }

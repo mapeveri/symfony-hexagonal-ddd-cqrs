@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Shared\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Shared\Domain\Aggregate\AggregateHistory;
+use App\Shared\Domain\DatetimeUtils;
 use App\Shared\Domain\EventStore\EventStoreRepository;
 use App\Shared\Domain\EventStream\EventStream;
 use App\Shared\Domain\ValueObjects\Uuid;
@@ -29,7 +30,7 @@ final class DBALEventStoreRepository implements EventStoreRepository
                 ':id' => Uuid::random()->value(),
                 ':aggregate_id' => (string) $event->aggregateId(),
                 ':type'         => get_class($event),
-                ':created_at'   => (new DateTimeImmutable())->format('Y-m-d H:i:s'),
+                ':created_at'   => (new DateTimeImmutable())->format(DatetimeUtils::DATETIME_FORMAT),
                 ':data'         => json_encode($event->toPrimitives()),
             ]);
         }
