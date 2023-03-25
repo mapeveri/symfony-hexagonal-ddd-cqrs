@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Event;
+namespace App\Controller\Venue\Event;
 
 use App\Shared\Infrastructure\Ports\ApiController;
 use App\Venue\Event\Application\Command\Update\EventUpdateCommand;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use RuntimeException;
 
 final class EventPutController extends ApiController
 {

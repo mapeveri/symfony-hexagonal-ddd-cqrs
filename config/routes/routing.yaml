@@ -7,7 +7,7 @@ api_post_directory:
     type: directory
 
 api_event_directory:
-  resource: 'event/'
+  resource: 'venue/event/'
   type: directory
 
 index:

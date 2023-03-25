@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Event;
+namespace App\Controller\Venue\Event;
 
 use App\Shared\Infrastructure\Ports\ApiController;
 use App\Venue\Event\Application\Query\Find\EventFinderResponseQuery;
