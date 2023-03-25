@@ -34,7 +34,7 @@ abstract class ImmutableArray extends SplFixedArray implements Countable, Iterat
         return parent::current();
     }
 
-    final public function key(): string
+    final public function key(): int
     {
         return parent::key();
     }
@@ -54,22 +54,22 @@ abstract class ImmutableArray extends SplFixedArray implements Countable, Iterat
         return parent::valid();
     }
 
-    final public function offsetExists($offset)
+    final public function offsetExists(mixed $offset): mixed
     {
         return parent::offsetExists($offset);
     }
 
-    final public function offsetGet($offset)
+    final public function offsetGet(mixed $offset): mixed
     {
         return parent::offsetGet($offset);
     }
 
-    final public function offsetSet($offset, $value)
+    final public function offsetSet(mixed $offset, mixed $value): void
     {
         throw new ArrayIsImmutable();
     }
 
-    final public function offsetUnset($offset)
+    final public function offsetUnset(mixed $offset): void
     {
         throw new ArrayIsImmutable();
     }
