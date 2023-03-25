@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Venue\Event\Application\Command\Create;
+namespace App\Venue\Event\Application\Command\Update;
 
-use App\Venue\Event\Domain\Event;
 use App\Venue\Event\Domain\EventRepository;
+use App\Venue\Event\Domain\Exceptions\EventNotExistException;
 use App\Venue\Event\Domain\ValueObjects\EventId;
 use DateTime;
 
-final class EventCreate
+final class EventUpdater
 {
     public function __construct(private EventRepository $repository)
     {
@@ -17,8 +17,12 @@ final class EventCreate
 
     public function __invoke(string $id, string $title, string $content, string $location, string $startAt, string $endAt): void
     {
-        $event = Event::create(
-            EventId::create($id),
+        $event = $this->repository->find(EventId::create($id));
+        if (null === $event) {
+            throw new EventNotExistException($id);
+        }
+
+        $event->update(
             $title,
             $content,
             $location,

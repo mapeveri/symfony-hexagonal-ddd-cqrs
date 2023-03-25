@@ -8,7 +8,7 @@ use App\Shared\Domain\Bus\Command\CommandHandler;
 
 final class EventCreateCommandHandler implements CommandHandler
 {
-    public function __construct(private EventCreate $service)
+    public function __construct(private EventCreator $service)
     {
     }
 
