@@ -1,0 +1,14 @@
+event_create:
+  path: /events/create
+  controller: App\Controller\Venue\Event\EventPostController
+  methods:  [POST]
+
+event_find:
+  path: /events/{id}
+  controller: App\Controller\Venue\Event\EventFindController
+  methods:  [GET]
+
+event_update:
+  path: /events/{id}
+  controller: App\Controller\Venue\Event\EventPutController
+  methods:  [PUT]

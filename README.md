@@ -73,4 +73,6 @@ Rabbit configuration and consumers
 To check elasticsearch data:
 
 
-   http://localhost:9200/magazine/_search
+   http://localhost:9200/magazine-portal-front/_search
+
+   http://localhost:9200/venue-events-view/_search

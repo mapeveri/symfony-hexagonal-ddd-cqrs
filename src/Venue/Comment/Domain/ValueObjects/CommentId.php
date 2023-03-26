@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Magazine\Comment\Domain\ValueObjects;
+namespace App\Venue\Comment\Domain\ValueObjects;
 
 use App\Shared\Domain\ValueObjects\Uuid;
 

@@ -1,0 +1,4 @@
+comment_create:
+  path: /comments/add/event/{eventId}
+  controller: App\Controller\Venue\Comment\CommentPostController
+  methods:  [POST]
