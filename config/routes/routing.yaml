@@ -1,10 +1,14 @@
 api_category_directory:
-    resource: 'category/'
+    resource: 'magazine/category/'
     type: directory
 
 api_post_directory:
-    resource: 'post/'
+    resource: 'magazine/post/'
     type: directory
+
+api_portal_directory:
+  resource: 'magazine/portal/'
+  type: directory
 
 api_event_directory:
   resource: 'venue/event/'
@@ -13,11 +17,6 @@ api_event_directory:
 api_comment_directory:
   resource: 'venue/comment/'
   type: directory
-
-index:
-  path: /index
-  controller: App\Controller\Index\IndexController
-  methods:  [GET]
 
 api_login_check:
     path: /login_check

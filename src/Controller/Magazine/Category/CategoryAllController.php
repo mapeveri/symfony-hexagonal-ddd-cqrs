@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Category;
+namespace App\Controller\Magazine\Category;
 
 use App\Magazine\Category\Application\Query\GetAll\CategoryGetAllQuery;
 use App\Shared\Infrastructure\Ports\ApiController;

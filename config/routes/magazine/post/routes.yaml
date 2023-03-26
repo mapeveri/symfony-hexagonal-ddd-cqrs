@@ -1,0 +1,9 @@
+post_create:
+  path: /posts/create
+  controller: App\Controller\Magazine\Post\PostPostController
+  methods:  [POST]
+
+post_find:
+  path: /posts/{id}
+  controller: App\Controller\Magazine\Post\PostFindController
+  methods:  [GET]

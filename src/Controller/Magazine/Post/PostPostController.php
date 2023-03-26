@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Post;
+namespace App\Controller\Magazine\Post;
 
 use App\Magazine\Post\Application\Command\Create\PostCreateCommand;
 use App\Shared\Infrastructure\Ports\ApiController;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use RuntimeException;
 
 final class PostPostController extends ApiController
 {

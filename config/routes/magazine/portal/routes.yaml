@@ -1,0 +1,4 @@
+index:
+  path: /index
+  controller: App\Controller\Magazine\Index\IndexController
+  methods:  [GET]

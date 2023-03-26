@@ -1,0 +1,24 @@
+category_index:
+  path: /categories
+  controller: App\Controller\Magazine\Category\CategoryAllController
+  methods:  [GET]
+
+category_find:
+  path: /categories/{id}
+  controller: App\Controller\Magazine\Category\CategoryFindController
+  methods:  [GET]
+
+category_create:
+  path: /categories/create
+  controller: App\Controller\Magazine\Category\CategoryPostController
+  methods:  [POST]
+
+category_delete:
+  path: /categories/{id}
+  controller: App\Controller\Magazine\Category\CategoryDeleteController
+  methods:  [DELETE]
+
+category_update:
+  path: /categories/{id}
+  controller: App\Controller\Magazine\Category\CategoryPutController
+  methods:  [PUT]

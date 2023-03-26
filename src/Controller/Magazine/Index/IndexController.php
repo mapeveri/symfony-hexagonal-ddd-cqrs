@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Index;
+namespace App\Controller\Magazine\Index;
 
 use App\Magazine\Portal\Application\Query\GetAll\IndexGetAllQuery;
 use App\Shared\Infrastructure\Ports\ApiController;

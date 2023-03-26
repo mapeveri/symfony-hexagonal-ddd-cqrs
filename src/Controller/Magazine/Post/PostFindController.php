@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Controller\Category;
+namespace App\Controller\Magazine\Post;
 
-use App\Magazine\Category\Application\Query\Find\CategoryFinderResponseQuery;
+use App\Magazine\Post\Application\Query\Find\PostFinderQuery;
 use App\Shared\Infrastructure\Ports\ApiController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-final class CategoryFindController extends ApiController
+final class PostFindController extends ApiController
 {
     public function __invoke(string $id): JsonResponse
     {
         try {
-            $response = $this->handle(new CategoryFinderResponseQuery($id));
+            $response = $this->handle(new PostFinderQuery($id));
         } catch(\Throwable $e) {
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
         }

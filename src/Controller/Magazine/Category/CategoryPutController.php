@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Category;
+namespace App\Controller\Magazine\Category;
 
 use App\Magazine\Category\Application\Command\Update\CategoryUpdateCommand;
 use App\Shared\Infrastructure\Ports\ApiController;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use RuntimeException;
 
 final class CategoryPutController extends ApiController
 {
