@@ -6,6 +6,7 @@ namespace App\Venue\Event\Infrastructure\Projection\Event\Elasticsearch;
 
 use App\Shared\Infrastructure\Persistence\Elasticsearch\ElasticsearchClient;
 use App\Shared\Infrastructure\Projection\BaseProjection;
+use App\Venue\Comment\Domain\Events\CommentWasAddedEvent;
 use App\Venue\Event\Domain\EventProjection;
 use App\Venue\Event\Domain\Events\EventWasCreatedEvent;
 use App\Venue\Event\Domain\Events\EventWasUpdatedEvent;
@@ -44,12 +45,23 @@ final class ElasticsearchEventProjection extends BaseProjection implements Event
             $this->indexName,
             $event->aggregateId(),
             [
+
                 'title' => $event->title(),
                 'content' => $event->content(),
                 'location' => $event->location(),
                 'startAt' => $event->startAt(),
                 'endAt' => $event->endAt(),
             ]
+        );
+    }
+
+    public function projectCommentWasAddedEvent(CommentWasAddedEvent $event): void
+    {
+        $this->client->addItemToArrayField(
+            $this->indexName,
+            $event->eventId(),
+            $event->toPrimitives(),
+            'comments',
         );
     }
 }

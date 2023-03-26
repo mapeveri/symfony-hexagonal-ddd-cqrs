@@ -34,13 +34,13 @@ final class EventWasCreatedEvent extends DomainEvent
     }
 
     public static function fromPrimitives(
-        string $id,
+        string $aggregateId,
         array $body,
         string $eventId,
         string $occurredOn
     ): DomainEvent {
         return new self(
-            $id,
+            $aggregateId,
             $body['title'],
             $body['content'],
             $body['location'],

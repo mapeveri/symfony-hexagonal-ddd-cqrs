@@ -12,14 +12,33 @@ final class ElasticsearchClient
     {
     }
 
-    public function persist(string $name, string $identifier, array $plainBody): void
+    public function persist(string $indexName, string $identifier, array $plainBody): void
     {
         $this->client->update(
             [
-                'index' => $name,
-                'type' => $name,
+                'index' => $indexName,
+                'type'  => $indexName,
                 'id'    => $identifier,
                 'body'  => ['doc' => $plainBody, 'doc_as_upsert' => true],
+            ]
+        );
+    }
+
+    public function addItemToArrayField(string $indexName, string $identifier, array $plainBody, string $field): void
+    {
+        $this->client->update(
+            [
+                'index' => $indexName,
+                'type'  => $indexName,
+                'id'    => $identifier,
+                'body'  => [
+                    "script" => [
+                        "inline" => sprintf("ctx._source.%s.add(params.new_value)", $field),
+                        "params" => [
+                            'new_value' => $plainBody
+                        ],
+                    ]
+                ],
             ]
         );
     }

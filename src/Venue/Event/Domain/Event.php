@@ -9,6 +9,9 @@ use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Aggregate\IsEventSourced;
 use App\Shared\Domain\DatetimeUtils;
 use App\Shared\Domain\ValueObjects\Uuid;
+use App\Venue\Comment\Domain\Comment;
+use App\Venue\Comment\Domain\Events\CommentWasAddedEvent;
+use App\Venue\Comment\Domain\ValueObjects\CommentId;
 use App\Venue\Event\Domain\Events\EventWasCreatedEvent;
 use App\Venue\Event\Domain\Events\EventWasUpdatedEvent;
 use App\Venue\Event\Domain\ValueObjects\EventId;
@@ -18,6 +21,7 @@ class Event extends AggregateRoot implements IsEventSourced
 {
     private DateTime $created;
     private DateTime $updated;
+    private array $comments;
 
     public function __construct(
         private EventId $id,
@@ -29,6 +33,7 @@ class Event extends AggregateRoot implements IsEventSourced
     ) {
         $this->created = new DateTime();
         $this->updated = new DateTime();
+        $this->comments = [];
     }
 
     public static function create(EventId $id, string $title, string $content, string $location, DateTime $startAt, DateTime $endAt): self
@@ -67,6 +72,21 @@ class Event extends AggregateRoot implements IsEventSourced
                 $location,
                 $startAt->format(DatetimeUtils::DATETIME_FORMAT),
                 $endAt->format(DatetimeUtils::DATETIME_FORMAT),
+            )
+        );
+    }
+
+    public function makeComment(string $content, string $username, EventId $eventId): void
+    {
+        $now = (new DateTime())->format(DatetimeUtils::DATETIME_FORMAT);
+        $this->record(
+            new CommentWasAddedEvent(
+                CommentId::random()->value(),
+                $content,
+                $username,
+                $eventId->value(),
+                $now,
+                $now,
             )
         );
     }
@@ -111,7 +131,7 @@ class Event extends AggregateRoot implements IsEventSourced
         return $this->updated;
     }
 
-    private function applyEventWasCreated(EventWasCreatedEvent $event)
+    public function applyEventWasCreatedEvent(EventWasCreatedEvent $event)
     {
         $this->title = $event->title();
         $this->content = $event->content();
@@ -122,7 +142,7 @@ class Event extends AggregateRoot implements IsEventSourced
         $this->updated = new DateTime($event->updated());
     }
 
-    private function applyEventWasUpdated(EventWasUpdatedEvent $event)
+    public function applyEventWasUpdatedEvent(EventWasUpdatedEvent $event)
     {
         $this->title = $event->title();
         $this->content = $event->content();
@@ -131,11 +151,22 @@ class Event extends AggregateRoot implements IsEventSourced
         $this->endAt = new DateTime($event->endAt());
     }
 
+    public function applyCommentWasAddedEvent(CommentWasAddedEvent $event)
+    {
+        $this->comments[] = Comment::create(
+            CommentId::create($event->aggregateId()),
+            $event->content(),
+            $event->username(),
+            EventId::create($event->eventId()),
+            $event->hidden(),
+        );
+    }
+
     public static function reconstituteFrom(AggregateHistory $aggregateHistory): self
     {
         $event = static::createEmptyEventWith($aggregateHistory->aggregateId());
 
-        foreach ($aggregateHistory as $anEvent) {
+        foreach ($aggregateHistory->eventStream() as $anEvent) {
             $event->apply($anEvent);
         }
 

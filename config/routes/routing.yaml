@@ -10,6 +10,10 @@ api_event_directory:
   resource: 'venue/event/'
   type: directory
 
+api_comment_directory:
+  resource: 'venue/comment/'
+  type: directory
+
 index:
   path: /index
   controller: App\Controller\Index\IndexController

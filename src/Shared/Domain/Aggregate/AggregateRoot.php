@@ -35,9 +35,9 @@ class AggregateRoot
         $this->domainEvents[] = $domainEvent;
     }
 
-    final protected function apply($anEvent)
+    final protected function apply(DomainEvent $anEvent): void
     {
-        $method = 'apply' . Utils::shortNamespace($anEvent);
+        $method = 'apply' . Utils::shortNamespace($anEvent::class);
         $this->$method($anEvent);
     }
 }

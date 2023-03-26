@@ -10,10 +10,10 @@ use App\Shared\Domain\ValueObjects\Uuid;
 
 final class AggregateHistory
 {
-    public function __construct(private Uuid $aggregateId, private array $events)
+    public function __construct(private Uuid $aggregateId, private array $eventStream)
     {
         /** @var $event DomainEvent */
-        foreach($events as $event) {
+        foreach($eventStream as $event) {
             if(!$aggregateId->equals(Uuid::create($event->aggregateId()))) {
                 throw new CorruptAggregateHistory;
             }
@@ -25,8 +25,13 @@ final class AggregateHistory
         return $this->aggregateId;
     }
 
+    public function eventStream(): array
+    {
+        return $this->eventStream;
+    }
+
     public function isEmptyEventStream(): bool
     {
-        return count($this->events) === 0;
+        return count($this->eventStream()) === 0;
     }
 }
