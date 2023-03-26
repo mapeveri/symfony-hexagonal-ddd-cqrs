@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Magazine\Category\Application\Command\Create;
 
-use App\Magazine\Category\Application\Command\Create\CategoryCreate;
+use App\Magazine\Category\Application\Command\Create\CategoryCreator;
 use App\Tests\Magazine\Category\CategoryUnitTestCase;
 use App\Tests\Magazine\Category\Domain\CategoryMother;
 use App\Tests\Magazine\Category\Domain\Events\CategoryWasCreatedEventMother;
@@ -14,11 +14,11 @@ use function Lambdish\Phunctional\apply;
 
 final class CategoryCreateTest extends CategoryUnitTestCase
 {
-    private CategoryCreate $SUT;
+    private CategoryCreator $SUT;
 
     public function setUp(): void
     {
-        $this->SUT = new CategoryCreate(
+        $this->SUT = new CategoryCreator(
             $this->repository(),
             $this->finder(),
             $this->finderByNameChecker(),

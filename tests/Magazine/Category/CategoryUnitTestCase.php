@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Magazine\Category;
 
-use App\Magazine\Category\Application\Command\Create\CategoryCreate;
+use App\Magazine\Category\Application\Command\Create\CategoryCreator;
 use App\Magazine\Category\Application\Command\Create\CategoryCreateCommand;
 use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\Category;
@@ -16,7 +16,7 @@ use Mockery\MockInterface;
 class CategoryUnitTestCase extends UnitTestCase
 {
     protected CategoryRepository|MockInterface $repository;
-    protected CategoryCreate|MockInterface $creator;
+    protected CategoryCreator|MockInterface $creator;
     protected CategoryFinder|MockInterface $finder;
     protected CategoryFinderByNameChecker|MockInterface $finderByNameChecker;
 
@@ -70,9 +70,9 @@ class CategoryUnitTestCase extends UnitTestCase
         return $this->repository = $this->repository ?? $this->mock(CategoryRepository::class);
     }
 
-    protected function creator(): CategoryCreate|MockInterface
+    protected function creator(): CategoryCreator|MockInterface
     {
-        return $this->creator = $this->creator ?? $this->mock(CategoryCreate::class);
+        return $this->creator = $this->creator ?? $this->mock(CategoryCreator::class);
     }
 
     protected function finder(): CategoryFinder|MockInterface

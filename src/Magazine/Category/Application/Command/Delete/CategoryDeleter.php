@@ -9,7 +9,7 @@ use App\Magazine\Category\Domain\CategoryRepository;
 use App\Magazine\Category\Domain\Exceptions\CategoryAssociatedContentException;
 use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 
-final class CategoryDelete
+final class CategoryDeleter
 {
     public function __construct(private CategoryRepository $repository, private CategoryFinder $serviceFinder)
     {

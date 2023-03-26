@@ -8,9 +8,9 @@ use App\Shared\Domain\Bus\Command\CommandHandler;
 
 final class NewPostEmailAdminCommandHandler implements CommandHandler
 {
-    private NewPostEmailAdmin $service;
+    private NewPostEmailSender $service;
 
-    public function __construct(NewPostEmailAdmin $service)
+    public function __construct(NewPostEmailSender $service)
     {
         $this->service = $service;
     }

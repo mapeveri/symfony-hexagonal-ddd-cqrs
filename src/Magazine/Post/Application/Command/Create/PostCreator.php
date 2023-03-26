@@ -13,7 +13,7 @@ use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\UuidGenerator;
 
-final class PostCreate
+final class PostCreator
 {
     public function __construct(
         private QueryBus $queryBus,

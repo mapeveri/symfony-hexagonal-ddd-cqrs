@@ -8,7 +8,7 @@ use App\Magazine\Category\Application\Query\Find\CategoryFinder;
 use App\Magazine\Category\Domain\CategoryRepository;
 use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 
-final class CategoryUpdate
+final class CategoryUpdater
 {
     public function __construct(private CategoryRepository $repository, private CategoryFinder $serviceFinder)
     {

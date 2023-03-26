@@ -9,7 +9,7 @@ use App\Shared\Domain\Bus\Command\CommandHandler;
 
 final class CategoryUpdateHandler implements CommandHandler
 {
-    public function __construct(private CategoryUpdate $service)
+    public function __construct(private CategoryUpdater $service)
     {
     }
 

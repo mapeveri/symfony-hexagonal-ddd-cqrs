@@ -6,7 +6,7 @@ namespace App\Magazine\Post\Application\Command\NewPostEmailAdmin;
 
 use App\Magazine\Post\Domain\SendEmailAdmin;
 
-final class NewPostEmailAdmin
+final class NewPostEmailSender
 {
     public function __construct(private SendEmailAdmin $emailService)
     {

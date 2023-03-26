@@ -12,7 +12,7 @@ use App\Magazine\Category\Domain\ValueObjects\CategoryId;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\Shared\Domain\UuidGenerator;
 
-class CategoryCreate
+class CategoryCreator
 {
     public function __construct(
         private CategoryRepository          $repository,

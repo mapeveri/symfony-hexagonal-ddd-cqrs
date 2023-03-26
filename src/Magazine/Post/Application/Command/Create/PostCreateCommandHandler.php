@@ -8,9 +8,9 @@ use App\Shared\Domain\Bus\Command\CommandHandler;
 
 final class PostCreateCommandHandler implements CommandHandler
 {
-    private PostCreate $service;
+    private PostCreator $service;
 
-    public function __construct(PostCreate $service)
+    public function __construct(PostCreator $service)
     {
         $this->service = $service;
     }

@@ -8,9 +8,9 @@ use App\Shared\Domain\Bus\Command\CommandHandler;
 
 final class CategoryCreateCommandHandler implements CommandHandler
 {
-    private CategoryCreate $service;
+    private CategoryCreator $service;
 
-    public function __construct(CategoryCreate $service)
+    public function __construct(CategoryCreator $service)
     {
         $this->service = $service;
     }
