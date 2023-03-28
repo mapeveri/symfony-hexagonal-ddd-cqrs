@@ -1,7 +1,7 @@
 symfony-hexagonal-cqrs
 ======================
 
-Api Rest with Symfony 6 + Hexagonal Architecture + DDD & CQRS.
+Api Rest with Symfony 6 + Hexagonal Architecture + DDD & CQRS & Event sourcing.
 
 
 Installation
@@ -70,7 +70,7 @@ Rabbit configuration and consumers
          bin/console app:domain-events:rabbitmq:generate-supervisor-files
 
 
-To check elasticsearch data:
+To check elasticsearch projections data:
 
 
    http://localhost:9200/magazine-portal-front/_search
