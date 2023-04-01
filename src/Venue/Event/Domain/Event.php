@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Venue\Event\Domain;
 
 use App\Shared\Domain\Aggregate\AggregateHistory;
-use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\Shared\Domain\Aggregate\IsEventSourced;
+use App\Shared\Domain\Aggregate\EventSourcedAggregateRoot;
 use App\Shared\Domain\DatetimeUtils;
 use App\Shared\Domain\ValueObjects\Uuid;
 use App\Venue\Comment\Domain\Comment;
@@ -17,7 +16,7 @@ use App\Venue\Event\Domain\Events\EventWasUpdatedEvent;
 use App\Venue\Event\Domain\ValueObjects\EventId;
 use DateTime;
 
-class Event extends AggregateRoot implements IsEventSourced
+class Event extends EventSourcedAggregateRoot
 {
     private DateTime $created;
     private DateTime $updated;
@@ -131,8 +130,14 @@ class Event extends AggregateRoot implements IsEventSourced
         return $this->updated;
     }
 
+    public function comments(): array
+    {
+        return $this->comments;
+    }
+
     public function applyEventWasCreatedEvent(EventWasCreatedEvent $event)
     {
+        $this->id = EventId::create($event->aggregateId());
         $this->title = $event->title();
         $this->content = $event->content();
         $this->location = $event->location();
@@ -166,9 +171,7 @@ class Event extends AggregateRoot implements IsEventSourced
     {
         $event = static::createEmptyEventWith($aggregateHistory->aggregateId());
 
-        foreach ($aggregateHistory->eventStream() as $anEvent) {
-            $event->apply($anEvent);
-        }
+        $event->replay($aggregateHistory->eventStream());
 
         return $event;
     }

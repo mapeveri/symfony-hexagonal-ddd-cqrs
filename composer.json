@@ -18,6 +18,7 @@
         "lambdish/phunctional": "^2.1",
         "lexik/jwt-authentication-bundle": "^2.18",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "predis/predis": "^2.1",
         "ruflin/elastica": "^7.3",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/amqp-messenger": "6.2.*",
@@ -34,7 +35,8 @@
         "symfony/security-bundle": "6.2.*",
         "symfony/serializer": "6.2.*",
         "symfony/uid": "6.2.*",
-        "symfony/yaml": "6.2.*"
+        "symfony/yaml": "6.2.*",
+        "zumba/json-serializer": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "1.19.*",

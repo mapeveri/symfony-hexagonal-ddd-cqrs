@@ -6,7 +6,6 @@ namespace App\Shared\Domain\Aggregate;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 use App\Shared\Domain\EventStream\EventStream;
-use App\Shared\Domain\Utils;
 
 class AggregateRoot
 {
@@ -33,11 +32,5 @@ class AggregateRoot
     final protected function record(DomainEvent $domainEvent): void
     {
         $this->domainEvents[] = $domainEvent;
-    }
-
-    final protected function apply(DomainEvent $anEvent): void
-    {
-        $method = 'apply' . Utils::shortNamespace($anEvent::class);
-        $this->$method($anEvent);
     }
 }
