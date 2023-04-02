@@ -41,7 +41,7 @@ final class DBALEventStoreRepository implements EventStoreRepository
     public function getAggregateHistoryFor(Uuid $id): EventStream
     {
         $stmt = $this->connection->prepare(
-            'SELECT * FROM event_store WHERE aggregate_id = :aggregate_id'
+            'SELECT * FROM event_store WHERE aggregate_id = :aggregate_id ORDER BY created_at ASC'
         );
         $resultSet = $stmt->executeQuery([':aggregate_id' => (string) $id]);
         $resultData = $resultSet->fetchAllAssociative();
@@ -63,7 +63,7 @@ final class DBALEventStoreRepository implements EventStoreRepository
     public function countEventsFor(Uuid $id): int
     {
         $stmt = $this->connection->prepare(
-            'SELECT COUNT(*) as total FROM event_store WHERE aggregate_id = :aggregate_id'
+            'SELECT COUNT(*) as total FROM event_store WHERE aggregate_id = :aggregate_id ORDER BY created_at ASC'
         );
         $resultSet = $stmt->executeQuery([':aggregate_id' => (string) $id]);
         $resultData = $resultSet->fetchAllAssociative();
