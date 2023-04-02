@@ -10,11 +10,11 @@ use App\Shared\Domain\ValueObjects\Uuid;
 
 interface EventStoreRepository
 {
-    public function commit(EventStream $eventStream, int $version): void;
+    public function append(EventStream $eventStream, int $version): void;
 
     public function getAggregateHistoryFor(Uuid $id): AggregateHistory;
 
     public function countEventsFor(Uuid $id): int;
 
-    public function fromVersion(string $id, int $version): EventStream;
+    public function fromVersion(Uuid $id, int $version): EventStream;
 }

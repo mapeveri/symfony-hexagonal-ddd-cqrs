@@ -20,7 +20,7 @@ final class DBALEventStoreRepository implements EventStoreRepository
     {
     }
 
-    public function commit(EventStream $eventStream, int $version): void
+    public function append(EventStream $eventStream, int $version): void
     {
         $stmt = $this->connection->prepare(
             'INSERT INTO event_store (id, aggregate_id, version, `type`, created_at, `data`)
@@ -62,19 +62,19 @@ final class DBALEventStoreRepository implements EventStoreRepository
         return new AggregateHistory($id, new EventStream($events));
     }
 
-    public function fromVersion(string $id, int $version): EventStream
+    public function fromVersion(Uuid $id, int $version): EventStream
     {
         $stmt = $this->connection->prepare(
             'SELECT * FROM event_store WHERE aggregate_id = :aggregate_id AND version = :version'
         );
-        $resultSet = $stmt->executeQuery([':aggregate_id' => $id, ':version' => $version]);
+        $resultSet = $stmt->executeQuery([':aggregate_id' => $id->value(), ':version' => $version]);
 
         /** @var DomainEvent[] $events */
         $events = [];
         $resultData = $resultSet->fetchAllAssociative();
         foreach ($resultData as $row) {
             $event = $row['type']::fromPrimitives(
-                $id,
+                $id->value(),
                 $this->serializer->unserialize($row['data']),
                 $row['id'],
                 $row['created_at'],
