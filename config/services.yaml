@@ -42,6 +42,16 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
 
+    # Redis
+    Predis\Client:
+        class: Predis\Client
+        arguments:
+            - { host: '%env(REDIS_HOST)%' }
+
+    # Serializer
+    Zumba\JsonSerializer\JsonSerializer:
+        class: Zumba\JsonSerializer\JsonSerializer
+
     # Tagging
     App\Shared\Infrastructure\Bus\Event\DomainEventMapping:
         arguments: [ !tagged app.domain_event_subscriber ]

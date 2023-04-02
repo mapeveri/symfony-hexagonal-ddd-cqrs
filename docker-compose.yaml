@@ -52,3 +52,11 @@ services:
             - discovery.type=single-node
             - xpack.security.enabled=false
             - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+    redis:
+        image: redis:5.0
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./dbdata/redis:/var/lib/redis
+            - ./etc/infrastructure/redis/redis.conf:/etc/redis/redis.conf
