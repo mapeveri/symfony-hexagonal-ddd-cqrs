@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Shared\Domain\Aggregate\AggregateHistory;
 use App\Shared\Domain\Bus\Event\DomainEvent;
 use App\Shared\Domain\DatetimeUtils;
 use App\Shared\Domain\EventStore\EventStoreRepository;
@@ -39,27 +38,15 @@ final class DBALEventStoreRepository implements EventStoreRepository
         }
     }
 
-    public function getAggregateHistoryFor(Uuid $id): AggregateHistory
+    public function getAggregateHistoryFor(Uuid $id): EventStream
     {
         $stmt = $this->connection->prepare(
             'SELECT * FROM event_store WHERE aggregate_id = :aggregate_id'
         );
         $resultSet = $stmt->executeQuery([':aggregate_id' => (string) $id]);
-
-        $events = [];
         $resultData = $resultSet->fetchAllAssociative();
-        foreach ($resultData as $row) {
-            $event = $row['type']::fromPrimitives(
-                $id->value(),
-                $this->serializer->unserialize($row['data']),
-                $row['id'],
-                $row['created_at'],
-            );
 
-            $events[] = $event;
-        }
-
-        return new AggregateHistory($id, new EventStream($events));
+        return $this->eventStreamFromArray($resultData, $id);
     }
 
     public function fromVersion(Uuid $id, int $version): EventStream
@@ -68,22 +55,9 @@ final class DBALEventStoreRepository implements EventStoreRepository
             'SELECT * FROM event_store WHERE aggregate_id = :aggregate_id AND version = :version'
         );
         $resultSet = $stmt->executeQuery([':aggregate_id' => $id->value(), ':version' => $version]);
-
-        /** @var DomainEvent[] $events */
-        $events = [];
         $resultData = $resultSet->fetchAllAssociative();
-        foreach ($resultData as $row) {
-            $event = $row['type']::fromPrimitives(
-                $id->value(),
-                $this->serializer->unserialize($row['data']),
-                $row['id'],
-                $row['created_at'],
-            );
 
-            $events[] = $event;
-        }
-
-        return new EventStream($events);
+        return $this->eventStreamFromArray($resultData, $id);
     }
 
     public function countEventsFor(Uuid $id): int
@@ -94,5 +68,23 @@ final class DBALEventStoreRepository implements EventStoreRepository
         $resultSet = $stmt->executeQuery([':aggregate_id' => (string) $id]);
         $resultData = $resultSet->fetchAllAssociative();
         return (int)$resultData[0]['total'];
+    }
+
+    private function eventStreamFromArray(array $resultData, Uuid $id): EventStream
+    {
+        /** @var DomainEvent[] $events */
+        $events = [];
+        foreach ($resultData as $row) {
+            $event = $row['type']::fromPrimitives(
+                $id->value(),
+                $this->serializer->unserialize($row['data']),
+                $row['id'],
+                $row['created_at'],
+            );
+
+            $events[] = $event;
+        }
+
+        return new EventStream($id->value(), $events);
     }
 }

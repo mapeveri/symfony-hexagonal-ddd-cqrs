@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Venue\Event\Infrastructure\EventStore;
 
 use App\Shared\Domain\EventStore\EventStoreRepository;
+use App\Shared\Domain\EventStream\EventStream;
 use App\Shared\Domain\Snapshot\Snapshot;
 use App\Shared\Domain\Snapshot\SnapshotRepository;
 use App\Venue\Event\Domain\Event;
@@ -30,10 +31,7 @@ final class EventRepository implements BaseEventRepository
         }
 
         $event = $snapshot->aggregate();
-
-        $event->replay(
-            $this->eventStore->fromVersion($eventId, $snapshot->version())
-        );
+        $event->replay($this->eventStore->fromVersion($eventId, $snapshot->version()));
 
         /** @var Event */
         return $event;
@@ -42,11 +40,12 @@ final class EventRepository implements BaseEventRepository
     public function save(Event $aggregate): void
     {
         $events = $aggregate->getRecordedEvents();
+        $eventStream = new EventStream($aggregate->id()->value(), $events);
 
         $countOfEvents = $this->eventStore->countEventsFor($aggregate->id());
         $version = (int) ($countOfEvents / 100);
 
-        $this->eventStore->append($events, $version);
+        $this->eventStore->append($eventStream, $version);
         $aggregate->clearRecordedEvents();
 
         if (!$this->snapshotRepository->has($aggregate->id()->value(), $version)) {
@@ -59,6 +58,6 @@ final class EventRepository implements BaseEventRepository
             );
         }
 
-        $this->eventProjection->project($events);
+        $this->eventProjection->project($eventStream);
     }
 }

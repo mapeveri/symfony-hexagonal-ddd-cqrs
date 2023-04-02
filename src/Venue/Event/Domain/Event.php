@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Venue\Event\Domain;
 
-use App\Shared\Domain\Aggregate\AggregateHistory;
 use App\Shared\Domain\Aggregate\EventSourcedAggregateRoot;
 use App\Shared\Domain\DatetimeUtils;
+use App\Shared\Domain\EventStream\EventStream;
 use App\Shared\Domain\ValueObjects\Uuid;
 use App\Venue\Comment\Domain\Comment;
 use App\Venue\Comment\Domain\Events\CommentWasAddedEvent;
@@ -167,11 +167,11 @@ class Event extends EventSourcedAggregateRoot
         );
     }
 
-    public static function reconstituteFrom(AggregateHistory $aggregateHistory): self
+    public static function reconstituteFrom(EventStream $eventStream): self
     {
-        $event = static::createEmptyEventWith($aggregateHistory->aggregateId());
+        $event = static::createEmptyEventWith(Uuid::create($eventStream->aggregateId()));
 
-        $event->replay($aggregateHistory->eventStream());
+        $event->replay($eventStream);
 
         return $event;
     }

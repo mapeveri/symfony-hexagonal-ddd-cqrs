@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Shared\Domain\Aggregate;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
-use App\Shared\Domain\EventStream\EventStream;
 
 class AggregateRoot
 {
@@ -19,9 +18,9 @@ class AggregateRoot
         return $domainEvents;
     }
 
-    final public function getRecordedEvents(): EventStream
+    final public function getRecordedEvents(): array
     {
-        return new EventStream($this->domainEvents);
+        return $this->domainEvents;
     }
 
     final public function clearRecordedEvents(): void

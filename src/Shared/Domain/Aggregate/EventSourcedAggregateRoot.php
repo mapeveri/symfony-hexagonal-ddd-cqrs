@@ -10,7 +10,7 @@ use App\Shared\Domain\Utils;
 
 abstract class EventSourcedAggregateRoot extends AggregateRoot
 {
-    public abstract static function reconstituteFrom(AggregateHistory $aggregateHistory): EventSourcedAggregateRoot;
+    public abstract static function reconstituteFrom(EventStream $eventStream): EventSourcedAggregateRoot;
 
     final protected function apply(DomainEvent $anEvent): void
     {
