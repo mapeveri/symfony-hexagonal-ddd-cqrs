@@ -18,6 +18,12 @@ abstract class EventSourcedAggregateRoot extends AggregateRoot
         $this->$method($anEvent);
     }
 
+    protected function recordApply(DomainEvent $event): void
+    {
+        $this->record($event);
+        $this->apply($event);
+    }
+
     public function replay(EventStream $eventStream): void
     {
         /** @var DomainEvent */

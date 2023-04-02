@@ -18,28 +18,26 @@ use DateTime;
 
 class Event extends EventSourcedAggregateRoot
 {
+    private string $title;
+    private string $content;
+    private string $location;
+    private DateTime $startAt;
+    private DateTime $endAt;
     private DateTime $created;
     private DateTime $updated;
     private array $comments;
 
-    public function __construct(
-        private EventId $id,
-        private string $title,
-        private string $content,
-        private string $location,
-        private DateTime $startAt,
-        private DateTime $endAt
-    ) {
-        $this->created = new DateTime();
-        $this->updated = new DateTime();
+    public function __construct(private EventId $id)
+    {
         $this->comments = [];
     }
 
     public static function create(EventId $id, string $title, string $content, string $location, DateTime $startAt, DateTime $endAt): self
     {
-        $event = new self($id, $title, $content, $location, $startAt, $endAt);
+        $event = new self($id);
+        $now = (new DateTime())->format(DatetimeUtils::DATETIME_FORMAT);
 
-        $event->record(
+        $event->recordApply(
             new EventWasCreatedEvent(
                 $id->value(),
                 $title,
@@ -47,8 +45,8 @@ class Event extends EventSourcedAggregateRoot
                 $location,
                 $startAt->format(DatetimeUtils::DATETIME_FORMAT),
                 $endAt->format(DatetimeUtils::DATETIME_FORMAT),
-                $event->created()->format(DatetimeUtils::DATETIME_FORMAT),
-                $event->updated()->format(DatetimeUtils::DATETIME_FORMAT)
+                $now,
+                $now,
             )
         );
 
@@ -57,13 +55,7 @@ class Event extends EventSourcedAggregateRoot
 
     public function update(string $title, string $content, string $location, DateTime $startAt, DateTime $endAt): void
     {
-        $this->title = $title;
-        $this->content = $content;
-        $this->location = $location;
-        $this->startAt = $startAt;
-        $this->endAt = $endAt;
-
-        $this->record(
+        $this->recordApply(
             new EventWasUpdatedEvent(
                 $this->id->value(),
                 $title,
@@ -78,7 +70,7 @@ class Event extends EventSourcedAggregateRoot
     public function makeComment(string $content, string $username, EventId $eventId): void
     {
         $now = (new DateTime())->format(DatetimeUtils::DATETIME_FORMAT);
-        $this->record(
+        $this->recordApply(
             new CommentWasAddedEvent(
                 CommentId::random()->value(),
                 $content,
@@ -178,13 +170,6 @@ class Event extends EventSourcedAggregateRoot
 
     private static function createEmptyEventWith(Uuid $eventId): self
     {
-        return new self(
-            EventId::create($eventId->value()),
-            '',
-            '',
-            '',
-            new DateTime(),
-            new DateTime()
-        );
+        return new self(EventId::create($eventId->value()));
     }
 }
