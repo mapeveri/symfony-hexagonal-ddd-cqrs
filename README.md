@@ -4,8 +4,7 @@ symfony-hexagonal-cqrs
 Api Rest with Symfony 6 + Hexagonal Architecture + DDD & CQRS & Event sourcing.
 
 
-Installation
-------------
+## Installation
 
 1. Execute docker-compose:
 
@@ -52,7 +51,7 @@ Installation
 8. In the browser execute http://localhost:8000
 
 
-Rabbit configuration and consumers
+## Rabbit configuration and consumers
 
 1. Configure exchange and queues in rabbitmq:
     
